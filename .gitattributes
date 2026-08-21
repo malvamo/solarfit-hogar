@@ -1,0 +1,5 @@
+# Preserve byte-stable evidence so the recorded SHA-256 hashes survive checkout.
+cases/fixtures/**/*.json text eol=lf
+cases/evidence/**/*.json text eol=lf
+cases/evidence/**/*.csv text eol=lf
+cases/evidence/**/*.md text eol=lf

@@ -8,7 +8,7 @@ No se han inventado nombres ni aportes. Los campos entre corchetes deben complet
 
 ## 2. Declaración breve sugerida
 
-> El equipo utilizó OpenAI Codex como apoyo para analizar los archivos oficiales del curso, estructurar el modelo matemático, investigar documentación técnica oficial, implementar y probar el prototipo web, redactar y diseñar borradores del informe, póster y guion, y preparar el paquete técnico. El equipo conserva la responsabilidad sobre la selección de datos, revisión de fórmulas, decisiones, validación, redacción final y sustentación. Los datos de demostración son sintéticos y no se presentan como resultados de la vivienda estudiada.
+> El equipo utilizó OpenAI Codex como apoyo para analizar los archivos oficiales del curso, estructurar el modelo matemático, investigar fuentes oficiales, implementar y probar el prototipo web, ejecutar cinco escenarios simulados, redactar y diseñar el informe, el libro de validación, el póster, el guion y la hoja de ruta. El equipo conserva la responsabilidad sobre la selección de supuestos, revisión de fórmulas, decisiones, validación, redacción final y sustentación. Los consumos y techos de los casos son sintéticos; PVGIS y PVWatts son modelos y no mediciones de una vivienda.
 
 Editar la declaración si otra herramienta de IA fue usada.
 
@@ -32,9 +32,10 @@ La tabla resume tareas, no sustituye el historial completo. Cuando la rúbrica e
 | IA-05 | 18-08-2026 | Investigar datos solares y APIs oficiales | Parámetros y límites de PVGIS 5.3 y PVWatts V8 | PVGIS como fuente primaria; PVWatts como contraste opcional con clave de servidor | Enlaces oficiales; las consultas de prueba no son resultados del caso real |
 | IA-06 | 18-08-2026 | Auditar el modelo matemático | Dos modos excluyentes, dos criterios de tamaño, derivada `K/h`, restricción de techo y métricas | Se evitó aplicar PR dos veces y se separó recomendación de factibilidad | Pruebas unitarias y desarrollo en `mathematical-model.md` |
 | IA-07 | 18-08-2026 | Crear documentación técnica honesta basada en el código real | README, arquitectura, modelo, diccionario, plan, trazabilidad y guía | Marcadores explícitos para todo dato humano o empírico faltante | Revisión de rutas, tipos y fuentes del repositorio |
-| IA-08 | 18–21-08-2026 | Construir el informe completo, póster y guion del pitch | DOCX de 25 páginas, póster editable de una diapositiva y guion de 416 palabras | Se conservaron marcadores donde faltan nombres, aportes y evidencia; el demo no se declaró caso final | Renderización y revisión visual; revisión humana del equipo pendiente |
-| IA-09 | 21-08-2026 | “Continuar con la ejecución y el cierre de la construcción” | Importador JSON, esquema Zod, invalidación de consultas antiguas, accesibilidad, pruebas, documentación y empaquetado reproducible | Se cerró el producto técnico sin inventar el caso académico ni aportes personales | `pnpm check`, 32 pruebas, cobertura V8, QA escritorio/móvil y humo PVGIS |
-| IA-10 | 21-08-2026 | Sincronizar y cerrar los artefactos académicos | Informe Word, póster, pitch y checklist alineados con 102 %, 32 pruebas y la ruta real/simulada permitida | Se mantuvieron campos editables y se corrigieron paginación, notación, declaración de IA y estado de la evidencia | Render de 25 páginas, prueba de desbordamiento/fidelidad del PPTX e inspección visual |
+| IA-08 | 18–21-08-2026 | Construir el informe completo, póster y guion del pitch | Borradores acumulativos en Word, póster editable y guion oral | Se conservaron marcadores para nombres y aportes; el demo no se declaró caso final | Renderización y revisión visual; revisión humana del equipo pendiente |
+| IA-09 | 21-08-2026 | “Continuar con la ejecución y el cierre de la construcción” | Importador JSON, esquema Zod, accesibilidad, APIs, pruebas, documentación y empaquetado reproducible | Se cerró el producto técnico sin inventar aportes personales | `pnpm check`, QA de navegador y humo de proveedores |
+| IA-10 | 21-08-2026 | Simular cinco usos cercanos a la realidad con fuentes exactas y construir los entregables restantes | Cinco fixtures, runner LIVE, PVGIS/PVWatts, métricas, JSON/CSV, libro de validación, informes, póster, pitch y roadmap | Se eligió la ruta `simulated_formal` permitida por la rúbrica y se rotuló como no experimental | Diez consultas externas, 37 pruebas, hashes, revisión de fórmulas, render de documentos y QA del póster |
+| IA-11 | 21-08-2026 | Explicar la siguiente fase para convertir el MVP en startup | Hoja de ruta B2B2C, piloto medido, regulación, privacidad, métricas y modelo de negocio | Se separaron hechos oficiales de metas internas recomendadas | Enlaces oficiales de MinEnergía, UPME, CREG, RETIE y leyes colombianas |
 
 ## 5. Decisiones influenciadas por IA
 
@@ -51,6 +52,7 @@ La tabla resume tareas, no sustituye el historial completo. Cuando la rúbrica e
 | Consultar PVGIS desde el servidor | PVGIS bloquea AJAX directo por CORS | `/api/pvgis`; documentación oficial |
 | Rotular la demostración como sintética | Evita confundir prueba de software con evidencia | `demo-project.ts`; interfaz |
 | Guardar borrador local y minimizar datos | Reduce tratamiento de datos personales | `project-storage.ts`; interfaz |
+| Usar cinco escenarios simulados formales | La rúbrica permite condiciones simuladas y no había tiempo ni recursos para una instalación medida | `cases/fixtures/v1/`; `cases/evidence/latest/` |
 
 ### Modificadas por el equipo o durante la revisión
 
@@ -79,12 +81,12 @@ La tabla resume tareas, no sustituye el historial completo. Cuando la rúbrica e
 |---|---|---|
 | Requisitos académicos | Lectura del sílabo, instructivos y rúbricas originales | Revisado técnicamente; `[APROBACIÓN DEL EQUIPO]` pendiente |
 | Fórmulas y unidades | Derivación manual, análisis dimensional y pruebas controladas | Codificado; registrar revisión humana |
-| Implementación | Lint, tipos, pruebas y build mediante `pnpm check` | 32/32 pruebas, lint, typegen, TypeScript y build aprobados el 21-08-2026; evidencia en `verification-log-2026-08-21.md` |
+| Implementación | Lint, tipos, pruebas y build mediante `pnpm check` | 37/37 pruebas, lint, typegen, TypeScript y build aprobados el 21-08-2026 |
 | Parámetros PVGIS | Documentación de JRC y validación del contrato | Revisado en fuente oficial |
-| Parámetros PVWatts | Documentación vigente de NLR | Revisado en fuente oficial; requiere clave para consulta real |
-| Caso definitivo real o simulado | Facturas y medición, o protocolo de simulación con regla, propósito y supuestos | Pendiente |
-| Ficha de panel | PDF del fabricante | Pendiente |
-| Resultados cruzados | Segunda herramienta o medición | Pendiente |
+| Parámetros PVWatts | Documentación vigente de NLR | Revisado y ejecutado mediante clave solo servidor |
+| Casos simulados formales | Protocolo con regla, propósito, supuestos, entradas y salidas | Cinco casos completos; no son validación experimental |
+| Ficha de panel | PDF oficial LONGi LR5-54HTH-450M | Verificada y citada |
+| Resultados cruzados | PVGIS frente a PVWatts con doce pares por ciudad | Completo; MAPE 4,43–20,39 % y limitaciones documentadas |
 | Texto final | Lectura y reescritura por cada integrante | Pendiente |
 
 ## 7. Registro detallado reutilizable

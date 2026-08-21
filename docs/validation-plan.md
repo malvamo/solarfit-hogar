@@ -2,25 +2,27 @@
 
 ## 1. Objetivo
 
-La validación debe responder dos preguntas diferentes:
+La validación debe responder tres preguntas diferentes:
 
 1. **¿El software ejecuta correctamente las ecuaciones declaradas?**
-2. **¿Las ecuaciones y entradas representan con suficiente fidelidad el caso real estudiado?**
+2. **¿Los resultados son consistentes entre modelos solares independientes?**
+3. **¿Las ecuaciones y entradas representan con suficiente fidelidad una vivienda física?**
 
 Una prueba de software positiva no valida las facturas, la geometría del techo ni el recurso solar. Del mismo modo, una similitud con otro simulador no demuestra por sí sola que ambos modelos representen el techo real.
 
 ## 2. Estado honesto
 
-El repositorio contiene pruebas unitarias del motor, análisis y prorrateo. No incluye todavía:
+El 21-08-2026 se ejecutaron cinco escenarios residenciales `simulated_formal` contra PVGIS y PVWatts: diez consultas externas exitosas, series mensuales, métricas, JSON, CSV y hashes archivados en `cases/evidence/latest/`. También se aprobaron 37 pruebas automatizadas, lint, tipos y build.
 
-- datos reales de la vivienda;
-- una serie de producción medida;
-- una comparación PVGIS–PVWatts ejecutada con datos del caso real, aunque el adaptador de servidor ya existe;
-- pruebas de interfaz automatizadas;
-- un informe registrado de validación cruzada;
-- criterios de aceptación aprobados por el equipo y el profesor.
+La evidencia actual permite afirmar consistencia matemática, ejecución del software y contraste intermodelo. Todavía no incluye:
 
-Por tanto, esta es una guía ejecutable y una plantilla de evidencia; no es un informe de resultados empíricos terminados.
+- facturas de una vivienda física;
+- medición profesional del techo, sombras o estructura;
+- una serie de producción medida después de una instalación;
+- pruebas automatizadas de interfaz de extremo a extremo;
+- criterios numéricos de aceptación aprobados por el profesor.
+
+Por tanto, hay una validación simulada reproducible terminada, pero no una validación experimental en campo.
 
 ## 3. Niveles de evidencia
 
@@ -30,7 +32,8 @@ Por tanto, esta es una guía ejecutable y una plantilla de evidencia; no es un i
 | V2. Implementación | ¿La aplicación maneja entradas, errores y exportaciones? | `pnpm check` y pruebas manuales registradas |
 | V3. Fuente solar | ¿La respuesta externa es completa y trazable? | Respuesta de 12 meses, metadatos, fecha y configuración |
 | V4. Validación cruzada | ¿Otro modelo independiente produce un orden de magnitud comparable? | Dos series normalizadas y métricas de diferencia |
-| V5. Caso real | ¿El modelo representa la vivienda seleccionada? | Facturas, ficha, medición del techo y, si existe, producción medida |
+| V5. Escenario simulado formal | ¿El caso es reproducible y declara sus supuestos? | Regla de consumo, ficha, techo hipotético, configuración, salidas y hashes |
+| V6. Caso físico | ¿El modelo representa una vivienda observada? | Facturas, visita, medición del techo y producción medida cuando exista |
 
 ## 4. Verificación automatizada existente
 
@@ -68,10 +71,11 @@ pnpm test
 Última ejecución observada durante esta documentación:
 
 ```text
-Fecha y hora: 2026-08-21 07:09 America/Bogota
+Fecha y hora: 2026-08-21 09:49 America/Bogota
 Comando: pnpm check
-Resultado: lint aprobado; typegen y TypeScript aprobados; 7 archivos/32 pruebas aprobadas; build productivo aprobado
+Resultado: lint aprobado; typegen y TypeScript aprobados; 37/37 pruebas aprobadas; build productivo aprobado
 Rutas: /, /api/pvgis, /api/pvgis/optimize, /api/pvwatts
+Casos LIVE: 5 PVGIS + 5 PVWatts; 0 reintentos
 ```
 
 El registro detallado, incluida la revisión de interfaz y el humo PVGIS, está en `docs/verification-log-2026-08-21.md`. No sustituye la validación del caso académico elegido.
@@ -221,7 +225,7 @@ PVWatts V8 puede usarse como contraste opcional. Desde el 29 de mayo de 2026, la
 - [Uso de claves](https://developer.nlr.gov/docs/api-key/)
 - [Calculadora PVWatts y advertencias](https://pvwatts.nlr.gov/)
 
-La clave debe permanecer en servidor y no escribirse en el repositorio o navegador. La interfaz conecta con `/api/pvwatts`, que requiere `NLR_API_KEY`; si falta, presenta el HTTP 503 como configuración pendiente. La existencia del botón no constituye una comparación ejecutada: se deben guardar configuración, respuesta y métricas del caso real.
+La clave permanece en servidor y no se escribe en el repositorio ni en el navegador. La interfaz conecta con `/api/pvwatts` mediante `NLR_API_KEY`. La comparación fue ejecutada para los cinco escenarios formales y sus respuestas, configuración y métricas quedaron archivadas en `cases/evidence/latest/`; esto no las convierte en mediciones de campo.
 
 ### Métricas
 
@@ -238,14 +242,14 @@ No se debe declarar un proveedor como “verdad”. Las diferencias pueden prove
 
 ### Criterio de aceptación
 
-No se encontró en los archivos oficiales del curso un umbral numérico obligatorio para aceptar la diferencia. El equipo debe definir y justificar uno **antes** de ver el resultado, o limitarse a reportar y explicar la diferencia.
+No se encontró en los archivos oficiales del curso un umbral numérico obligatorio. Para no inventarlo después de conocer las salidas, esta entrega reporta y explica todas las diferencias sin clasificar un proveedor como “verdad”. Cali y Quibdó se tratan como hallazgos de sensibilidad que requieren cautela.
 
 ```text
-Criterio acordado: [POR DEFINIR]
-Justificación: [FUENTE O DECISIÓN DEL EQUIPO]
-Fecha de definición: [ANTES DE CALCULAR]
-Resultado: [PENDIENTE]
-Conclusión: [PENDIENTE]
+Criterio aplicado: reporte descriptivo sin umbral de aprobación inventado
+Justificación: la rúbrica no fija umbral y ambos proveedores son modelos
+Fecha de ejecución: 2026-08-21
+Resultado: MAPE mensual entre 4,43 % y 20,39 %
+Conclusión: coherencia razonable en tres ciudades; divergencia material en Cali y Quibdó
 ```
 
 ## 10. Validación con producción medida
@@ -283,14 +287,16 @@ Los ajustes del modelo deben conservar la ecuación anterior, la nueva, la razó
 
 ## 13. Lista de cierre
 
-- [ ] Sustituir todos los datos sintéticos por datos trazables.
-- [ ] Ejecutar y archivar `pnpm check` sobre la versión entregada.
-- [ ] Completar la verificación manual de al menos un mes y del total anual.
-- [ ] Verificar las 12 facturas y sus periodos.
-- [ ] Guardar ficha oficial del módulo.
-- [ ] Registrar medición o método del área útil.
-- [ ] Guardar configuración y metadatos de PVGIS.
-- [ ] Ejecutar una validación independiente o explicar honestamente por qué no fue posible.
-- [ ] Calcular y explicar métricas, sin inventar umbrales.
+- [x] Rotular los cinco consumos y techos como supuestos simulados trazables.
+- [x] Ejecutar y archivar `pnpm check` sobre la versión evaluada.
+- [x] Verificar manualmente un mes, el total anual y los cálculos del libro de validación.
+- [x] Documentar la regla de los doce consumos de cada escenario.
+- [x] Guardar y citar la ficha oficial del módulo LONGi.
+- [x] Declarar el área útil como supuesto hipotético, no medición.
+- [x] Guardar configuración y metadatos de PVGIS y PVWatts.
+- [x] Ejecutar el contraste independiente e identificar que no es validación experimental.
+- [x] Calcular y explicar métricas sin inventar umbrales.
 - [ ] Registrar incidencias, cambios y revisión humana.
-- [ ] Confirmar que documento, póster y pitch usan exactamente los mismos datos y resultados.
+- [x] Confirmar que documento, póster y pitch usan los mismos datos y resultados.
+- [ ] Completar nombres, aportes, aprobación del equipo y ensayo del pitch.
+- [ ] Ejecutar en una fase futura el piloto con facturas, visita y producción medida.
