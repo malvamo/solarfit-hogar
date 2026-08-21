@@ -23,6 +23,9 @@
 # misc
 .DS_Store
 *.pem
+/.codex_tmp/
+__pycache__/
+*.py[cod]
 /AGENTS.md
 /CLAUDE.md
 

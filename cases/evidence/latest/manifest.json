@@ -1,0 +1,61 @@
+{
+  "artifacts": {
+    "markdown": {
+      "path": "evidencia_5_casos.md",
+      "sha256": "b29fed4f021ff2b7ddc873987851d69c3296d1ea5b1b6e04f237187225b614a0"
+    },
+    "monthlyCsv": {
+      "path": "series_mensuales.csv",
+      "sha256": "ff4c23780ed64fbcdbaa3e39dd1d2f600616f6e5c5fccc41b901338aa4bba2df"
+    },
+    "summaryCsv": {
+      "path": "resumen_casos.csv",
+      "sha256": "959d97085954b9df41d5c9add2398835bc838d455e53f97455e2653e7f2d6396"
+    }
+  },
+  "baseUrl": "https://solarfit-hogar.vercel.app",
+  "caseCount": 5,
+  "cases": [
+    {
+      "caseId": "barranquilla_climatizacion_alta",
+      "evidenceSha256": "435e69a4fc204611f3494a1d5b139f372bf0ed40620c11b3436eeca4d1ac59ca",
+      "fileSha256": "da80e0e7b2483add1c44d6cd2924c4992153e45e27710c215f9a65179f450cf4",
+      "path": "cases/barranquilla_climatizacion_alta.json"
+    },
+    {
+      "caseId": "bogota_promedio_residencial",
+      "evidenceSha256": "09ee1f5cb2cfff963e462b266712801cb189118848d359d748ce93af07d9b265",
+      "fileSha256": "d9fb3c6916197fd509dc81d7aae5e9f0f326e7937f7639fdc630f757527b6fec",
+      "path": "cases/bogota_promedio_residencial.json"
+    },
+    {
+      "caseId": "cali_demanda_media",
+      "evidenceSha256": "efa0b7c2da73e6fbf1b821717755af2810bcffe4483123ab0ada0cc98c43f43f",
+      "fileSha256": "9d0000d87844769c97ff6ca08809e3203534d63bd869ed5d1b3dee82c0b1a523",
+      "path": "cases/cali_demanda_media.json"
+    },
+    {
+      "caseId": "medellin_subsistencia_altura",
+      "evidenceSha256": "01728f8764ff3d6da0f8561ca190f7106fbd2d5ae9aaf44404fce9f481ba387a",
+      "fileSha256": "f1da97a2af46ee91e965cc5d1baaa1eb968d2b7af1fb2aca5f3ac04776521499",
+      "path": "cases/medellin_subsistencia_altura.json"
+    },
+    {
+      "caseId": "quibdo_techo_restringido",
+      "evidenceSha256": "f93364abb695cb420dc8b72d04dc3fda8588a13dd1e2ba5fcb067846c1b923b0",
+      "fileSha256": "1d00979c8db1e41622ee71380b9ad2869a3ac4a15493b4cf558917d7e40eb040",
+      "path": "cases/quibdo_techo_restringido.json"
+    }
+  ],
+  "classification": "simulated_formal",
+  "integrity": {
+    "algorithm": "SHA-256",
+    "canonicalization": "recursive-key-sort-json-v1",
+    "sha256": "542bf04d45eb47d2dc82051b3d3d344599010c952c8c15eb9f8ce196576b7c23"
+  },
+  "requestMode": "sequential",
+  "runCompletedAt": "2026-08-21T14:50:02.317Z",
+  "runStartedAt": "2026-08-21T14:49:48.267Z",
+  "runnerVersion": "1.0.0",
+  "schemaVersion": "1.0.0"
+}

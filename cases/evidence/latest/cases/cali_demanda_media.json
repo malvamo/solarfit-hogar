@@ -1,0 +1,1456 @@
+{
+  "caseId": "cali_demanda_media",
+  "classification": "simulated_formal",
+  "evaluatedInputs": {
+    "pvgis": {
+      "azimuthDeg": 180,
+      "consumptionProvenance": {
+        "kind": "synthetic",
+        "label": "Serie sintética formal de demanda media",
+        "note": "Promedio 240 kWh/mes = 1,85 × 130; patrón mensual declarado, no facturas.",
+        "sourceUrl": "https://gestornormativo.creg.gov.co/gestor/entorno/docs/resolucion_upme_0355_2004.htm"
+      },
+      "installationAreaFactor": 1.1,
+      "latitude": 3.4545,
+      "locationLabel": "Cali, Valle del Cauca (referencia urbana IDEAM)",
+      "longitude": -76.499722,
+      "months": [
+        {
+          "billingDays": 31,
+          "consumptionKwh": 230,
+          "hsp": null,
+          "month": 1,
+          "specificYieldKwhPerKwp": 116.71
+        },
+        {
+          "billingDays": 28,
+          "consumptionKwh": 228,
+          "hsp": null,
+          "month": 2,
+          "specificYieldKwhPerKwp": 106.67
+        },
+        {
+          "billingDays": 31,
+          "consumptionKwh": 232,
+          "hsp": null,
+          "month": 3,
+          "specificYieldKwhPerKwp": 109.7
+        },
+        {
+          "billingDays": 30,
+          "consumptionKwh": 238,
+          "hsp": null,
+          "month": 4,
+          "specificYieldKwhPerKwp": 93.71
+        },
+        {
+          "billingDays": 31,
+          "consumptionKwh": 242,
+          "hsp": null,
+          "month": 5,
+          "specificYieldKwhPerKwp": 90.93
+        },
+        {
+          "billingDays": 30,
+          "consumptionKwh": 245,
+          "hsp": null,
+          "month": 6,
+          "specificYieldKwhPerKwp": 89.89
+        },
+        {
+          "billingDays": 31,
+          "consumptionKwh": 250,
+          "hsp": null,
+          "month": 7,
+          "specificYieldKwhPerKwp": 99.36
+        },
+        {
+          "billingDays": 31,
+          "consumptionKwh": 252,
+          "hsp": null,
+          "month": 8,
+          "specificYieldKwhPerKwp": 108.04
+        },
+        {
+          "billingDays": 30,
+          "consumptionKwh": 248,
+          "hsp": null,
+          "month": 9,
+          "specificYieldKwhPerKwp": 108.37
+        },
+        {
+          "billingDays": 31,
+          "consumptionKwh": 244,
+          "hsp": null,
+          "month": 10,
+          "specificYieldKwhPerKwp": 102.73
+        },
+        {
+          "billingDays": 30,
+          "consumptionKwh": 240,
+          "hsp": null,
+          "month": 11,
+          "specificYieldKwhPerKwp": 99.06
+        },
+        {
+          "billingDays": 31,
+          "consumptionKwh": 231,
+          "hsp": null,
+          "month": 12,
+          "specificYieldKwhPerKwp": 110.11
+        }
+      ],
+      "panelHeightM": 1.722,
+      "panelModel": "LONGi Hi-MO X6 LR5-54HTH-450M",
+      "panelPowerWp": 450,
+      "panelProvenance": {
+        "kind": "official",
+        "label": "LONGi LR5-54HTH-450M",
+        "sourceUrl": "https://static.longi.com/Hi_MO_X6_LR_5_54_HTH_445_455_M_V1_30_30_and_15_V19_ES_09bf28ff6d.pdf"
+      },
+      "panelWidthM": 1.134,
+      "performanceRatioPct": 82,
+      "projectName": "SolarFit formal — Cali",
+      "pvgisSystemLossPct": 14,
+      "roofUsableM2": 18,
+      "sizingStrategy": "annual-balance",
+      "solarProvenance": {
+        "fetchedAt": "2026-08-21T14:49:55.658Z",
+        "kind": "official",
+        "label": "PVGIS 5.3 — PVGIS-ERA5",
+        "note": "Rendimiento específico AC neto para 1 kWp; las pérdidas configuradas ya están incorporadas.",
+        "sourceUrl": "https://joint-research-centre.ec.europa.eu/photovoltaic-geographical-information-system-pvgis_en"
+      },
+      "solarSourceMode": "pvgis-yield",
+      "targetCoveragePct": 100,
+      "tiltDeg": 10,
+      "uncertaintyPct": 10
+    },
+    "pvwatts": {
+      "azimuthDeg": 180,
+      "consumptionProvenance": {
+        "kind": "synthetic",
+        "label": "Serie sintética formal de demanda media",
+        "note": "Promedio 240 kWh/mes = 1,85 × 130; patrón mensual declarado, no facturas.",
+        "sourceUrl": "https://gestornormativo.creg.gov.co/gestor/entorno/docs/resolucion_upme_0355_2004.htm"
+      },
+      "installationAreaFactor": 1.1,
+      "latitude": 3.4545,
+      "locationLabel": "Cali, Valle del Cauca (referencia urbana IDEAM)",
+      "longitude": -76.499722,
+      "months": [
+        {
+          "billingDays": 31,
+          "consumptionKwh": 230,
+          "hsp": null,
+          "month": 1,
+          "specificYieldKwhPerKwp": 134.845851304285
+        },
+        {
+          "billingDays": 28,
+          "consumptionKwh": 228,
+          "hsp": null,
+          "month": 2,
+          "specificYieldKwhPerKwp": 118.750181257421
+        },
+        {
+          "billingDays": 31,
+          "consumptionKwh": 232,
+          "hsp": null,
+          "month": 3,
+          "specificYieldKwhPerKwp": 126.4310598537947
+        },
+        {
+          "billingDays": 30,
+          "consumptionKwh": 238,
+          "hsp": null,
+          "month": 4,
+          "specificYieldKwhPerKwp": 114.2463550120645
+        },
+        {
+          "billingDays": 31,
+          "consumptionKwh": 242,
+          "hsp": null,
+          "month": 5,
+          "specificYieldKwhPerKwp": 107.4529653372945
+        },
+        {
+          "billingDays": 30,
+          "consumptionKwh": 245,
+          "hsp": null,
+          "month": 6,
+          "specificYieldKwhPerKwp": 106.2967703483855
+        },
+        {
+          "billingDays": 31,
+          "consumptionKwh": 250,
+          "hsp": null,
+          "month": 7,
+          "specificYieldKwhPerKwp": 119.0483617876393
+        },
+        {
+          "billingDays": 31,
+          "consumptionKwh": 252,
+          "hsp": null,
+          "month": 8,
+          "specificYieldKwhPerKwp": 126.4913255659972
+        },
+        {
+          "billingDays": 30,
+          "consumptionKwh": 248,
+          "hsp": null,
+          "month": 9,
+          "specificYieldKwhPerKwp": 119.9387374097675
+        },
+        {
+          "billingDays": 31,
+          "consumptionKwh": 244,
+          "hsp": null,
+          "month": 10,
+          "specificYieldKwhPerKwp": 119.9003659570171
+        },
+        {
+          "billingDays": 30,
+          "consumptionKwh": 240,
+          "hsp": null,
+          "month": 11,
+          "specificYieldKwhPerKwp": 110.8458189554383
+        },
+        {
+          "billingDays": 31,
+          "consumptionKwh": 231,
+          "hsp": null,
+          "month": 12,
+          "specificYieldKwhPerKwp": 117.9366284727562
+        }
+      ],
+      "panelHeightM": 1.722,
+      "panelModel": "LONGi Hi-MO X6 LR5-54HTH-450M",
+      "panelPowerWp": 450,
+      "panelProvenance": {
+        "kind": "official",
+        "label": "LONGi LR5-54HTH-450M",
+        "sourceUrl": "https://static.longi.com/Hi_MO_X6_LR_5_54_HTH_445_455_M_V1_30_30_and_15_V19_ES_09bf28ff6d.pdf"
+      },
+      "panelWidthM": 1.134,
+      "performanceRatioPct": 82,
+      "projectName": "SolarFit formal — Cali",
+      "pvgisSystemLossPct": 14,
+      "roofUsableM2": 18,
+      "sizingStrategy": "annual-balance",
+      "solarProvenance": {
+        "fetchedAt": "2026-08-21T14:49:56.939Z",
+        "kind": "official",
+        "label": "PVWATTS 8.5.0 — NSRDB PSM V3 GOES tmy-2020 3.2.0",
+        "note": "Rendimiento específico AC neto para 1 kWp; las pérdidas configuradas ya están incorporadas.",
+        "sourceUrl": "https://developer.nlr.gov/docs/solar/pvwatts/v8/"
+      },
+      "solarSourceMode": "pvgis-yield",
+      "targetCoveragePct": 100,
+      "tiltDeg": 10,
+      "uncertaintyPct": 10
+    }
+  },
+  "execution": {
+    "baseUrl": "https://solarfit-hogar.vercel.app",
+    "endpoints": {
+      "pvgis": "https://solarfit-hogar.vercel.app/api/pvgis",
+      "pvwatts": "https://solarfit-hogar.vercel.app/api/pvwatts"
+    },
+    "retryPolicy": {
+      "initialBackoffMs": 750,
+      "maximumAttempts": 3,
+      "requestTimeoutMs": 30000
+    },
+    "runnerVersion": "1.0.0",
+    "sequentialRequests": true
+  },
+  "fixture": {
+    "caseId": "cali_demanda_media",
+    "classification": "simulated_formal",
+    "declaredAssumptions": [
+      "El nivel y la forma mensual del consumo son sintéticos y no corresponden a facturas.",
+      "Los 18 m² de techo útil son una hipótesis del escenario.",
+      "Las coordenadas representan una estación o referencia urbana de IDEAM.",
+      "No se modelan sombras cercanas ni diseño eléctrico, estructural o de conexión."
+    ],
+    "input": {
+      "azimuthDeg": 180,
+      "consumptionProvenance": {
+        "kind": "synthetic",
+        "label": "Serie sintética formal de demanda media",
+        "note": "Promedio 240 kWh/mes = 1,85 × 130; patrón mensual declarado, no facturas.",
+        "sourceUrl": "https://gestornormativo.creg.gov.co/gestor/entorno/docs/resolucion_upme_0355_2004.htm"
+      },
+      "installationAreaFactor": 1.1,
+      "latitude": 3.4545,
+      "locationLabel": "Cali, Valle del Cauca (referencia urbana IDEAM)",
+      "longitude": -76.499722,
+      "months": [
+        {
+          "billingDays": 31,
+          "consumptionKwh": 230,
+          "hsp": null,
+          "month": 1,
+          "specificYieldKwhPerKwp": null
+        },
+        {
+          "billingDays": 28,
+          "consumptionKwh": 228,
+          "hsp": null,
+          "month": 2,
+          "specificYieldKwhPerKwp": null
+        },
+        {
+          "billingDays": 31,
+          "consumptionKwh": 232,
+          "hsp": null,
+          "month": 3,
+          "specificYieldKwhPerKwp": null
+        },
+        {
+          "billingDays": 30,
+          "consumptionKwh": 238,
+          "hsp": null,
+          "month": 4,
+          "specificYieldKwhPerKwp": null
+        },
+        {
+          "billingDays": 31,
+          "consumptionKwh": 242,
+          "hsp": null,
+          "month": 5,
+          "specificYieldKwhPerKwp": null
+        },
+        {
+          "billingDays": 30,
+          "consumptionKwh": 245,
+          "hsp": null,
+          "month": 6,
+          "specificYieldKwhPerKwp": null
+        },
+        {
+          "billingDays": 31,
+          "consumptionKwh": 250,
+          "hsp": null,
+          "month": 7,
+          "specificYieldKwhPerKwp": null
+        },
+        {
+          "billingDays": 31,
+          "consumptionKwh": 252,
+          "hsp": null,
+          "month": 8,
+          "specificYieldKwhPerKwp": null
+        },
+        {
+          "billingDays": 30,
+          "consumptionKwh": 248,
+          "hsp": null,
+          "month": 9,
+          "specificYieldKwhPerKwp": null
+        },
+        {
+          "billingDays": 31,
+          "consumptionKwh": 244,
+          "hsp": null,
+          "month": 10,
+          "specificYieldKwhPerKwp": null
+        },
+        {
+          "billingDays": 30,
+          "consumptionKwh": 240,
+          "hsp": null,
+          "month": 11,
+          "specificYieldKwhPerKwp": null
+        },
+        {
+          "billingDays": 31,
+          "consumptionKwh": 231,
+          "hsp": null,
+          "month": 12,
+          "specificYieldKwhPerKwp": null
+        }
+      ],
+      "panelHeightM": 1.722,
+      "panelModel": "LONGi Hi-MO X6 LR5-54HTH-450M",
+      "panelPowerWp": 450,
+      "panelProvenance": {
+        "kind": "official",
+        "label": "LONGi LR5-54HTH-450M",
+        "sourceUrl": "https://static.longi.com/Hi_MO_X6_LR_5_54_HTH_445_455_M_V1_30_30_and_15_V19_ES_09bf28ff6d.pdf"
+      },
+      "panelWidthM": 1.134,
+      "performanceRatioPct": 82,
+      "projectName": "SolarFit formal — Cali",
+      "pvgisSystemLossPct": 14,
+      "roofUsableM2": 18,
+      "sizingStrategy": "annual-balance",
+      "solarProvenance": {
+        "kind": "official",
+        "label": "PVGIS y PVWatts — pendiente de ejecución reproducible",
+        "note": "El runner sustituye esta referencia por la respuesta trazable de cada proveedor.",
+        "sourceUrl": "https://joint-research-centre.ec.europa.eu/photovoltaic-geographical-information-system-pvgis_en"
+      },
+      "solarSourceMode": "pvgis-yield",
+      "targetCoveragePct": 100,
+      "tiltDeg": 10,
+      "uncertaintyPct": 10
+    },
+    "objective": "Evaluar una vivienda con demanda media, variación mensual moderada y techo limitado pero potencialmente suficiente.",
+    "scenarioVersion": "2026.1",
+    "schemaVersion": "1.0.0",
+    "simulationRule": "Serie sintética de 2.880 kWh/año (240 kWh/mes en promedio), equivalente a 1,85 veces el consumo de subsistencia de 130 kWh/mes; la estacionalidad es una regla declarada.",
+    "sourceReferences": [
+      {
+        "id": "upme_subsistencia",
+        "label": "UPME — consumo de subsistencia",
+        "url": "https://gestornormativo.creg.gov.co/gestor/entorno/docs/resolucion_upme_0355_2004.htm",
+        "use": "Ancla regulatoria usada para declarar el factor de intensidad 1,85."
+      },
+      {
+        "id": "ideam_radiacion",
+        "label": "IDEAM — Promedios climatológicos de radiación global 2025",
+        "url": "https://www.ideam.gov.co/sites/default/files/prensa/boletines/2025-05-08/promedios_climatologicos_de_radiacion_global_actualizado_a_2025.xlsx",
+        "use": "Referencia de coordenadas de estación o centro urbano."
+      },
+      {
+        "id": "longi_panel",
+        "label": "LONGi — ficha técnica LR5-54HTH 445–455M",
+        "url": "https://static.longi.com/Hi_MO_X6_LR_5_54_HTH_445_455_M_V1_30_30_and_15_V19_ES_09bf28ff6d.pdf",
+        "use": "Potencia y dimensiones del módulo de 450 W."
+      },
+      {
+        "id": "pvgis",
+        "label": "JRC — PVGIS",
+        "url": "https://joint-research-centre.ec.europa.eu/photovoltaic-geographical-information-system-pvgis_en",
+        "use": "Serie mensual principal de rendimiento específico."
+      },
+      {
+        "id": "pvwatts",
+        "label": "NLR — PVWatts V8",
+        "url": "https://developer.nlr.gov/docs/solar/pvwatts/v8/",
+        "use": "Serie mensual independiente para contraste."
+      }
+    ],
+    "title": "Cali — demanda residencial media"
+  },
+  "generatedAt": "2026-08-21T14:49:48.267Z",
+  "integrity": {
+    "algorithm": "SHA-256",
+    "canonicalization": "recursive-key-sort-json-v1",
+    "sha256": "efa0b7c2da73e6fbf1b821717755af2810bcffe4483123ab0ada0cc98c43f43f"
+  },
+  "providerResponses": {
+    "pvgis": {
+      "annualKwhPerKwp": 1235.27,
+      "apiVersion": "5.3",
+      "dataset": "PVGIS-ERA5",
+      "fetchedAt": "2026-08-21T14:49:55.658Z",
+      "interannualSdKwhPerKwp": [
+        10.64,
+        10.63,
+        10.23,
+        4.8,
+        4.21,
+        4.45,
+        5.28,
+        6.15,
+        5.01,
+        6.28,
+        7.25,
+        7.29
+      ],
+      "irradiationKwhM2Day": [
+        5.13,
+        5.2,
+        4.82,
+        4.25,
+        3.98,
+        4.05,
+        4.34,
+        4.74,
+        4.93,
+        4.5,
+        4.48,
+        4.83
+      ],
+      "latitude": 3.4545,
+      "longitude": -76.499722,
+      "monthlyKwhPerKwp": [
+        116.71,
+        106.67,
+        109.7,
+        93.71,
+        90.93,
+        89.89,
+        99.36,
+        108.04,
+        108.37,
+        102.73,
+        99.06,
+        110.11
+      ],
+      "provider": "PVGIS",
+      "sourceLatitude": 3.4545,
+      "sourceLongitude": -76.499722,
+      "sourceUrl": "https://joint-research-centre.ec.europa.eu/photovoltaic-geographical-information-system-pvgis_en",
+      "warnings": [
+        "PVGIS modela el horizonte topográfico, pero no las sombras cercanas de árboles, muros, antenas o edificios."
+      ]
+    },
+    "pvwatts": {
+      "annualKwhPerKwp": 1422.184421261862,
+      "apiVersion": "8.5.0",
+      "dataset": "NSRDB PSM V3 GOES tmy-2020 3.2.0",
+      "fetchedAt": "2026-08-21T14:49:56.939Z",
+      "irradiationKwhM2Day": [
+        5.911286005324713,
+        5.797823378539661,
+        5.631391813510928,
+        5.231380622910871,
+        4.724097605654504,
+        4.783703666481449,
+        5.15065001801715,
+        5.519433705941031,
+        5.46618092924986,
+        5.304646469553235,
+        5.075659239826172,
+        5.194794222679564
+      ],
+      "latitude": 3.4545,
+      "longitude": -76.499722,
+      "monthlyKwhPerKwp": [
+        134.845851304285,
+        118.750181257421,
+        126.4310598537947,
+        114.2463550120645,
+        107.4529653372945,
+        106.2967703483855,
+        119.0483617876393,
+        126.4913255659972,
+        119.9387374097675,
+        119.9003659570171,
+        110.8458189554383,
+        117.9366284727562
+      ],
+      "provider": "PVWATTS",
+      "sourceDistanceM": 440,
+      "sourceLatitude": 3.450000047683716,
+      "sourceLongitude": -76.5,
+      "sourceUrl": "https://developer.nlr.gov/docs/solar/pvwatts/v8/",
+      "warnings": [
+        "PVWatts reporta energía AC neta para 1 kWp e incorpora las pérdidas configuradas; no se volvió a aplicar el PR.",
+        "PVWatts no sustituye una inspección de sombras cercanas ni un diseño eléctrico y estructural."
+      ]
+    }
+  },
+  "results": {
+    "pvgis": {
+      "buildableAnnualCoveragePct": 115.80750000000002,
+      "buildableAnnualGenerationKwh": 3335.2560000000003,
+      "buildableCapacityKwp": 2.7,
+      "buildablePanelCount": 6,
+      "continuousCapacityKwp": 2.3314552166310474,
+      "continuousPanelCount": 5.181011592513438,
+      "limitingMonth": 6,
+      "maximumPanelsByRoof": 8,
+      "monthly": [
+        {
+          "billingDays": 31,
+          "buildableBalanceKwh": 85.11700000000002,
+          "buildableCoveragePct": 137.00739130434783,
+          "buildableGenerationKwh": 315.117,
+          "consumptionKwh": 230,
+          "continuousPanelsRequired": 4.379325774236236,
+          "energyPerPanelKwh": 52.5195,
+          "hsp": null,
+          "month": 1,
+          "monthLabel": "Enero",
+          "recommendedBalanceKwh": 85.11700000000002,
+          "recommendedCoveragePct": 137.00739130434783,
+          "recommendedGenerationKwh": 315.117,
+          "specificYieldKwhPerKwp": 116.71,
+          "specificYieldKwhPerKwpUsed": 116.71,
+          "targetEnergyKwh": 230
+        },
+        {
+          "billingDays": 28,
+          "buildableBalanceKwh": 60.009000000000015,
+          "buildableCoveragePct": 126.31973684210527,
+          "buildableGenerationKwh": 288.009,
+          "consumptionKwh": 228,
+          "continuousPanelsRequired": 4.749851567138527,
+          "energyPerPanelKwh": 48.0015,
+          "hsp": null,
+          "month": 2,
+          "monthLabel": "Febrero",
+          "recommendedBalanceKwh": 60.009000000000015,
+          "recommendedCoveragePct": 126.31973684210527,
+          "recommendedGenerationKwh": 288.009,
+          "specificYieldKwhPerKwp": 106.67,
+          "specificYieldKwhPerKwpUsed": 106.67,
+          "targetEnergyKwh": 228
+        },
+        {
+          "billingDays": 31,
+          "buildableBalanceKwh": 64.19,
+          "buildableCoveragePct": 127.66810344827586,
+          "buildableGenerationKwh": 296.19,
+          "consumptionKwh": 232,
+          "continuousPanelsRequired": 4.699686012356933,
+          "energyPerPanelKwh": 49.365,
+          "hsp": null,
+          "month": 3,
+          "monthLabel": "Marzo",
+          "recommendedBalanceKwh": 64.19,
+          "recommendedCoveragePct": 127.66810344827586,
+          "recommendedGenerationKwh": 296.19,
+          "specificYieldKwhPerKwp": 109.7,
+          "specificYieldKwhPerKwpUsed": 109.7,
+          "targetEnergyKwh": 232
+        },
+        {
+          "billingDays": 30,
+          "buildableBalanceKwh": 15.016999999999996,
+          "buildableCoveragePct": 106.30966386554621,
+          "buildableGenerationKwh": 253.017,
+          "consumptionKwh": 238,
+          "continuousPanelsRequired": 5.643889541018983,
+          "energyPerPanelKwh": 42.1695,
+          "hsp": null,
+          "month": 4,
+          "monthLabel": "Abril",
+          "recommendedBalanceKwh": 15.016999999999996,
+          "recommendedCoveragePct": 106.30966386554621,
+          "recommendedGenerationKwh": 253.017,
+          "specificYieldKwhPerKwp": 93.71,
+          "specificYieldKwhPerKwpUsed": 93.71,
+          "targetEnergyKwh": 238
+        },
+        {
+          "billingDays": 31,
+          "buildableBalanceKwh": 3.511000000000024,
+          "buildableCoveragePct": 101.45082644628101,
+          "buildableGenerationKwh": 245.51100000000002,
+          "consumptionKwh": 242,
+          "continuousPanelsRequired": 5.914195290638708,
+          "energyPerPanelKwh": 40.9185,
+          "hsp": null,
+          "month": 5,
+          "monthLabel": "Mayo",
+          "recommendedBalanceKwh": 3.511000000000024,
+          "recommendedCoveragePct": 101.45082644628101,
+          "recommendedGenerationKwh": 245.51100000000002,
+          "specificYieldKwhPerKwp": 90.93,
+          "specificYieldKwhPerKwpUsed": 90.93,
+          "targetEnergyKwh": 242
+        },
+        {
+          "billingDays": 30,
+          "buildableBalanceKwh": -2.2970000000000255,
+          "buildableCoveragePct": 99.06244897959182,
+          "buildableGenerationKwh": 242.70299999999997,
+          "consumptionKwh": 245,
+          "continuousPanelsRequired": 6.056785453826282,
+          "energyPerPanelKwh": 40.4505,
+          "hsp": null,
+          "month": 6,
+          "monthLabel": "Junio",
+          "recommendedBalanceKwh": -2.2970000000000255,
+          "recommendedCoveragePct": 99.06244897959182,
+          "recommendedGenerationKwh": 242.70299999999997,
+          "specificYieldKwhPerKwp": 89.89,
+          "specificYieldKwhPerKwpUsed": 89.89,
+          "targetEnergyKwh": 245
+        },
+        {
+          "billingDays": 31,
+          "buildableBalanceKwh": 18.272000000000048,
+          "buildableCoveragePct": 107.30880000000002,
+          "buildableGenerationKwh": 268.27200000000005,
+          "consumptionKwh": 250,
+          "continuousPanelsRequired": 5.591340132402934,
+          "energyPerPanelKwh": 44.712,
+          "hsp": null,
+          "month": 7,
+          "monthLabel": "Julio",
+          "recommendedBalanceKwh": 18.272000000000048,
+          "recommendedCoveragePct": 107.30880000000002,
+          "recommendedGenerationKwh": 268.27200000000005,
+          "specificYieldKwhPerKwp": 99.36,
+          "specificYieldKwhPerKwpUsed": 99.36,
+          "targetEnergyKwh": 250
+        },
+        {
+          "billingDays": 31,
+          "buildableBalanceKwh": 39.70800000000003,
+          "buildableCoveragePct": 115.75714285714287,
+          "buildableGenerationKwh": 291.708,
+          "consumptionKwh": 252,
+          "continuousPanelsRequired": 5.183265457238059,
+          "energyPerPanelKwh": 48.618,
+          "hsp": null,
+          "month": 8,
+          "monthLabel": "Agosto",
+          "recommendedBalanceKwh": 39.70800000000003,
+          "recommendedCoveragePct": 115.75714285714287,
+          "recommendedGenerationKwh": 291.708,
+          "specificYieldKwhPerKwp": 108.04,
+          "specificYieldKwhPerKwpUsed": 108.04,
+          "targetEnergyKwh": 252
+        },
+        {
+          "billingDays": 30,
+          "buildableBalanceKwh": 44.59899999999999,
+          "buildableCoveragePct": 117.98346774193548,
+          "buildableGenerationKwh": 292.599,
+          "consumptionKwh": 248,
+          "continuousPanelsRequired": 5.085458255154665,
+          "energyPerPanelKwh": 48.7665,
+          "hsp": null,
+          "month": 9,
+          "monthLabel": "Septiembre",
+          "recommendedBalanceKwh": 44.59899999999999,
+          "recommendedCoveragePct": 117.98346774193548,
+          "recommendedGenerationKwh": 292.599,
+          "specificYieldKwhPerKwp": 108.37,
+          "specificYieldKwhPerKwpUsed": 108.37,
+          "targetEnergyKwh": 248
+        },
+        {
+          "billingDays": 31,
+          "buildableBalanceKwh": 33.37100000000004,
+          "buildableCoveragePct": 113.67663934426231,
+          "buildableGenerationKwh": 277.37100000000004,
+          "consumptionKwh": 244,
+          "continuousPanelsRequired": 5.278129292535989,
+          "energyPerPanelKwh": 46.228500000000004,
+          "hsp": null,
+          "month": 10,
+          "monthLabel": "Octubre",
+          "recommendedBalanceKwh": 33.37100000000004,
+          "recommendedCoveragePct": 113.67663934426231,
+          "recommendedGenerationKwh": 277.37100000000004,
+          "specificYieldKwhPerKwp": 102.73,
+          "specificYieldKwhPerKwpUsed": 102.73,
+          "targetEnergyKwh": 244
+        },
+        {
+          "billingDays": 30,
+          "buildableBalanceKwh": 27.462000000000046,
+          "buildableCoveragePct": 111.44250000000002,
+          "buildableGenerationKwh": 267.46200000000005,
+          "consumptionKwh": 240,
+          "continuousPanelsRequired": 5.383942391816407,
+          "energyPerPanelKwh": 44.577000000000005,
+          "hsp": null,
+          "month": 11,
+          "monthLabel": "Noviembre",
+          "recommendedBalanceKwh": 27.462000000000046,
+          "recommendedCoveragePct": 111.44250000000002,
+          "recommendedGenerationKwh": 267.46200000000005,
+          "specificYieldKwhPerKwp": 99.06,
+          "specificYieldKwhPerKwpUsed": 99.06,
+          "targetEnergyKwh": 240
+        },
+        {
+          "billingDays": 31,
+          "buildableBalanceKwh": 66.29700000000003,
+          "buildableCoveragePct": 128.70000000000002,
+          "buildableGenerationKwh": 297.297,
+          "consumptionKwh": 231,
+          "continuousPanelsRequired": 4.662004662004662,
+          "energyPerPanelKwh": 49.5495,
+          "hsp": null,
+          "month": 12,
+          "monthLabel": "Diciembre",
+          "recommendedBalanceKwh": 66.29700000000003,
+          "recommendedCoveragePct": 128.70000000000002,
+          "recommendedGenerationKwh": 297.297,
+          "specificYieldKwhPerKwp": 110.11,
+          "specificYieldKwhPerKwpUsed": 110.11,
+          "targetEnergyKwh": 231
+        }
+      ],
+      "panelAreaM2": 1.9527479999999997,
+      "panelAreaWithInstallationM2": 2.1480227999999997,
+      "panelPowerKw": 0.45,
+      "recommendedAnnualCoveragePct": 115.80750000000002,
+      "recommendedAnnualGenerationKwh": 3335.2560000000003,
+      "recommendedCapacityKwp": 2.7,
+      "recommendedPanelCount": 6,
+      "requiredRoofAreaM2": 12.888136799999998,
+      "roofFeasible": true,
+      "sensitivity": {
+        "changeForPointOneHsp": -0.15308830639752974,
+        "derivativeAtReference": -1.5308830639752973,
+        "elasticity": -1,
+        "kConstant": 17.534246575342465,
+        "points": [
+          {
+            "continuousPanels": 9.42002107729716,
+            "hsp": 1.861380821917808
+          },
+          {
+            "continuousPanels": 8.756639311290318,
+            "hsp": 2.002394520547945
+          },
+          {
+            "continuousPanels": 8.180544619758061,
+            "hsp": 2.143408219178082
+          },
+          {
+            "continuousPanels": 7.675572729649539,
+            "hsp": 2.284421917808219
+          },
+          {
+            "continuousPanels": 7.229318501181543,
+            "hsp": 2.4254356164383557
+          },
+          {
+            "continuousPanels": 6.832103198918821,
+            "hsp": 2.5664493150684926
+          },
+          {
+            "continuousPanels": 6.476264490641798,
+            "hsp": 2.70746301369863
+          },
+          {
+            "continuousPanels": 6.155657337639729,
+            "hsp": 2.848476712328767
+          },
+          {
+            "continuousPanels": 5.865296142468044,
+            "hsp": 2.9894904109589033
+          },
+          {
+            "continuousPanels": 5.601093613528042,
+            "hsp": 3.1305041095890402
+          },
+          {
+            "continuousPanels": 5.359667164669076,
+            "hsp": 3.271517808219177
+          },
+          {
+            "continuousPanels": 5.138193314889362,
+            "hsp": 3.412531506849314
+          },
+          {
+            "continuousPanels": 4.934296754774703,
+            "hsp": 3.553545205479452
+          },
+          {
+            "continuousPanels": 4.745964817569562,
+            "hsp": 3.6945589041095888
+          },
+          {
+            "continuousPanels": 4.571480816923622,
+            "hsp": 3.8355726027397257
+          },
+          {
+            "continuousPanels": 4.409371568096544,
+            "hsp": 3.976586301369862
+          },
+          {
+            "continuousPanels": 4.258365692476799,
+            "hsp": 4.1175999999999995
+          },
+          {
+            "continuousPanels": 4.117360205970946,
+            "hsp": 4.2586136986301355
+          },
+          {
+            "continuousPanels": 3.9853935327026453,
+            "hsp": 4.399627397260273
+          },
+          {
+            "continuousPanels": 3.8616235472149856,
+            "hsp": 4.54064109589041
+          },
+          {
+            "continuousPanels": 3.745309584949474,
+            "hsp": 4.681654794520547
+          },
+          {
+            "continuousPanels": 3.6357976087813606,
+            "hsp": 4.822668493150684
+          },
+          {
+            "continuousPanels": 3.5325079039864358,
+            "hsp": 4.963682191780821
+          },
+          {
+            "continuousPanels": 3.4349248127160923,
+            "hsp": 5.104695890410958
+          },
+          {
+            "continuousPanels": 3.342588124202219,
+            "hsp": 5.245709589041095
+          }
+        ],
+        "referenceHsp": 3.384328767123287,
+        "referenceLabel": "balance anual equivalente",
+        "referenceMonth": null,
+        "resourceLabel": "rendimiento específico neto diario equivalente",
+        "resourceSymbol": "y_d",
+        "resourceUnit": "kWh/kWp·día"
+      },
+      "sourceMode": "pvgis-yield",
+      "strategy": "annual-balance",
+      "targetAnnualEnergyKwh": 2880,
+      "totalConsumptionKwh": 2880,
+      "uncertaintyPanelRange": {
+        "conservativeContinuous": 5.7566795472371535,
+        "conservativeRounded": 6,
+        "optimisticContinuous": 4.7100105386485795,
+        "optimisticRounded": 5
+      },
+      "warnings": [
+        "El rendimiento específico de PVGIS ya incorpora las pérdidas configuradas; no se volvió a aplicar el PR.",
+        "El balance anual puede compensar la meta en el total del año sin alcanzarla necesariamente en todos los meses.",
+        "Este resultado es una prefactibilidad energética: no dimensiona inversor, protecciones, estructura, cableado ni baterías."
+      ]
+    },
+    "pvwatts": {
+      "buildableAnnualCoveragePct": 111.10815791108288,
+      "buildableAnnualGenerationKwh": 3199.914947839187,
+      "buildableCapacityKwp": 2.25,
+      "buildablePanelCount": 5,
+      "continuousCapacityKwp": 2.0250538235010787,
+      "continuousPanelCount": 4.500119607780174,
+      "limitingMonth": 6,
+      "maximumPanelsByRoof": 8,
+      "monthly": [
+        {
+          "billingDays": 31,
+          "buildableBalanceKwh": 73.40316543464121,
+          "buildableCoveragePct": 131.9144197541918,
+          "buildableGenerationKwh": 303.4031654346412,
+          "consumptionKwh": 230,
+          "continuousPanelsRequired": 3.7903361962376483,
+          "energyPerPanelKwh": 60.680633086928246,
+          "hsp": null,
+          "month": 1,
+          "monthLabel": "Enero",
+          "recommendedBalanceKwh": 73.40316543464121,
+          "recommendedCoveragePct": 131.9144197541918,
+          "recommendedGenerationKwh": 303.4031654346412,
+          "specificYieldKwhPerKwp": 134.845851304285,
+          "specificYieldKwhPerKwpUsed": 134.845851304285,
+          "targetEnergyKwh": 230
+        },
+        {
+          "billingDays": 28,
+          "buildableBalanceKwh": 39.18790782919723,
+          "buildableCoveragePct": 117.18767887245491,
+          "buildableGenerationKwh": 267.18790782919723,
+          "consumptionKwh": 228,
+          "continuousPanelsRequired": 4.26666015412927,
+          "energyPerPanelKwh": 53.43758156583945,
+          "hsp": null,
+          "month": 2,
+          "monthLabel": "Febrero",
+          "recommendedBalanceKwh": 39.18790782919723,
+          "recommendedCoveragePct": 117.18767887245491,
+          "recommendedGenerationKwh": 267.18790782919723,
+          "specificYieldKwhPerKwp": 118.750181257421,
+          "specificYieldKwhPerKwpUsed": 118.750181257421,
+          "targetEnergyKwh": 228
+        },
+        {
+          "billingDays": 31,
+          "buildableBalanceKwh": 52.46988467103807,
+          "buildableCoveragePct": 122.61632959958537,
+          "buildableGenerationKwh": 284.4698846710381,
+          "consumptionKwh": 232,
+          "continuousPanelsRequired": 4.07776029206546,
+          "energyPerPanelKwh": 56.893976934207615,
+          "hsp": null,
+          "month": 3,
+          "monthLabel": "Marzo",
+          "recommendedBalanceKwh": 52.46988467103807,
+          "recommendedCoveragePct": 122.61632959958537,
+          "recommendedGenerationKwh": 284.4698846710381,
+          "specificYieldKwhPerKwp": 126.4310598537947,
+          "specificYieldKwhPerKwpUsed": 126.4310598537947,
+          "targetEnergyKwh": 232
+        },
+        {
+          "billingDays": 30,
+          "buildableBalanceKwh": 19.054298777145107,
+          "buildableCoveragePct": 108.00600788955677,
+          "buildableGenerationKwh": 257.0542987771451,
+          "consumptionKwh": 238,
+          "continuousPanelsRequired": 4.62937210410816,
+          "energyPerPanelKwh": 51.41085975542902,
+          "hsp": null,
+          "month": 4,
+          "monthLabel": "Abril",
+          "recommendedBalanceKwh": 19.054298777145107,
+          "recommendedCoveragePct": 108.00600788955677,
+          "recommendedGenerationKwh": 257.0542987771451,
+          "specificYieldKwhPerKwp": 114.2463550120645,
+          "specificYieldKwhPerKwpUsed": 114.2463550120645,
+          "targetEnergyKwh": 238
+        },
+        {
+          "billingDays": 31,
+          "buildableBalanceKwh": -0.2308279910873523,
+          "buildableCoveragePct": 99.90461653260854,
+          "buildableGenerationKwh": 241.76917200891265,
+          "consumptionKwh": 242,
+          "continuousPanelsRequired": 5.004773726715639,
+          "energyPerPanelKwh": 48.35383440178253,
+          "hsp": null,
+          "month": 5,
+          "monthLabel": "Mayo",
+          "recommendedBalanceKwh": -0.2308279910873523,
+          "recommendedCoveragePct": 99.90461653260854,
+          "recommendedGenerationKwh": 241.76917200891265,
+          "specificYieldKwhPerKwp": 107.4529653372945,
+          "specificYieldKwhPerKwpUsed": 107.4529653372945,
+          "targetEnergyKwh": 242
+        },
+        {
+          "billingDays": 30,
+          "buildableBalanceKwh": -5.8322667161326365,
+          "buildableCoveragePct": 97.61948297300708,
+          "buildableGenerationKwh": 239.16773328386736,
+          "consumptionKwh": 245,
+          "continuousPanelsRequired": 5.121928377127912,
+          "energyPerPanelKwh": 47.83354665677347,
+          "hsp": null,
+          "month": 6,
+          "monthLabel": "Junio",
+          "recommendedBalanceKwh": -5.8322667161326365,
+          "recommendedCoveragePct": 97.61948297300708,
+          "recommendedGenerationKwh": 239.16773328386736,
+          "specificYieldKwhPerKwp": 106.2967703483855,
+          "specificYieldKwhPerKwpUsed": 106.2967703483855,
+          "targetEnergyKwh": 245
+        },
+        {
+          "billingDays": 31,
+          "buildableBalanceKwh": 17.858814022188426,
+          "buildableCoveragePct": 107.14352560887536,
+          "buildableGenerationKwh": 267.8588140221884,
+          "consumptionKwh": 250,
+          "continuousPanelsRequired": 4.666637551439523,
+          "energyPerPanelKwh": 53.57176280443768,
+          "hsp": null,
+          "month": 7,
+          "monthLabel": "Julio",
+          "recommendedBalanceKwh": 17.858814022188426,
+          "recommendedCoveragePct": 107.14352560887536,
+          "recommendedGenerationKwh": 267.8588140221884,
+          "specificYieldKwhPerKwp": 119.0483617876393,
+          "specificYieldKwhPerKwpUsed": 119.0483617876393,
+          "targetEnergyKwh": 250
+        },
+        {
+          "billingDays": 31,
+          "buildableBalanceKwh": 32.60548252349372,
+          "buildableCoveragePct": 112.93868354106893,
+          "buildableGenerationKwh": 284.6054825234937,
+          "consumptionKwh": 252,
+          "continuousPanelsRequired": 4.42718105367485,
+          "energyPerPanelKwh": 56.92109650469874,
+          "hsp": null,
+          "month": 8,
+          "monthLabel": "Agosto",
+          "recommendedBalanceKwh": 32.60548252349372,
+          "recommendedCoveragePct": 112.93868354106893,
+          "recommendedGenerationKwh": 284.6054825234937,
+          "specificYieldKwhPerKwp": 126.4913255659972,
+          "specificYieldKwhPerKwpUsed": 126.4913255659972,
+          "targetEnergyKwh": 252
+        },
+        {
+          "billingDays": 30,
+          "buildableBalanceKwh": 21.862159171976884,
+          "buildableCoveragePct": 108.81538676289391,
+          "buildableGenerationKwh": 269.8621591719769,
+          "consumptionKwh": 248,
+          "continuousPanelsRequired": 4.594938407832782,
+          "energyPerPanelKwh": 53.97243183439537,
+          "hsp": null,
+          "month": 9,
+          "monthLabel": "Septiembre",
+          "recommendedBalanceKwh": 21.862159171976884,
+          "recommendedCoveragePct": 108.81538676289391,
+          "recommendedGenerationKwh": 269.8621591719769,
+          "specificYieldKwhPerKwp": 119.9387374097675,
+          "specificYieldKwhPerKwpUsed": 119.9387374097675,
+          "targetEnergyKwh": 248
+        },
+        {
+          "billingDays": 31,
+          "buildableBalanceKwh": 25.775823403288484,
+          "buildableCoveragePct": 110.56386205052806,
+          "buildableGenerationKwh": 269.7758234032885,
+          "consumptionKwh": 244,
+          "continuousPanelsRequired": 4.522273288278392,
+          "energyPerPanelKwh": 53.955164680657695,
+          "hsp": null,
+          "month": 10,
+          "monthLabel": "Octubre",
+          "recommendedBalanceKwh": 25.775823403288484,
+          "recommendedCoveragePct": 110.56386205052806,
+          "recommendedGenerationKwh": 269.7758234032885,
+          "specificYieldKwhPerKwp": 119.9003659570171,
+          "specificYieldKwhPerKwpUsed": 119.9003659570171,
+          "targetEnergyKwh": 244
+        },
+        {
+          "billingDays": 30,
+          "buildableBalanceKwh": 9.40309264973618,
+          "buildableCoveragePct": 103.91795527072341,
+          "buildableGenerationKwh": 249.40309264973618,
+          "consumptionKwh": 240,
+          "continuousPanelsRequired": 4.811488050331798,
+          "energyPerPanelKwh": 49.880618529947235,
+          "hsp": null,
+          "month": 11,
+          "monthLabel": "Noviembre",
+          "recommendedBalanceKwh": 9.40309264973618,
+          "recommendedCoveragePct": 103.91795527072341,
+          "recommendedGenerationKwh": 249.40309264973618,
+          "specificYieldKwhPerKwp": 110.8458189554383,
+          "specificYieldKwhPerKwpUsed": 110.8458189554383,
+          "targetEnergyKwh": 240
+        },
+        {
+          "billingDays": 31,
+          "buildableBalanceKwh": 34.35741406370147,
+          "buildableCoveragePct": 114.87333942151578,
+          "buildableGenerationKwh": 265.35741406370147,
+          "consumptionKwh": 231,
+          "continuousPanelsRequired": 4.352620046722086,
+          "energyPerPanelKwh": 53.07148281274029,
+          "hsp": null,
+          "month": 12,
+          "monthLabel": "Diciembre",
+          "recommendedBalanceKwh": 34.35741406370147,
+          "recommendedCoveragePct": 114.87333942151578,
+          "recommendedGenerationKwh": 265.35741406370147,
+          "specificYieldKwhPerKwp": 117.9366284727562,
+          "specificYieldKwhPerKwpUsed": 117.9366284727562,
+          "targetEnergyKwh": 231
+        }
+      ],
+      "panelAreaM2": 1.9527479999999997,
+      "panelAreaWithInstallationM2": 2.1480227999999997,
+      "panelPowerKw": 0.45,
+      "recommendedAnnualCoveragePct": 111.10815791108288,
+      "recommendedAnnualGenerationKwh": 3199.914947839187,
+      "recommendedCapacityKwp": 2.25,
+      "recommendedPanelCount": 5,
+      "requiredRoofAreaM2": 10.740113999999998,
+      "roofFeasible": true,
+      "sensitivity": {
+        "changeForPointOneHsp": -0.11549442057468083,
+        "derivativeAtReference": -1.1549442057468082,
+        "elasticity": -1,
+        "kConstant": 17.534246575342465,
+        "points": [
+          {
+            "continuousPanels": 8.182035650509409,
+            "hsp": 2.143017621079516
+          },
+          {
+            "continuousPanels": 7.605835956811562,
+            "hsp": 2.3053674408582676
+          },
+          {
+            "continuousPanels": 7.105452012284487,
+            "hsp": 2.4677172606370186
+          },
+          {
+            "continuousPanels": 6.666843863378037,
+            "hsp": 2.63006708041577
+          },
+          {
+            "continuousPanels": 6.279236662018849,
+            "hsp": 2.792416900194521
+          },
+          {
+            "continuousPanels": 5.934223658611219,
+            "hsp": 2.9547667199732723
+          },
+          {
+            "continuousPanels": 5.625149509725219,
+            "hsp": 3.1171165397520233
+          },
+          {
+            "continuousPanels": 5.34667676171902,
+            "hsp": 3.2794663595307747
+          },
+          {
+            "continuousPanels": 5.09447502767567,
+            "hsp": 3.4418161793095257
+          },
+          {
+            "continuousPanels": 4.864994170573162,
+            "hsp": 3.604165999088277
+          },
+          {
+            "continuousPanels": 4.6552961459794915,
+            "hsp": 3.7665158188670285
+          },
+          {
+            "continuousPanels": 4.4629285366414955,
+            "hsp": 3.92886563864578
+          },
+          {
+            "continuousPanels": 4.285828197885881,
+            "hsp": 4.09121545842453
+          },
+          {
+            "continuousPanels": 4.1222469689589385,
+            "hsp": 4.253565278203283
+          },
+          {
+            "continuousPanels": 3.9706937715707427,
+            "hsp": 4.415915097982033
+          },
+          {
+            "continuousPanels": 3.829889027898021,
+            "hsp": 4.578264917760785
+          },
+          {
+            "continuousPanels": 3.6987284447508286,
+            "hsp": 4.740614737539536
+          },
+          {
+            "continuousPanels": 3.576253992937888,
+            "hsp": 4.9029645573182865
+          },
+          {
+            "continuousPanels": 3.4616304675232117,
+            "hsp": 5.065314377097038
+          },
+          {
+            "continuousPanels": 3.3541264157367765,
+            "hsp": 5.227664196875789
+          },
+          {
+            "continuousPanels": 3.2530985116483193,
+            "hsp": 5.390014016654541
+          },
+          {
+            "continuousPanels": 3.1579786721264385,
+            "hsp": 5.552363836433292
+          },
+          {
+            "continuousPanels": 3.0682633689410284,
+            "hsp": 5.714713656212043
+          },
+          {
+            "continuousPanels": 2.9835047123404475,
+            "hsp": 5.877063475990794
+          },
+          {
+            "continuousPanels": 2.903302972761403,
+            "hsp": 6.039413295769545
+          }
+        ],
+        "referenceHsp": 3.8963956746900292,
+        "referenceLabel": "balance anual equivalente",
+        "referenceMonth": null,
+        "resourceLabel": "rendimiento específico neto diario equivalente",
+        "resourceSymbol": "y_d",
+        "resourceUnit": "kWh/kWp·día"
+      },
+      "sourceMode": "pvgis-yield",
+      "strategy": "annual-balance",
+      "targetAnnualEnergyKwh": 2880,
+      "totalConsumptionKwh": 2880,
+      "uncertaintyPanelRange": {
+        "conservativeContinuous": 5.000132897533527,
+        "conservativeRounded": 6,
+        "optimisticContinuous": 4.091017825254704,
+        "optimisticRounded": 5
+      },
+      "warnings": [
+        "El rendimiento específico de PVGIS ya incorpora las pérdidas configuradas; no se volvió a aplicar el PR.",
+        "El balance anual puede compensar la meta en el total del año sin alcanzarla necesariamente en todos los meses.",
+        "Este resultado es una prefactibilidad energética: no dimensiona inversor, protecciones, estructura, cableado ni baterías."
+      ]
+    }
+  },
+  "scenarioVersion": "2026.1",
+  "schemaVersion": "1.0.0",
+  "validation": {
+    "capacityUsedKwp": 2.7,
+    "comparisonScope": "Comparación mensual del rendimiento específico AC neto y de la generación equivalente a la capacidad recomendada por PVGIS.",
+    "metrics": {
+      "generationAtRecommendedCapacity": {
+        "annualBiasPct": -13.14206642033289,
+        "maeKwh": 42.05349478391867,
+        "mapePct": 13.166906442807234,
+        "rmseKwh": 43.225322084649726
+      },
+      "specificYield": {
+        "annualBiasPct": -13.142066420332915,
+        "maeKwh": 15.575368438488395,
+        "mapePct": 13.16690644280723,
+        "rmseKwh": 16.009378549870267
+      }
+    },
+    "modelProvider": "PVGIS",
+    "monthlySeries": [
+      {
+        "consumptionKwh": 230,
+        "generationDifferenceKwh": -48.9667985215695,
+        "month": 1,
+        "monthLabel": "Enero",
+        "pvgisBuildableCoveragePct": 137.00739130434783,
+        "pvgisGenerationAtRecommendedCapacityKwh": 315.117,
+        "pvgisSpecificYieldKwhPerKwp": 116.71,
+        "pvwattsGenerationAtRecommendedCapacityKwh": 364.0837985215695,
+        "pvwattsSpecificYieldKwhPerKwp": 134.845851304285,
+        "specificYieldDifferenceKwhPerKwp": -18.135851304284998
+      },
+      {
+        "consumptionKwh": 228,
+        "generationDifferenceKwh": -32.616489395036695,
+        "month": 2,
+        "monthLabel": "Febrero",
+        "pvgisBuildableCoveragePct": 126.31973684210527,
+        "pvgisGenerationAtRecommendedCapacityKwh": 288.009,
+        "pvgisSpecificYieldKwhPerKwp": 106.67,
+        "pvwattsGenerationAtRecommendedCapacityKwh": 320.6254893950367,
+        "pvwattsSpecificYieldKwhPerKwp": 118.750181257421,
+        "specificYieldDifferenceKwhPerKwp": -12.080181257421003
+      },
+      {
+        "consumptionKwh": 232,
+        "generationDifferenceKwh": -45.173861605245634,
+        "month": 3,
+        "monthLabel": "Marzo",
+        "pvgisBuildableCoveragePct": 127.66810344827586,
+        "pvgisGenerationAtRecommendedCapacityKwh": 296.19000000000005,
+        "pvgisSpecificYieldKwhPerKwp": 109.7,
+        "pvwattsGenerationAtRecommendedCapacityKwh": 341.3638616052457,
+        "pvwattsSpecificYieldKwhPerKwp": 126.4310598537947,
+        "specificYieldDifferenceKwhPerKwp": -16.73105985379469
+      },
+      {
+        "consumptionKwh": 238,
+        "generationDifferenceKwh": -55.448158532574155,
+        "month": 4,
+        "monthLabel": "Abril",
+        "pvgisBuildableCoveragePct": 106.30966386554621,
+        "pvgisGenerationAtRecommendedCapacityKwh": 253.017,
+        "pvgisSpecificYieldKwhPerKwp": 93.71,
+        "pvwattsGenerationAtRecommendedCapacityKwh": 308.46515853257415,
+        "pvwattsSpecificYieldKwhPerKwp": 114.2463550120645,
+        "specificYieldDifferenceKwhPerKwp": -20.536355012064504
+      },
+      {
+        "consumptionKwh": 242,
+        "generationDifferenceKwh": -44.61200641069513,
+        "month": 5,
+        "monthLabel": "Mayo",
+        "pvgisBuildableCoveragePct": 101.45082644628101,
+        "pvgisGenerationAtRecommendedCapacityKwh": 245.51100000000002,
+        "pvgisSpecificYieldKwhPerKwp": 90.93,
+        "pvwattsGenerationAtRecommendedCapacityKwh": 290.12300641069515,
+        "pvwattsSpecificYieldKwhPerKwp": 107.4529653372945,
+        "specificYieldDifferenceKwhPerKwp": -16.522965337294494
+      },
+      {
+        "consumptionKwh": 245,
+        "generationDifferenceKwh": -44.29827994064084,
+        "month": 6,
+        "monthLabel": "Junio",
+        "pvgisBuildableCoveragePct": 99.06244897959182,
+        "pvgisGenerationAtRecommendedCapacityKwh": 242.70300000000003,
+        "pvgisSpecificYieldKwhPerKwp": 89.89,
+        "pvwattsGenerationAtRecommendedCapacityKwh": 287.00127994064087,
+        "pvwattsSpecificYieldKwhPerKwp": 106.2967703483855,
+        "specificYieldDifferenceKwhPerKwp": -16.406770348385493
+      },
+      {
+        "consumptionKwh": 250,
+        "generationDifferenceKwh": -53.15857682662613,
+        "month": 7,
+        "monthLabel": "Julio",
+        "pvgisBuildableCoveragePct": 107.30880000000002,
+        "pvgisGenerationAtRecommendedCapacityKwh": 268.272,
+        "pvgisSpecificYieldKwhPerKwp": 99.36,
+        "pvwattsGenerationAtRecommendedCapacityKwh": 321.4305768266261,
+        "pvwattsSpecificYieldKwhPerKwp": 119.0483617876393,
+        "specificYieldDifferenceKwhPerKwp": -19.688361787639295
+      },
+      {
+        "consumptionKwh": 252,
+        "generationDifferenceKwh": -49.81857902819246,
+        "month": 8,
+        "monthLabel": "Agosto",
+        "pvgisBuildableCoveragePct": 115.75714285714287,
+        "pvgisGenerationAtRecommendedCapacityKwh": 291.708,
+        "pvgisSpecificYieldKwhPerKwp": 108.04,
+        "pvwattsGenerationAtRecommendedCapacityKwh": 341.5265790281925,
+        "pvwattsSpecificYieldKwhPerKwp": 126.4913255659972,
+        "specificYieldDifferenceKwhPerKwp": -18.451325565997195
+      },
+      {
+        "consumptionKwh": 248,
+        "generationDifferenceKwh": -31.235591006372204,
+        "month": 9,
+        "monthLabel": "Septiembre",
+        "pvgisBuildableCoveragePct": 117.98346774193548,
+        "pvgisGenerationAtRecommendedCapacityKwh": 292.59900000000005,
+        "pvgisSpecificYieldKwhPerKwp": 108.37,
+        "pvwattsGenerationAtRecommendedCapacityKwh": 323.83459100637225,
+        "pvwattsSpecificYieldKwhPerKwp": 119.9387374097675,
+        "specificYieldDifferenceKwhPerKwp": -11.568737409767493
+      },
+      {
+        "consumptionKwh": 244,
+        "generationDifferenceKwh": -46.35998808394618,
+        "month": 10,
+        "monthLabel": "Octubre",
+        "pvgisBuildableCoveragePct": 113.67663934426231,
+        "pvgisGenerationAtRecommendedCapacityKwh": 277.37100000000004,
+        "pvgisSpecificYieldKwhPerKwp": 102.73,
+        "pvwattsGenerationAtRecommendedCapacityKwh": 323.7309880839462,
+        "pvwattsSpecificYieldKwhPerKwp": 119.9003659570171,
+        "specificYieldDifferenceKwhPerKwp": -17.170365957017097
+      },
+      {
+        "consumptionKwh": 240,
+        "generationDifferenceKwh": -31.821711179683405,
+        "month": 11,
+        "monthLabel": "Noviembre",
+        "pvgisBuildableCoveragePct": 111.44250000000002,
+        "pvgisGenerationAtRecommendedCapacityKwh": 267.46200000000005,
+        "pvgisSpecificYieldKwhPerKwp": 99.06,
+        "pvwattsGenerationAtRecommendedCapacityKwh": 299.28371117968345,
+        "pvwattsSpecificYieldKwhPerKwp": 110.8458189554383,
+        "specificYieldDifferenceKwhPerKwp": -11.785818955438302
+      },
+      {
+        "consumptionKwh": 231,
+        "generationDifferenceKwh": -21.131896876441715,
+        "month": 12,
+        "monthLabel": "Diciembre",
+        "pvgisBuildableCoveragePct": 128.70000000000002,
+        "pvgisGenerationAtRecommendedCapacityKwh": 297.297,
+        "pvgisSpecificYieldKwhPerKwp": 110.11,
+        "pvwattsGenerationAtRecommendedCapacityKwh": 318.42889687644174,
+        "pvwattsSpecificYieldKwhPerKwp": 117.9366284727562,
+        "specificYieldDifferenceKwhPerKwp": -7.826628472756198
+      }
+    ],
+    "pvwattsEquivalentAnnualCoveragePct": 133.32978949329944,
+    "recommendationDifference": {
+      "capacityKwp": 0.4500000000000002,
+      "continuousPanels": 0.6808919847332637,
+      "roundedPanels": 1
+    },
+    "referenceProvider": "PVWATTS"
+  }
+}

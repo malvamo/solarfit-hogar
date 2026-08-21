@@ -1,0 +1,59 @@
+{
+  "schemaVersion": "1.0.0",
+  "classification": "simulated_formal",
+  "caseId": "bogota_promedio_residencial",
+  "scenarioVersion": "2026.1",
+  "title": "Bogotá — consumo residencial promedio",
+  "objective": "Evaluar el dimensionamiento base en una vivienda urbana con consumo estable y techo suficiente.",
+  "simulationRule": "Serie sintética de 157 kWh en cada mes (1.884 kWh/año), calibrada con el promedio residencial de referencia de 157 kWh/mes reportado por UPME.",
+  "declaredAssumptions": [
+    "Los doce consumos son sintéticos y no corresponden a facturas de una vivienda observada.",
+    "Los 20 m² de techo útil son una hipótesis del escenario y no provienen de un levantamiento físico.",
+    "Las coordenadas representan una estación o referencia urbana de IDEAM, no una dirección residencial.",
+    "No se modelan sombras cercanas, degradación, inversor, estructura, baterías ni conexión a red."
+  ],
+  "sourceReferences": [
+    { "id": "upme_beu", "label": "UPME — Balance de Energía Útil residencial", "url": "https://www1.upme.gov.co/DemandayEficiencia/Documents/Balance_energia_util/BEU-Residencial.pdf", "use": "Ancla del promedio residencial de 157 kWh/mes." },
+    { "id": "ideam_radiacion", "label": "IDEAM — Promedios climatológicos de radiación global 2025", "url": "https://www.ideam.gov.co/sites/default/files/prensa/boletines/2025-05-08/promedios_climatologicos_de_radiacion_global_actualizado_a_2025.xlsx", "use": "Referencia de coordenadas de estación o centro urbano." },
+    { "id": "longi_panel", "label": "LONGi — ficha técnica LR5-54HTH 445–455M", "url": "https://static.longi.com/Hi_MO_X6_LR_5_54_HTH_445_455_M_V1_30_30_and_15_V19_ES_09bf28ff6d.pdf", "use": "Potencia y dimensiones del módulo de 450 W." },
+    { "id": "pvgis", "label": "JRC — PVGIS", "url": "https://joint-research-centre.ec.europa.eu/photovoltaic-geographical-information-system-pvgis_en", "use": "Serie mensual principal de rendimiento específico." },
+    { "id": "pvwatts", "label": "NLR — PVWatts V8", "url": "https://developer.nlr.gov/docs/solar/pvwatts/v8/", "use": "Serie mensual independiente para contraste." }
+  ],
+  "input": {
+    "projectName": "SolarFit formal — Bogotá",
+    "locationLabel": "Bogotá, D. C. (referencia urbana IDEAM)",
+    "latitude": 4.705583,
+    "longitude": -74.150667,
+    "targetCoveragePct": 100,
+    "sizingStrategy": "annual-balance",
+    "solarSourceMode": "pvgis-yield",
+    "performanceRatioPct": 82,
+    "pvgisSystemLossPct": 14,
+    "tiltDeg": 10,
+    "azimuthDeg": 180,
+    "roofUsableM2": 20,
+    "installationAreaFactor": 1.1,
+    "panelModel": "LONGi Hi-MO X6 LR5-54HTH-450M",
+    "panelPowerWp": 450,
+    "panelWidthM": 1.134,
+    "panelHeightM": 1.722,
+    "uncertaintyPct": 10,
+    "months": [
+      { "month": 1, "consumptionKwh": 157, "billingDays": 31, "hsp": null, "specificYieldKwhPerKwp": null },
+      { "month": 2, "consumptionKwh": 157, "billingDays": 28, "hsp": null, "specificYieldKwhPerKwp": null },
+      { "month": 3, "consumptionKwh": 157, "billingDays": 31, "hsp": null, "specificYieldKwhPerKwp": null },
+      { "month": 4, "consumptionKwh": 157, "billingDays": 30, "hsp": null, "specificYieldKwhPerKwp": null },
+      { "month": 5, "consumptionKwh": 157, "billingDays": 31, "hsp": null, "specificYieldKwhPerKwp": null },
+      { "month": 6, "consumptionKwh": 157, "billingDays": 30, "hsp": null, "specificYieldKwhPerKwp": null },
+      { "month": 7, "consumptionKwh": 157, "billingDays": 31, "hsp": null, "specificYieldKwhPerKwp": null },
+      { "month": 8, "consumptionKwh": 157, "billingDays": 31, "hsp": null, "specificYieldKwhPerKwp": null },
+      { "month": 9, "consumptionKwh": 157, "billingDays": 30, "hsp": null, "specificYieldKwhPerKwp": null },
+      { "month": 10, "consumptionKwh": 157, "billingDays": 31, "hsp": null, "specificYieldKwhPerKwp": null },
+      { "month": 11, "consumptionKwh": 157, "billingDays": 30, "hsp": null, "specificYieldKwhPerKwp": null },
+      { "month": 12, "consumptionKwh": 157, "billingDays": 31, "hsp": null, "specificYieldKwhPerKwp": null }
+    ],
+    "consumptionProvenance": { "kind": "synthetic", "label": "Serie sintética formal calibrada a 157 kWh/mes", "sourceUrl": "https://www1.upme.gov.co/DemandayEficiencia/Documents/Balance_energia_util/BEU-Residencial.pdf", "note": "No corresponde a facturas domiciliarias." },
+    "solarProvenance": { "kind": "official", "label": "PVGIS y PVWatts — pendiente de ejecución reproducible", "sourceUrl": "https://joint-research-centre.ec.europa.eu/photovoltaic-geographical-information-system-pvgis_en", "note": "El runner sustituye esta referencia por la respuesta trazable de cada proveedor." },
+    "panelProvenance": { "kind": "official", "label": "LONGi LR5-54HTH-450M", "sourceUrl": "https://static.longi.com/Hi_MO_X6_LR_5_54_HTH_445_455_M_V1_30_30_and_15_V19_ES_09bf28ff6d.pdf" }
+  }
+}
