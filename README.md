@@ -205,4 +205,3 @@ Antes de presentar resultados como propios del caso de estudio, el equipo debe e
 - **Aportes individuales y revisión humana:** `[REGISTRO POR INTEGRANTE]`.
 
 Hasta completar esos campos, los resultados del modo demostración son únicamente una prueba de funcionamiento del software. La interfaz mantiene el estado **Pendiente · validar soportes** para cualquier caso no sintético; no afirma por sí sola que la evidencia ya fue revisada.
-
