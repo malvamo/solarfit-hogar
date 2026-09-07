@@ -1,40 +1,42 @@
-# Notas del cierre técnico — 21 de agosto de 2026
+# Notas de la corrección académica — 7 de septiembre de 2026
 
-Esta copia mantiene la versión de paquete `0.1.0` porque SolarFit Hogar sigue siendo un prototipo académico de prefactibilidad, no un producto certificado ni una entrega empírica ya completada.
+SolarFit Hogar sigue siendo un prototipo académico de prefactibilidad. Esta revisión aplica la retroalimentación del profesor al primer entregable y no afirma una validación empírica.
 
-## Producto cerrado dentro del alcance
+## Corrección del enfoque matemático
 
-- Motor mensual con balance anual y criterio conservador.
-- Modos HSP y rendimiento neto PVGIS mutuamente excluyentes.
-- Restricción de techo sin truncar silenciosamente la recomendación.
-- Sensibilidad diferencial con unidad correcta para HSP o PVGIS.
-- Consulta PVGIS, optimización discreta de inclinación y contraste opcional PVWatts.
-- CSV de entrada, CSV de resultados, JSON versionado e impresión.
-- Restauración de JSON v1 con validación Zod y recálculo seguro.
-- Borrador local validado, recuperación ante corrupción y aviso si el guardado falla.
-- Invalidación de series solares y descarte de respuestas externas tardías.
-- Pestañas operables por teclado, foco visible, contraste reforzado y reducción de movimiento.
-- Marca explícita de demostración o de soportes pendientes en pantalla, CSV e impresión.
+- Se conserva una sola aplicación de cálculo diferencial con efecto directo: `n(Y)=qD/(P·Y)` y `n′(Y)=−qD/(P·Y²)`.
+- La derivada se traduce a un cambio local en la necesidad continua de paneles y se interpreta antes del redondeo.
+- Se retiraron de la explicación límites, continuidad, segunda derivada, convexidad, elasticidad, reglas del cociente/cadena y diferencias finitas porque no eran necesarias para la decisión.
+- La inclinación se presenta como comparación discreta de escenarios PVGIS, no como optimización por cálculo diferencial.
+
+## Casos simulados calibrados
+
+- Bogotá: 156 kWh/mes, promedio SUI 2018 para piso térmico frío.
+- Barranquilla: 279 kWh/mes, promedio SUI 2018 para piso térmico cálido.
+- Medellín y Cali: 178 kWh/mes, promedio SUI 2018 para piso térmico templado.
+- Quibdó rural: 118,8 kWh/mes, promedio rural SUI 2018 para piso térmico cálido.
+- Se repite el promedio en los doce meses porque la fuente no respalda una estacionalidad domiciliaria mensual.
+- Coordenadas y áreas de techo se declaran como supuestos de prueba; PVGIS/PVWatts son modelos y no producción medida.
+
+## Correcciones técnicas
+
+- El caso inicial ahora usa demanda calibrada, serie PVGIS archivada y ficha LONGi oficial.
+- PVGIS y PVWatts se contrastan con la misma capacidad construible cuando el techo limita.
+- La interfaz muestra rendimientos anuales, diferencia porcentual y cambio de paneles, en lugar de presentar métricas como validación de exactitud.
+- Los estados visibles distinguen simulación calibrada, demo sintética y caso propio pendiente de soportes.
 
 ## Evidencia técnica
 
-- `pnpm check`: aprobado.
-- Vitest: 7 archivos, 32 pruebas, 0 fallidas.
-- Cobertura V8: 78,08 % de sentencias y 77,53 % de líneas en el alcance instrumentado.
-- Build productivo Next.js: aprobado.
-- QA en 1280×720 y 390×844: sin desbordamiento global ni errores de consola.
-- Humo de PVGIS 5.3: 12 meses recibidos; JSON malformado rechazado con HTTP 400.
-- Informe Word de 25 páginas y póster sincronizados con la demostración verificada de 5 paneles, 2,25 kWp y 102 %, siempre rotulada como no definitiva.
-- Póster validado sin desbordamientos; guion y checklist alineados con la ruta permitida de caso real o simulado documentado.
-
-El detalle está en `docs/verification-log-2026-08-21.md`.
+- `pnpm check`: aprobado el 7 de septiembre de 2026.
+- Vitest: 9 archivos, 38 pruebas, 0 fallidas, incluida una prueba de lenguaje y acciones clave de la interfaz.
+- ESLint, TypeScript y build productivo Next.js: aprobados.
+- Casos LIVE: 5 consultas PVGIS + 5 consultas PVWatts, archivadas con hashes en `cases/evidence/latest/`.
 
 ## Límites deliberados
 
-- El servidor no debe exponerse públicamente sin cuota/rate limiting distribuido y política de privacidad.
-- No hay base de datos, cuentas, telemetría ni sincronización en nube.
 - No se modelan inversor, protecciones, estructura, sombras cercanas, baterías, tarifa ni flujo de caja.
-- El caso académico definitivo, nombres y contribuciones no se inventaron.
+- Los casos calibrados no representan hogares observados ni sustituyen una visita técnica.
+- No hay base de datos, cuentas ni sincronización en nube en esta versión.
 
 ## Compatibilidad
 

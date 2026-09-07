@@ -52,7 +52,7 @@ describe("calculateSolarProject", () => {
     const highSolar = cloneInput();
     highSolar.months = highSolar.months.map((month) => ({
       ...month,
-      hsp: (month.hsp ?? 0) * 1.2,
+      specificYieldKwhPerKwp: (month.specificYieldKwhPerKwp ?? 0) * 1.2,
     }));
 
     expect(calculateSolarProject(highSolar).continuousPanelCount).toBeLessThan(
@@ -69,10 +69,11 @@ describe("calculateSolarProject", () => {
     expect(result.monthly.every((month) => (month.recommendedCoveragePct ?? 0) >= 100)).toBe(true);
   });
 
-  it("expone la derivada negativa de n(h)=K/h", () => {
+  it("expone la derivada negativa de n(Y)=K/Y", () => {
     const result = calculateSolarProject(cloneInput());
 
     expect(result.sensitivity.derivativeAtReference).toBeLessThan(0);
-    expect(result.sensitivity.elasticity).toBe(-1);
+    expect(result.sensitivity.referenceYield).toBeGreaterThan(0);
+    expect(result.sensitivity.estimatedPanelChange).toBeLessThan(0);
   });
 });

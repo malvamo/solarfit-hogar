@@ -56,8 +56,6 @@ const PROJECT_JSON_MAX_BYTES = 1_000_000;
 interface TiltEvaluation {
   tiltDeg: number;
   annualKwhPerKwp: number;
-  estimatedFirstDerivativeKwhPerKwpDeg: number;
-  estimatedSecondDerivativeKwhPerKwpDeg2: number | null;
   isSelectedMaximum: boolean;
   monthlyKwhPerKwp: number[];
   dataset: string;
@@ -87,6 +85,7 @@ interface PvwattsValidationState {
   message: string;
   dataset: SolarYieldDataset | null;
   metrics: EnergySeriesComparison | null;
+  recommendedPanelCount: number | null;
 }
 
 function cloneProject(project: SolarProjectInput) {
@@ -104,7 +103,7 @@ function inputNumber(value: number | null) {
 export function SolarFitApp() {
   const [project, setProject] = useState<SolarProjectInput>(() => cloneProject(DEMO_PROJECT));
   const [activeView, setActiveView] = useState<View>("data");
-  const [draftNotice, setDraftNotice] = useState("Escenario sintético activo");
+  const [draftNotice, setDraftNotice] = useState("Caso simulado calibrado activo");
   const [pvgis, setPvgis] = useState<PvgisState>({ status: "idle", message: "" });
   const [tiltOptimization, setTiltOptimization] = useState<TiltOptimizationState>({
     status: "idle",
@@ -116,6 +115,7 @@ export function SolarFitApp() {
     message: "",
     dataset: null,
     metrics: null,
+    recommendedPanelCount: null,
   });
   const [csvError, setCsvError] = useState("");
   const [projectFileError, setProjectFileError] = useState("");
@@ -164,7 +164,7 @@ export function SolarFitApp() {
     pvwattsRequestId.current += 1;
     setPvgis({ status: "idle", message: "" });
     setTiltOptimization({ status: "idle", message: "", data: null });
-    setPvwattsValidation({ status: "idle", message: "", dataset: null, metrics: null });
+    setPvwattsValidation({ status: "idle", message: "", dataset: null, metrics: null, recommendedPanelCount: null });
   }
 
   const calculation = useMemo(() => {
@@ -220,18 +220,18 @@ export function SolarFitApp() {
     }));
   }
 
-  function loadDemo() {
+  function loadCalibratedCase() {
     resetExternalEvidence();
     setProject(cloneProject(DEMO_PROJECT));
-    setDraftNotice("Escenario sintético activo");
+    setDraftNotice("Caso simulado calibrado activo");
     setProjectFileError("");
   }
 
-  function startRealProject() {
+  function startOwnProject() {
     removeProjectDraft();
     resetExternalEvidence();
     setProject(cloneProject(EMPTY_PROJECT));
-    setDraftNotice("Proyecto real: faltan datos verificables");
+    setDraftNotice("Caso propio · requiere fuentes o supuestos documentados");
     setProjectFileError("");
   }
 
@@ -244,7 +244,7 @@ export function SolarFitApp() {
     tiltRequestId.current += 1;
     pvwattsRequestId.current += 1;
     setTiltOptimization({ status: "idle", message: "", data: null });
-    setPvwattsValidation({ status: "idle", message: "", dataset: null, metrics: null });
+    setPvwattsValidation({ status: "idle", message: "", dataset: null, metrics: null, recommendedPanelCount: null });
     setPvgis({ status: "loading", message: "Consultando PVGIS 5.3…" });
     try {
       const response = await fetch("/api/pvgis", {
@@ -294,7 +294,7 @@ export function SolarFitApp() {
     if (project.latitude === null || project.longitude === null) {
       setTiltOptimization({
         status: "error",
-        message: "Ingresa latitud y longitud antes de optimizar.",
+        message: "Ingresa latitud y longitud antes de comparar.",
         data: null,
       });
       return;
@@ -307,7 +307,7 @@ export function SolarFitApp() {
     const requestId = ++tiltRequestId.current;
     setTiltOptimization({
       status: "loading",
-      message: `Evaluando ${candidateTiltsDeg.length} inclinaciones en PVGIS…`,
+      message: `Comparando ${candidateTiltsDeg.length} inclinaciones en PVGIS…`,
       data: null,
     });
 
@@ -326,7 +326,7 @@ export function SolarFitApp() {
       });
       const payload = (await response.json()) as TiltOptimizationPayload;
       if (!response.ok) {
-        throw new Error(payload.error || "PVGIS no pudo optimizar la inclinación.");
+        throw new Error(payload.error || "PVGIS no pudo comparar las inclinaciones.");
       }
       if (requestId !== tiltRequestId.current) return;
       setTiltOptimization({
@@ -338,7 +338,7 @@ export function SolarFitApp() {
       if (requestId !== tiltRequestId.current) return;
       setTiltOptimization({
         status: "error",
-        message: error instanceof Error ? error.message : "No fue posible optimizar con PVGIS.",
+        message: error instanceof Error ? error.message : "No fue posible comparar con PVGIS.",
         data: null,
       });
     }
@@ -360,7 +360,7 @@ export function SolarFitApp() {
       })),
       solarProvenance: {
         kind: "official",
-        label: `PVGIS ${optimization.apiVersion} · inclinación optimizada ${formatNumber(selected.tiltDeg, 0)}° · ${selected.dataset}`,
+        label: `PVGIS ${optimization.apiVersion} · mejor inclinación evaluada ${formatNumber(selected.tiltDeg, 0)}° · ${selected.dataset}`,
         sourceUrl: optimization.sourceUrl,
         fetchedAt: optimization.evaluatedAt,
         note: optimization.warnings.join(" "),
@@ -371,16 +371,17 @@ export function SolarFitApp() {
       message: `Se aplicó la serie neta de ${formatNumber(selected.tiltDeg, 0)}° sin PR adicional.`,
     });
     pvwattsRequestId.current += 1;
-    setPvwattsValidation({ status: "idle", message: "", dataset: null, metrics: null });
+    setPvwattsValidation({ status: "idle", message: "", dataset: null, metrics: null, recommendedPanelCount: null });
   }
 
   async function requestPvwattsValidation() {
     if (project.latitude === null || project.longitude === null) {
       setPvwattsValidation({
         status: "error",
-        message: "Ingresa latitud y longitud antes de validar.",
+        message: "Ingresa latitud y longitud antes de contrastar.",
         dataset: null,
         metrics: null,
+        recommendedPanelCount: null,
       });
       return;
     }
@@ -390,6 +391,7 @@ export function SolarFitApp() {
         message: "Completa primero un modelo válido para poder compararlo.",
         dataset: null,
         metrics: null,
+        recommendedPanelCount: null,
       });
       return;
     }
@@ -400,6 +402,7 @@ export function SolarFitApp() {
       message: "Consultando la referencia independiente PVWatts V8…",
       dataset: null,
       metrics: null,
+      recommendedPanelCount: null,
     });
     try {
       const response = await fetch("/api/pvwatts", {
@@ -422,19 +425,29 @@ export function SolarFitApp() {
         result.monthly.map((month) => month.specificYieldKwhPerKwpUsed),
         payload.monthlyKwhPerKwp,
       );
+      const pvwattsResult = calculateSolarProject({
+        ...project,
+        solarSourceMode: "pvgis-yield",
+        months: project.months.map((month, index) => ({
+          ...month,
+          specificYieldKwhPerKwp: payload.monthlyKwhPerKwp[index],
+        })),
+      });
       setPvwattsValidation({
         status: "success",
         message: `Referencia ${payload.dataset}: diferencia anual ${formatSigned(metrics.annualBiasPct ?? 0, 1)} %.`,
         dataset: payload,
         metrics,
+        recommendedPanelCount: pvwattsResult.recommendedPanelCount,
       });
     } catch (error) {
       if (requestId !== pvwattsRequestId.current) return;
       setPvwattsValidation({
         status: "error",
-        message: error instanceof Error ? error.message : "No fue posible validar con PVWatts.",
+        message: error instanceof Error ? error.message : "No fue posible contrastar con PVWatts.",
         dataset: null,
         metrics: null,
+        recommendedPanelCount: null,
       });
     }
   }
@@ -510,9 +523,12 @@ export function SolarFitApp() {
   const result = calculation.result;
   const evidenceStatus = getProjectEvidenceStatus(project);
   const isSynthetic = evidenceStatus === "synthetic_demo";
+  const isCalibrated = evidenceStatus === "calibrated_simulation";
   const evidenceLabel = isSynthetic
-    ? "DEMO · NO ES EVIDENCIA"
-    : "PENDIENTE · VALIDAR SOPORTES";
+    ? "DEMO SINTÉTICA · NO ES EVIDENCIA"
+    : isCalibrated
+      ? "SIMULACIÓN CALIBRADA · NO ES MEDICIÓN"
+      : "CASO PROPIO · VALIDAR SOPORTES";
 
   return (
     <section className="app-frame" id="calculadora">
@@ -522,7 +538,7 @@ export function SolarFitApp() {
           <h2>{project.projectName || "Proyecto sin nombre"}</h2>
         </div>
         <div className="toolbar-actions">
-          <span className={isSynthetic ? "status-pill status-demo" : "status-pill status-pending"}>
+          <span className={isSynthetic || isCalibrated ? "status-pill status-demo" : "status-pill status-pending"}>
             {evidenceLabel}
           </span>
           <button
@@ -539,8 +555,8 @@ export function SolarFitApp() {
             ref={projectFileInput}
             type="file"
           />
-          <button className="button button-ghost" onClick={loadDemo} type="button">Cargar demo</button>
-          <button className="button button-dark" onClick={startRealProject} type="button">Usar datos reales</button>
+          <button className="button button-ghost" onClick={loadCalibratedCase} type="button">Cargar caso calibrado</button>
+          <button className="button button-dark" onClick={startOwnProject} type="button">Crear caso propio</button>
         </div>
       </div>
 
@@ -655,8 +671,8 @@ export function SolarFitApp() {
               <section className="form-card model-intro-card">
                 <div className="section-heading"><div><span className="section-index">D</span><div><p className="eyebrow">Fuente solar</p><h3>Un método, nunca dos pérdidas</h3></div></div></div>
                 <div className="method-switch">
-                  <button aria-pressed={project.solarSourceMode === "manual-hsp"} className={project.solarSourceMode === "manual-hsp" ? "method-card selected" : "method-card"} onClick={() => updateProject("solarSourceMode", "manual-hsp")} type="button"><span>Modelo educativo</span><strong>HSP × días × PR</strong><p>Útil para explicar variables, derivadas y sensibilidad.</p></button>
-                  <button aria-pressed={project.solarSourceMode === "pvgis-yield"} className={project.solarSourceMode === "pvgis-yield" ? "method-card selected" : "method-card"} onClick={() => updateProject("solarSourceMode", "pvgis-yield")} type="button"><span>Simulación oficial</span><strong>Rendimiento neto PVGIS</strong><p>Usa Eₘ en kWh/kWp; las pérdidas ya están incorporadas.</p></button>
+                  <button aria-pressed={project.solarSourceMode === "manual-hsp"} className={project.solarSourceMode === "manual-hsp" ? "method-card selected" : "method-card"} onClick={() => updateProject("solarSourceMode", "manual-hsp")} type="button"><span>Entrada manual</span><strong>HSP × días × PR</strong><p>Calcula producción con HSP y pérdidas documentadas.</p></button>
+                  <button aria-pressed={project.solarSourceMode === "pvgis-yield"} className={project.solarSourceMode === "pvgis-yield" ? "method-card selected" : "method-card"} onClick={() => updateProject("solarSourceMode", "pvgis-yield")} type="button"><span>Estimación con PVGIS</span><strong>Rendimiento neto PVGIS</strong><p>Usa Yₘ en kWh/kWp; las pérdidas ya están incorporadas.</p></button>
                 </div>
                 {project.solarSourceMode === "manual-hsp" ? (
                   <div className="form-grid form-grid-2 method-settings"><label className="field"><span>Factor global de rendimiento</span><div className="input-unit"><input max="100" min="1" type="number" value={project.performanceRatioPct} onChange={(event) => updateProject("performanceRatioPct", Number(event.target.value))} /><em>%</em></div></label><label className="field"><span>Incertidumbre de producción</span><div className="input-unit"><input max="50" min="0" type="number" value={project.uncertaintyPct} onChange={(event) => updateProject("uncertaintyPct", Number(event.target.value))} /><em>± %</em></div></label></div>
@@ -670,24 +686,25 @@ export function SolarFitApp() {
                     <button className="button button-primary" disabled={pvgis.status === "loading"} onClick={requestPvgis} type="button">{pvgis.status === "loading" ? "Consultando…" : "Consultar PVGIS 5.3"}</button>
                     {pvgis.message ? <p className={`api-message api-${pvgis.status}`} role="status">{pvgis.message}</p> : null}
                     <div className="validation-actions">
-                      <button className="button button-ghost" disabled={tiltOptimization.status === "loading"} onClick={requestTiltOptimization} type="button">{tiltOptimization.status === "loading" ? "Optimizando…" : "Optimizar inclinación"}</button>
+                      <button className="button button-ghost" disabled={tiltOptimization.status === "loading"} onClick={requestTiltOptimization} type="button">{tiltOptimization.status === "loading" ? "Comparando…" : "Comparar inclinaciones"}</button>
                       <button className="button button-ghost" disabled={pvwattsValidation.status === "loading"} onClick={requestPvwattsValidation} type="button">{pvwattsValidation.status === "loading" ? "Contrastando…" : "Contrastar con PVWatts"}</button>
                     </div>
                     {tiltOptimization.message ? <p className={`api-message api-${tiltOptimization.status}`} role="status">{tiltOptimization.message}</p> : null}
                     {tiltOptimization.data ? (
-                      <section className="external-result" aria-label="Resultado de optimización de inclinación">
-                        <div><span>Inclinación seleccionada</span><strong>{formatNumber(tiltOptimization.data.selectedTiltDeg, 0)}°</strong></div>
+                      <section className="external-result" aria-label="Resultado de comparación de inclinaciones">
+                        <div><span>Mejor inclinación evaluada</span><strong>{formatNumber(tiltOptimization.data.selectedTiltDeg, 0)}°</strong></div>
                         <div><span>Ganancia frente a referencia</span><strong>{tiltOptimization.data.gainVsReferencePct === null ? "N/A" : formatPercent(tiltOptimization.data.gainVsReferencePct, 2)}</strong></div>
                         <div><span>Malla evaluada</span><strong>{tiltOptimization.data.evaluations.length} ángulos</strong></div>
-                        <button className="text-button" onClick={applyOptimizedTilt} type="button">Aplicar serie óptima →</button>
+                        <button className="text-button" onClick={applyOptimizedTilt} type="button">Aplicar mejor serie evaluada →</button>
                       </section>
                     ) : null}
                     {pvwattsValidation.message ? <p className={`api-message api-${pvwattsValidation.status}`} role="status">{pvwattsValidation.message}</p> : null}
                     {pvwattsValidation.metrics && pvwattsValidation.dataset ? (
                       <section className="external-result validation-result" aria-label="Comparación con PVWatts">
-                        <div><span>MAE específico</span><strong>{formatNumber(pvwattsValidation.metrics.maeKwh, 1)} kWh/kWp</strong></div>
-                        <div><span>RMSE específico</span><strong>{formatNumber(pvwattsValidation.metrics.rmseKwh, 1)} kWh/kWp</strong></div>
-                        <div><span>MAPE mensual</span><strong>{pvwattsValidation.metrics.mapePct === null ? "N/A" : formatPercent(pvwattsValidation.metrics.mapePct, 1)}</strong></div>
+                        <div><span>Rendimiento PVGIS</span><strong>{result ? `${formatNumber(result.monthly.reduce((sum, month) => sum + month.specificYieldKwhPerKwpUsed, 0), 0)} kWh/kWp·año` : "N/A"}</strong></div>
+                        <div><span>Rendimiento PVWatts</span><strong>{formatNumber(pvwattsValidation.dataset.annualKwhPerKwp, 0)} kWh/kWp·año</strong></div>
+                        <div><span>Diferencia anual</span><strong>{pvwattsValidation.metrics.annualBiasPct === null ? "N/A" : formatSigned(pvwattsValidation.metrics.annualBiasPct, 1)} %</strong></div>
+                        <div><span>Decisión entera</span><strong>{result?.recommendedPanelCount ?? "N/A"} vs. {pvwattsValidation.recommendedPanelCount ?? "N/A"} paneles</strong></div>
                         <a href={pvwattsValidation.dataset.sourceUrl} rel="noreferrer" target="_blank">Fuente PVWatts ↗</a>
                       </section>
                     ) : null}

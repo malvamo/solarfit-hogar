@@ -88,7 +88,7 @@ if (-not $SkipCheck) {
   }
 }
 
-$sourceDirectories = @("src", "public", "docs", "scripts")
+$sourceDirectories = @("src", "public", "docs", "scripts", "cases", "tools")
 foreach ($relativeDirectory in $sourceDirectories) {
   $source = Join-Path $projectRoot $relativeDirectory
   if (Test-Path -LiteralPath $source) {
@@ -127,13 +127,26 @@ if ([string]::IsNullOrWhiteSpace($AcademicDeliverablesDirectory)) {
 }
 
 $artifactMap = @(
-  @{ Source = "Proyecto_Completo_SolarFit_Hogar.docx"; Destination = "01_informe" },
-  @{ Source = "Hito_1_SolarFit_Hogar_Semana_5.docx"; Destination = "00_antecedentes" },
   @{ Source = "Propuesta_SolarFit_Hogar.docx"; Destination = "00_antecedentes" },
-  @{ Source = "Poster_Academico_SolarFit_Hogar.pptx"; Destination = "02_poster" },
+  @{ Source = "Propuesta_SolarFit_Hogar.pdf"; Destination = "00_antecedentes" },
+  @{ Source = "Hito_1_SolarFit_Hogar_Semana_5.docx"; Destination = "00_antecedentes" },
+  @{ Source = "Hito_1_SolarFit_Hogar_Semana_5.pdf"; Destination = "00_antecedentes" },
+  @{ Source = "Hito_2_SolarFit_Hogar_Semana_10.docx"; Destination = "01_informes" },
+  @{ Source = "Hito_2_SolarFit_Hogar_Semana_10.pdf"; Destination = "01_informes" },
+  @{ Source = "Proyecto_Final_SolarFit_Hogar_Hito_3.docx"; Destination = "01_informes" },
+  @{ Source = "Proyecto_Final_SolarFit_Hogar_Hito_3.pdf"; Destination = "01_informes" },
+  @{ Source = "Proyecto_Completo_SolarFit_Hogar.docx"; Destination = "01_informes" },
+  @{ Source = "Proyecto_Completo_SolarFit_Hogar.pdf"; Destination = "01_informes" },
+  @{ Source = "Poster_Academico_SolarFit_Hogar_Hito_3.pptx"; Destination = "02_poster" },
+  @{ Source = "Poster_Academico_SolarFit_Hogar_Hito_3.pdf"; Destination = "02_poster" },
   @{ Source = "Guion_Pitch_3_Minutos_SolarFit_Hogar.md"; Destination = "03_pitch" },
+  @{ Source = "Guion_Pitch_3_Minutos_SolarFit_Hogar_Hito_3.md"; Destination = "03_pitch" },
   @{ Source = "Checklist_Para_Convertir_SolarFit_en_Entrega_Real.md"; Destination = "05_evidencias" },
-  @{ Source = "plantilla-consumo-solarfit.csv"; Destination = "05_evidencias" }
+  @{ Source = "Roadmap_Startup_SolarFit_Hogar.md"; Destination = "05_evidencias" },
+  @{ Source = "Validacion_5_Casos_SolarFit.xlsx"; Destination = "05_evidencias" },
+  @{ Source = "plantilla-consumo-solarfit.csv"; Destination = "05_evidencias" },
+  @{ Source = "Guia_de_Uso_y_Pruebas_SolarFit_Hogar.docx"; Destination = "06_guia_uso" },
+  @{ Source = "Guia_de_Uso_y_Pruebas_SolarFit_Hogar.pdf"; Destination = "06_guia_uso" }
 )
 
 foreach ($artifact in $artifactMap) {
@@ -146,18 +159,20 @@ foreach ($artifact in $artifactMap) {
 }
 
 $evidenceReadme = @"
-# Evidencias que debe aportar el grupo
+# Evidencias y alcance de los cinco casos
 
-Esta carpeta no contiene datos inventados. Antes del Hito 3, organice aquí:
+Los casos incluidos son simulaciones calibradas y reproducibles; no son mediciones de cinco viviendas. Su demanda se apoya en niveles oficiales de referencia de UPME y se mantiene constante durante doce meses para no inventar estacionalidad. El recurso solar proviene de consultas archivadas de PVGIS y el contraste usa PVWatts con la misma capacidad física.
 
-- `caso/`: facturas anonimizadas y medición del techo, o protocolo del caso simulado;
+Esta carpeta incluye el libro de validación, las series y el manifiesto reproducible dentro del código de la aplicación. Para un caso propio, el grupo debe conservar:
+
+- `caso/`: facturas anonimizadas o regla de consumo documentada y geometría útil del techo;
 - `panel/`: ficha oficial del módulo;
 - `fuente_solar/`: configuración, respuesta y fecha de PVGIS/PVWatts;
-- `exportaciones/`: JSON y CSV del escenario definitivo;
-- `validacion/`: cálculo manual, métricas y conclusiones;
+- `exportaciones/`: JSON y CSV del escenario;
+- `contraste/`: cálculo manual, comparación intermodelo y conclusiones;
 - `ia_y_aportes/`: declaración revisada y contribuciones reales.
 
-No incluya claves, direcciones exactas, números de cuenta ni artefactos internos de QA.
+No incluya claves, direcciones exactas, números de cuenta ni artefactos internos de QA. El contraste entre modelos no demuestra exactitud frente a una instalación física.
 "@
 [System.IO.File]::WriteAllText(
   (Join-Path $releaseRoot "05_evidencias\LEEME.md"),

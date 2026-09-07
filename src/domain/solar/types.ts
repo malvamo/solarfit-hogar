@@ -73,21 +73,21 @@ export interface MonthlySolarResult extends MonthlySolarInput {
 }
 
 export interface SensitivityPoint {
-  hsp: number;
+  yieldValue: number;
   continuousPanels: number;
 }
 
 export interface SensitivityResult {
-  resourceSymbol: "h" | "y_d";
+  resourceSymbol: "Y";
   resourceLabel: string;
-  resourceUnit: "HSP" | "kWh/kWp·día";
+  resourceUnit: "kWh/kWp·año" | "kWh/kWp·mes";
   referenceMonth: number | null;
   referenceLabel: string;
   kConstant: number;
-  referenceHsp: number;
+  referenceYield: number;
   derivativeAtReference: number;
-  changeForPointOneHsp: number;
-  elasticity: number;
+  practicalYieldStep: number;
+  estimatedPanelChange: number;
   points: SensitivityPoint[];
 }
 

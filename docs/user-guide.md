@@ -4,7 +4,7 @@
 
 SolarFit Hogar produce una **prefactibilidad energética**. Úselo para estimar paneles, capacidad, producción, cobertura y área bajo supuestos visibles. No lo use para ordenar equipos o ejecutar una instalación sin revisión eléctrica, estructural y normativa de profesionales competentes.
 
-La aplicación inicia con un escenario didáctico. La etiqueta **Demo · no es evidencia** significa que sus consumos, HSP, coordenadas y módulo son sintéticos.
+La aplicación inicia con el caso simulado calibrado de Bogotá. La etiqueta **Simulación calibrada · no es medición** significa que la demanda usa un promedio oficial agregado y la producción una consulta PVGIS archivada, pero no existen facturas, mediciones solares ni levantamiento de techo de una vivienda observada.
 
 ## 2. Preparar los datos
 
@@ -37,11 +37,11 @@ Para habilitar el endpoint opcional de PVWatts, copie `.env.example` a `.env.loc
 NLR_API_KEY=[CLAVE PRIVADA]
 ```
 
-No use el prefijo `NEXT_PUBLIC_`, no confirme `.env.local` en control de versiones y no comparta la clave en capturas. La interfaz envía la validación a una ruta de servidor y la clave viaja al proveedor mediante `X-Api-Key`.
+No use el prefijo `NEXT_PUBLIC_`, no confirme `.env.local` en control de versiones y no comparta la clave en capturas. La interfaz envía el contraste a una ruta de servidor y la clave viaja al proveedor mediante `X-Api-Key`.
 
-## 4. Empezar un caso real
+## 4. Empezar un caso propio
 
-Pulse **Usar datos reales**. Esta acción elimina el borrador local anterior y carga campos pendientes. Una vez empiece a escribir, los cambios se guardan otra vez en el navegador.
+Pulse **Crear caso propio**. Esta acción elimina el borrador local anterior y carga campos pendientes. Una vez empiece a escribir, los cambios se guardan otra vez en el navegador.
 
 ### A. Vivienda y meta
 
@@ -104,9 +104,9 @@ Errores comunes:
 
 ## 6. Elegir la fuente solar
 
-### Método educativo: HSP × días × PR
+### Entrada manual: HSP × días × PR
 
-Use este método cuando tenga una serie mensual de HSP defendible y quiera mostrar con claridad la función y su derivada.
+Use este método únicamente cuando tenga una serie mensual de HSP defendible y un factor de rendimiento documentado.
 
 1. Cargue las HSP de los doce periodos.
 2. Defina un factor global de rendimiento.
@@ -119,7 +119,7 @@ La ecuación es:
 G_m = P · h_m · d_m · PR
 ```
 
-### Simulación oficial: PVGIS
+### Estimación con PVGIS
 
 Use este método para obtener producción específica mensual para una configuración.
 
@@ -148,9 +148,7 @@ La pestaña **Modelo** presenta cuatro pasos:
 3. redondeo entero `N = ceil(n*)`;
 4. restricción `N · A_panel · factor ≤ A_útil`.
 
-El gráfico `n(h)=K/h` muestra una curva decreciente. La derivada negativa significa que más recurso solar reduce la cantidad continua necesaria, manteniendo lo demás constante.
-
-En modo PVGIS, la abscisa debe interpretarse como rendimiento específico diario neto equivalente, aunque la interfaz conserve la etiqueta abreviada HSP.
+El gráfico `n(Y)=K/Y` muestra cómo cambia la cantidad continua antes del redondeo. La derivada `n′(Y)=−K/Y²` es negativa: cerca del caso analizado, un mayor rendimiento específico reduce la necesidad de paneles. La interfaz traduce esa derivada a un cambio local de 100 kWh/kWp·año o 10 kWh/kWp·mes. No se usan otras derivadas porque no aportan una decisión adicional.
 
 ## 8. Interpretar resultados
 
@@ -212,14 +210,14 @@ Use la opción del navegador. Antes de entregar:
 - seleccione tamaño y orientación apropiados;
 - revise todas las páginas;
 - confirme que no se cortaron tabla, fórmulas o advertencias;
-- verifique que la etiqueta de datos reales/sintéticos sea visible.
+- verifique que la etiqueta de caso simulado o caso propio sea visible.
 
-## 10. Optimización y validación independiente
+## 10. Comparación de inclinaciones y contraste entre modelos
 
 En modo PVGIS, la interfaz ofrece:
 
-- **Optimizar inclinación:** compara la malla visible mediante `POST /api/pvgis/optimize`, informa el máximo discreto y permite aplicar su serie mensual.
-- **Contrastar con PVWatts:** usa `POST /api/pvwatts`, si existe `NLR_API_KEY`, y presenta MAE, RMSE, MAPE y diferencia anual.
+- **Comparar inclinaciones:** consulta una malla mediante `POST /api/pvgis/optimize`, informa el mayor rendimiento entre los ángulos evaluados y permite aplicar esa serie mensual. No demuestra un máximo continuo.
+- **Contrastar con PVWatts:** usa `POST /api/pvwatts`, si existe `NLR_API_KEY`, y presenta los dos rendimientos anuales, su diferencia y si cambia la cantidad entera de paneles.
 
 Una respuesta visible no convierte el caso sintético en evidencia. Para el informe real se deben guardar entradas, configuración, fecha, fuente y captura. Consulte [architecture.md](architecture.md), [data-dictionary.md](data-dictionary.md) y [validation-plan.md](validation-plan.md).
 
@@ -227,7 +225,7 @@ Una respuesta visible no convierte el caso sintético en evidencia. Para el info
 
 | Mensaje o síntoma | Causa probable | Acción |
 |---|---|---|
-| “Se requieren exactamente doce registros” | Proyecto o borrador incompatible | Pulse **Usar datos reales** o limpie el almacenamiento y vuelva a cargar |
+| “Se requieren exactamente doce registros” | Proyecto o borrador incompatible | Pulse **Crear caso propio** o limpie el almacenamiento y vuelva a cargar |
 | “El consumo anual debe ser mayor que cero” | Todos los consumos están vacíos o en cero | Ingrese las doce facturas reales |
 | “Ingresa latitud y longitud” | Consulta PVGIS sin coordenadas | Complete ambos campos |
 | Error HTTP/servicio PVGIS | Red, límite o proveedor temporalmente no disponible | Espere, reintente y conserve fecha/error; no invente datos |
@@ -237,15 +235,15 @@ Una respuesta visible no convierte el caso sintético en evidencia. Para el info
 | “Área insuficiente” | `N > N_max` | Reporte la meta como no viable; no esconda paneles faltantes |
 | No recupera borrador | `localStorage` bloqueado o borrado | Pulse **Abrir JSON** y restaure una exportación v1 |
 | “La versión … no es compatible” | El archivo no usa el esquema SolarFit v1 | Abra el archivo con la versión que lo creó o migre sus entradas de forma controlada |
-| “Borrador inválido descartado” | El almacenamiento contenía JSON corrupto o incompleto | Continúe con la demo, un proyecto nuevo o una exportación válida |
+| “Borrador inválido descartado” | El almacenamiento contenía JSON corrupto o incompleto | Continúe con el caso calibrado, un caso propio o una exportación válida |
 
 ## 12. Flujo para una entrega académica
 
 1. Confirme la versión del proyecto y ejecute `pnpm check`.
-2. Cargue datos reales trazables o un caso simulado formal, reproducible y declarado como hipotético; no use el demo arbitrario como evidencia.
+2. Cargue datos trazables o un caso simulado formal, reproducible y declarado como hipotético. El caso incluido puede reproducirse, pero no debe llamarse vivienda real.
 3. Exporte JSON y CSV.
 4. Reproduzca manualmente al menos un mes y el total anual.
-5. Haga la comparación independiente definida en el plan de validación.
+5. Haga el contraste entre modelos definido en el plan de pruebas.
 6. Archive fuentes, configuración, fecha y capturas.
 7. Traslade al documento las ecuaciones y resultados que realmente usó.
 8. Actualice el registro de IA y los aportes individuales.
@@ -263,6 +261,6 @@ Método de anonimización: [ ]
 Panel y ficha oficial: [ ]
 Fuente solar y configuración: [ ]
 Criterio de dimensionamiento elegido: [ ]
-Validación independiente: [ ]
+Contraste entre modelos: [ ]
 Responsables de revisión: [ ]
 ```

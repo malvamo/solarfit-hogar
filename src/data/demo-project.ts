@@ -1,50 +1,56 @@
 import { MONTHS, type SolarProjectInput } from "@/domain/solar/types";
 
-const SYNTHETIC_CONSUMPTION = [
-  224, 218, 231, 219, 208, 212, 225, 238, 229, 221, 215, 227,
+const CALIBRATED_CONSUMPTION_KWH = 156;
+const ARCHIVED_PVGIS_YIELD = [
+  121.39, 108.99, 106.87, 94.02, 91.5, 85.08,
+  89.5, 105.91, 118.14, 114.2, 106.43, 118.62,
 ];
-const SYNTHETIC_HSP = [4.2, 4.1, 3.9, 3.7, 3.8, 4.0, 4.3, 4.4, 4.1, 3.8, 3.9, 4.1];
+const ARCHIVED_PVGIS_HSP = [5.2, 5.19, 4.57, 4.13, 3.87, 3.71, 3.77, 4.49, 5.22, 4.87, 4.68, 5.07];
 
 export const DEMO_PROJECT: SolarProjectInput = {
-  projectName: "Escenario didáctico SolarFit",
-  locationLabel: "Ubicación de demostración",
-  latitude: 4.711,
-  longitude: -74.0721,
+  projectName: "Caso simulado calibrado — Bogotá, piso frío",
+  locationLabel: "Bogotá, D. C. (punto urbano de referencia)",
+  latitude: 4.705583,
+  longitude: -74.150667,
   targetCoveragePct: 100,
   sizingStrategy: "annual-balance",
-  solarSourceMode: "manual-hsp",
+  solarSourceMode: "pvgis-yield",
   performanceRatioPct: 82,
   pvgisSystemLossPct: 14,
   tiltDeg: 10,
   azimuthDeg: 180,
-  roofUsableM2: 32,
+  roofUsableM2: 20,
   installationAreaFactor: 1.1,
-  panelModel: "Módulo genérico de demostración",
+  panelModel: "LONGi Hi-MO X6 LR5-54HTH-450M",
   panelPowerWp: 450,
   panelWidthM: 1.134,
-  panelHeightM: 1.762,
+  panelHeightM: 1.722,
   uncertaintyPct: 10,
   months: MONTHS.map((month, index) => ({
     month: month.number,
-    consumptionKwh: SYNTHETIC_CONSUMPTION[index],
+    consumptionKwh: CALIBRATED_CONSUMPTION_KWH,
     billingDays: month.defaultDays,
-    hsp: SYNTHETIC_HSP[index],
-    specificYieldKwhPerKwp: null,
+    hsp: ARCHIVED_PVGIS_HSP[index],
+    specificYieldKwhPerKwp: ARCHIVED_PVGIS_YIELD[index],
   })),
   consumptionProvenance: {
     kind: "synthetic",
-    label: "Serie sintética de demostración",
-    note: "No corresponde a facturas reales y no puede usarse como evidencia académica.",
+    label: "Simulación calibrada con promedio SUI 2018 de piso térmico frío",
+    sourceUrl: "https://bdigital.upme.gov.co/handle/001/1367",
+    note: "156 kWh/mes. No son facturas ni un promedio exclusivo de Bogotá.",
   },
   solarProvenance: {
-    kind: "synthetic",
-    label: "HSP sintéticas de demostración",
-    note: "Deben reemplazarse por datos trazables de la ubicación estudiada.",
+    kind: "official",
+    label: "PVGIS 5.3 · PVGIS-ERA5 · consulta archivada del caso Bogotá",
+    sourceUrl: "https://joint-research-centre.ec.europa.eu/photovoltaic-geographical-information-system-pvgis_en",
+    fetchedAt: "2026-09-07T17:18:38.685Z",
+    note: "Modelo solar oficial; no es producción medida ni incorpora sombras cercanas.",
   },
   panelProvenance: {
-    kind: "synthetic",
-    label: "Ficha genérica de demostración",
-    note: "Debe reemplazarse por la ficha técnica oficial del módulo seleccionado.",
+    kind: "official",
+    label: "Ficha oficial LONGi LR5-54HTH 445–455M",
+    sourceUrl: "https://static.longi.com/Hi_MO_X6_LR_5_54_HTH_445_455_M_V1_30_30_and_15_V19_ES_09bf28ff6d.pdf",
+    note: "Se usaron 450 Wp y dimensiones 1,722 × 1,134 m.",
   },
 };
 
@@ -68,7 +74,7 @@ export const EMPTY_PROJECT: SolarProjectInput = {
   })),
   consumptionProvenance: {
     kind: "user",
-    label: "Pendiente de cargar facturas reales anonimizadas",
+    label: "Pendiente de cargar consumos trazables o una regla de simulación documentada",
   },
   solarProvenance: {
     kind: "user",

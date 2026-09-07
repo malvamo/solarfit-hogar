@@ -3,7 +3,7 @@ import { describe, expect, it } from "vitest";
 import { analyzeTiltOptimization } from "./optimization";
 
 describe("analyzeTiltOptimization", () => {
-  it("selecciona el máximo y aproxima las derivadas de una parábola", () => {
+  it("selecciona el mayor rendimiento entre los escenarios evaluados", () => {
     const candidates = [0, 10, 20, 30, 40].map((tiltDeg) => ({
       tiltDeg,
       annualKwhPerKwp: 1_000 - (tiltDeg - 20) ** 2,
@@ -15,8 +15,6 @@ describe("analyzeTiltOptimization", () => {
     expect(result.selectedTiltDeg).toBe(20);
     expect(result.selectedAnnualKwhPerKwp).toBe(1_000);
     expect(result.gainVsReferencePct).toBeCloseTo(11.111111, 5);
-    expect(optimum?.estimatedFirstDerivativeKwhPerKwpDeg).toBe(0);
-    expect(optimum?.estimatedSecondDerivativeKwhPerKwpDeg2).toBe(-2);
     expect(optimum?.isSelectedMaximum).toBe(true);
   });
 

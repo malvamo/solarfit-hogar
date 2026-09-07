@@ -2,9 +2,9 @@
 
 SolarFit Hogar es un prototipo académico de prefactibilidad fotovoltaica residencial. Recibe doce consumos mensuales, el recurso solar, las características de un módulo y el área útil del techo; entrega una recomendación preliminar de potencia y número de paneles, producción mensual, cobertura, sensibilidad e indicación de viabilidad por área.
 
-El proyecto fue construido para Cálculo Diferencial, grupo 12, semestre 2026-2S. Su valor académico no está solo en obtener un número entero: conserva primero una solución continua, analiza su tasa de cambio y redondea únicamente al tomar la decisión física.
+El proyecto fue construido para Cálculo Diferencial, grupo 12, semestre 2026-2S. Conserva una solución continua, usa su primera derivada para medir el impacto del rendimiento solar y redondea únicamente al tomar la decisión física.
 
-> **Advertencia:** el escenario que aparece al abrir la aplicación es completamente sintético. No corresponde a facturas, mediciones solares ni fichas técnicas reales y no puede presentarse como evidencia del proyecto. Antes de una entrega académica debe reemplazarse por datos trazables del caso estudiado.
+> **Advertencia:** el escenario que aparece al abrir la aplicación es una simulación calibrada: usa un promedio agregado UPME/SUI, una consulta PVGIS archivada y una ficha LONGi oficial. No corresponde a una vivienda observada, facturas, producción medida ni levantamiento de techo.
 
 ## Estado y alcance
 
@@ -13,12 +13,12 @@ La versión actual implementa:
 - ingreso manual de doce consumos, días facturados y HSP;
 - importación de un CSV mensual;
 - consulta de producción específica mensual a PVGIS 5.3 mediante una ruta de servidor;
-- control opcional de contraste con PVWatts V8 mediante clave privada de servidor, con MAE, RMSE, MAPE y diferencia anual;
-- optimización visible que compara inclinaciones con PVGIS, estima derivadas por diferencias finitas y permite aplicar la serie seleccionada;
+- contraste opcional con PVWatts V8 mediante clave privada de servidor, mostrando rendimientos anuales, diferencia y cambio de decisión entera;
+- comparación visible de inclinaciones con PVGIS y aplicación de la mejor serie entre los ángulos evaluados;
 - dimensionamiento por balance anual o por el mes más exigente;
 - separación entre cantidad recomendada y cantidad instalable por el área declarada;
 - producción, cobertura y balance mes a mes;
-- análisis de sensibilidad de la forma `n(h) = K/h`;
+- análisis de sensibilidad de la forma `n(Y) = K/Y` y su primera derivada;
 - intervalo determinista ante una variación porcentual de producción;
 - almacenamiento validado del borrador en el navegador, con descarte seguro si está corrupto;
 - importación y exportación versionada del proyecto en JSON;
@@ -32,9 +32,9 @@ Requisitos reproducibles:
 
 - Node.js 24.16.0 (archivo `.nvmrc`; Next.js exige como mínimo 20.9.0);
 - pnpm 11.19.0 mediante Corepack;
-- acceso HTTPS saliente a PVGIS para usar la simulación oficial.
+- acceso HTTPS saliente a PVGIS para consultar una estimación trazable.
 
-PVWatts es opcional. Para usar su endpoint de validación, copie `.env.example` a `.env.local`, defina `NLR_API_KEY` y reinicie el servidor. Esa variable nunca debe llevar el prefijo `NEXT_PUBLIC_`.
+PVWatts es opcional. Para usar su endpoint de contraste, copie `.env.example` a `.env.local`, defina `NLR_API_KEY` y reinicie el servidor. Esa variable nunca debe llevar el prefijo `NEXT_PUBLIC_`.
 
 Instalación y ejecución:
 
@@ -68,19 +68,19 @@ Los comandos disponibles son:
 | `pnpm typegen` | Generación de tipos de rutas de Next.js |
 | `pnpm check` | Lint, tipos, pruebas y compilación, en ese orden |
 
-## Uso recomendado con datos reales
+## Uso recomendado
 
-1. Pulse **Usar datos reales** para retirar el escenario sintético, o **Abrir JSON** para restaurar un proyecto SolarFit v1 previamente exportado.
+1. Explore **Cargar caso calibrado**, pulse **Crear caso propio** para ingresar información distinta o use **Abrir JSON** para restaurar un proyecto SolarFit v1.
 2. Escriba un nombre de escenario y una referencia general del municipio; no use la dirección exacta.
 3. Ingrese doce periodos consecutivos de consumo en kWh y sus días facturados, o importe el CSV descargable.
 4. Registre el área realmente utilizable del techo, descontando obstáculos.
-5. Sustituya el módulo genérico por fabricante, modelo, potencia y dimensiones de una ficha técnica oficial.
+5. Registre fabricante, modelo, potencia y dimensiones de una misma ficha técnica oficial.
 6. Seleccione uno de los dos métodos solares:
    - **HSP × días × PR:** requiere HSP mensuales trazables y un factor global documentado.
    - **PVGIS:** requiere coordenadas generales, inclinación, azimut y pérdidas. Su rendimiento específico ya incorpora esas pérdidas; el modelo no aplica PR de nuevo.
 7. Compare el criterio de balance anual con el criterio conservador mensual.
 8. Revise advertencias, supuestos, fuente de cada dato y restricción de techo.
-9. Exporte JSON y CSV; conserve además los soportes del caso real o el protocolo reproducible del caso simulado, la ficha del panel y la respuesta o referencia de la fuente solar.
+9. Exporte JSON y CSV; conserve además facturas o la regla de simulación, el soporte del techo, la ficha del panel y la respuesta de la fuente solar.
 
 La guía detallada está en [docs/user-guide.md](docs/user-guide.md).
 
@@ -117,7 +117,7 @@ A_panel_instalación = ancho · alto · factor_instalación
 N_máximo_techo = floor(A_útil / A_panel_instalación)
 ```
 
-El desarrollo completo, con unidades, derivadas, dominio y métricas, está en [docs/mathematical-model.md](docs/mathematical-model.md).
+El desarrollo completo, con unidades, la derivada pertinente y el contraste de modelos, está en [docs/mathematical-model.md](docs/mathematical-model.md).
 
 ## Arquitectura
 
@@ -171,7 +171,7 @@ docs/                     documentación técnica, académica y de uso
 - [Guía de usuario](docs/user-guide.md)
 - [Instalación en Windows](INSTALL_WINDOWS.md)
 - [Notas de cierre técnico](RELEASE_NOTES.md)
-- [Última verificación](docs/verification-log-2026-08-21.md)
+- [Última verificación](docs/verification-log-2026-09-07.md)
 - [Protocolo para un caso simulado formal](docs/simulated-case-protocol.md)
 
 ## Fuentes del proyecto
@@ -190,6 +190,7 @@ Fuentes externas oficiales:
 - [API no interactiva de PVGIS](https://joint-research-centre.ec.europa.eu/photovoltaic-geographical-information-system-pvgis/using-pvgis-5/api-non-interactive-service_en)
 - [Manual de PVGIS 5](https://joint-research-centre.ec.europa.eu/photovoltaic-geographical-information-system-pvgis/using-pvgis-5/pvgis-5-user-manual_en)
 - [PVWatts V8 API, NLR](https://developer.nlr.gov/docs/solar/pvwatts/v8/)
+- [UPME/CORPOEMA, estimación de consumos de subsistencia (2019)](https://bdigital.upme.gov.co/handle/001/1367)
 
 ## Trabajo que el equipo debe completar
 
@@ -201,7 +202,7 @@ Antes de presentar resultados como propios del caso de estudio, el equipo debe e
 - **Área útil y forma de medición:** `[DATO, FECHA Y MÉTODO]`.
 - **Módulo seleccionado y ficha oficial:** `[FABRICANTE, MODELO Y URL/ARCHIVO]`.
 - **Fuente solar y fecha de consulta:** `[PVGIS/OTRA, CONFIGURACIÓN Y FECHA]`.
-- **Validación independiente:** `[HERRAMIENTA O MEDICIÓN, RESULTADOS Y DIFERENCIAS]`.
+- **Contraste entre modelos o medición:** `[HERRAMIENTA, RESULTADOS Y DIFERENCIAS]`.
 - **Aportes individuales y revisión humana:** `[REGISTRO POR INTEGRANTE]`.
 
-Hasta completar esos campos, los resultados del modo demostración son únicamente una prueba de funcionamiento del software. La interfaz mantiene el estado **Pendiente · validar soportes** para cualquier caso no sintético; no afirma por sí sola que la evidencia ya fue revisada.
+Los casos simulados son evidencia reproducible del funcionamiento del modelo, no evidencia empírica de una instalación. La interfaz mantiene esa diferencia visible y no afirma por sí sola que los soportes de un caso propio hayan sido revisados.

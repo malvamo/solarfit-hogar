@@ -28,7 +28,7 @@ export async function POST(request: Request) {
     if (!body.success) {
       return NextResponse.json(
         {
-          error: "Los parámetros para validar con PVWatts no son válidos.",
+          error: "Los parámetros para contrastar con PVWatts no son válidos.",
           details: body.error.flatten().fieldErrors,
         },
         { status: 400 },

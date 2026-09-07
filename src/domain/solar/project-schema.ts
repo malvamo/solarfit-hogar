@@ -3,7 +3,10 @@ import { z } from "zod";
 import type { SolarProjectInput } from "./types";
 
 export const SOLAR_PROJECT_SCHEMA_VERSION = 1;
-export type ProjectEvidenceStatus = "synthetic_demo" | "pending_verification";
+export type ProjectEvidenceStatus =
+  | "synthetic_demo"
+  | "calibrated_simulation"
+  | "pending_verification";
 
 const finiteNumber = z.number().finite();
 const optionalHttpUrl = z
@@ -135,5 +138,13 @@ export function getProjectEvidenceStatus(
     project.solarProvenance,
     project.panelProvenance,
   ].some((source) => source.kind === "synthetic");
-  return hasSyntheticSource ? "synthetic_demo" : "pending_verification";
+  if (!hasSyntheticSource) return "pending_verification";
+  const syntheticSources = [
+    project.consumptionProvenance,
+    project.solarProvenance,
+    project.panelProvenance,
+  ].filter((source) => source.kind === "synthetic");
+  return syntheticSources.every((source) => Boolean(source.sourceUrl))
+    ? "calibrated_simulation"
+    : "synthetic_demo";
 }

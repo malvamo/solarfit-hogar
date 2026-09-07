@@ -48,10 +48,10 @@ export default function Home() {
         </section>
 
         <section className="trust-strip" aria-label="Características del producto">
-          <article><span>01</span><div><strong>Dos métodos</strong><small>Modelo HSP o simulación PVGIS</small></div></article>
+          <article><span>01</span><div><strong>Dos métodos</strong><small>Modelo HSP o estimación PVGIS</small></div></article>
           <article><span>02</span><div><strong>Doce meses</strong><small>Sin esconder la estacionalidad</small></div></article>
           <article><span>03</span><div><strong>Techo finito</strong><small>Recomendación y viabilidad separadas</small></div></article>
-          <article><span>04</span><div><strong>Cálculo visible</strong><small>Derivada, sensibilidad y supuestos</small></div></article>
+          <article><span>04</span><div><strong>Cálculo visible</strong><small>Impacto del recurso solar y supuestos</small></div></article>
         </section>
 
         <SolarFitApp />
@@ -64,10 +64,10 @@ export default function Home() {
           </div>
           <div className="methodology-flow">
             <article><span>01</span><h3>Caracterizar</h3><p>Doce consumos, días facturados, coordenadas generales y área útil.</p><code>C₁ … C₁₂</code></article>
-            <article><span>02</span><h3>Modelar</h3><p>Producción específica por HSP o por rendimiento neto oficial.</p><code>Gₘ = P · Yₘ</code></article>
+            <article><span>02</span><h3>Modelar</h3><p>Producción específica por HSP o por una estimación neta trazable.</p><code>Gₘ = P · Yₘ</code></article>
             <article><span>03</span><h3>Dimensionar</h3><p>Comparar balance anual y cobertura conservadora de cada mes.</p><code>n* = qC / G</code></article>
             <article><span>04</span><h3>Restringir</h3><p>Redondear una vez y comprobar el límite físico del techo.</p><code>N · Aₚ ≤ Aᵤ</code></article>
-            <article><span>05</span><h3>Validar</h3><p>Revisar unidades, monotonicidad, simuladores y diferencias.</p><code>MAE · sesgo</code></article>
+            <article><span>05</span><h3>Contrastar</h3><p>Comparar PVGIS y PVWatts y comprobar si cambia la decisión entera.</p><code>PVGIS ↔ PVWatts</code></article>
           </div>
         </section>
 

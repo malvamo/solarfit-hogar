@@ -32,14 +32,14 @@ flowchart LR
 | Interacción | `src/components/solar-fit-app.tsx` | Estado del formulario, flujo Datos–Modelo–Resultados, consulta PVGIS y exportaciones |
 | Visualización | `src/components/charts.tsx` | Gráficos SVG de consumo/producción y sensibilidad |
 | Dominio | `src/domain/solar/calculate.ts` | Validación numérica, dimensionamiento, restricción de techo, resultados y advertencias |
-| Análisis | `src/domain/solar/analysis.ts`, `optimization.ts` | Métricas entre series, sensibilidad y optimización discreta con diferencias finitas |
+| Análisis | `src/domain/solar/analysis.ts`, `optimization.ts` | Contraste entre series y comparación discreta de inclinaciones |
 | Facturación | `src/domain/solar/bills.ts` | Prorrateo diario de periodos de factura que atraviesan meses |
 | Tipos | `src/domain/solar/types.ts` | Contratos de entrada, salida, procedencia y errores del modelo |
 | Fuente solar | `src/services/solar-yield.ts`, `pvgis.ts`, `pvwatts.ts`, `pvgis-optimization.ts` | Contrato común, normalización de energía neta, proveedores y comparación de inclinaciones |
 | API | `src/app/api/pvgis/`, `src/app/api/pvwatts/` | Fronteras de servidor, validación Zod y traducción de errores a HTTP |
 | Persistencia local | `src/lib/project-storage.ts` | Lectura, escritura y eliminación del borrador en el navegador |
 | Intercambio | `src/lib/monthly-csv.ts`, `src/lib/downloads.ts` | Importación mensual y descarga de plantilla, resultados y proyecto |
-| Datos de inicio | `src/data/demo-project.ts` | Escenario sintético rotulado y estructura vacía para datos reales |
+| Datos de inicio | `src/data/demo-project.ts` | Caso simulado calibrado y estructura vacía para un caso propio |
 | Verificación | `src/domain/solar/*.test.ts` | Pruebas unitarias del cálculo, sensibilidad, métricas y prorrateo |
 
 ## 4. Fronteras de cliente y servidor
@@ -83,7 +83,7 @@ El adaptador opcional de PVWatts usa `https://developer.nlr.gov/api/pvwatts/v8.j
 
 Cada intento PVWatts tiene un límite de 12 segundos. Para 429 o 5xx realiza hasta tres intentos, con esperas aproximadas de 500 y 1.000 ms; también trata como error los mensajes incluidos por el proveedor en `errors[]`.
 
-`POST /api/pvgis/optimize` acepta entre 2 y 13 inclinaciones únicas, consulta PVGIS para cada una, conserva respuestas válidas, selecciona el mayor rendimiento anual y estima derivadas primera y segunda mediante diferencias finitas. La interfaz ofrece controles para ejecutar la optimización, aplicar la serie seleccionada y contrastar el modelo actual con PVWatts.
+`POST /api/pvgis/optimize` acepta entre 2 y 13 inclinaciones únicas, consulta PVGIS para cada una, conserva respuestas válidas y selecciona el mayor rendimiento anual observado. La interfaz lo presenta como comparación de escenarios, permite aplicar la serie seleccionada y contrastar el modelo actual con PVWatts. No se interpreta como optimización continua ni como otro tema de cálculo diferencial.
 
 ## 5. Flujo principal de datos
 
@@ -159,19 +159,15 @@ solarfit:project:v1
 
 La exportación JSON añade `schemaVersion: 1` y `exportedAt`. El mismo esquema Zod valida tanto el borrador como el archivo importado. Una versión distinta de 1 se rechaza explícitamente; un borrador v1 corrupto se elimina para que no bloquee cada inicio. Al importar, la aplicación toma únicamente las entradas validadas y recalcula el resultado: no confía en resultados serializados por un archivo externo.
 
-## 9. Capacidades avanzadas y utilidades de dominio
+## 9. Capacidades complementarias y utilidades de dominio
 
-El flujo visible usa `compareEnergySeries`, `analyzeTiltOptimization`, `/api/pvgis/optimize` y `/api/pvwatts` para la validación avanzada. El repositorio también conserva utilidades que todavía no forman parte del formulario:
+El flujo visible usa `compareEnergySeries`, `analyzeTiltOptimization`, `/api/pvgis/optimize` y `/api/pvwatts` para contrastar proveedores y escenarios. `analyzeTiltOptimization` conserva su nombre técnico por compatibilidad, pero solo selecciona el mayor rendimiento entre ángulos evaluados: no calcula derivadas ni demuestra un máximo continuo. El repositorio también conserva `calendarizeBills`, una utilidad de prorrateo que todavía no forma parte del formulario.
 
-- `hspSensitivity`: primera y segunda derivada para un caso explícito;
-- `optimizeTilt`: selección entre proyectos candidatos que minimiza paneles continuos;
-- `calendarizeBills`: prorrateo de facturas con fechas reales a meses calendario.
-
-Que una ruta o función exista no equivale a que el usuario pueda ejecutarla desde la interfaz. Debe distinguirse entre capacidad técnica del backend, integración visible y validación ya realizada.
+La única derivada del producto se calcula en `calculate.ts` sobre `n(Y)=K/Y`, porque mide el impacto del rendimiento solar sobre la necesidad continua de paneles.
 
 ## 10. Limitaciones técnicas conocidas
 
-- El optimizador compara una malla discreta de ángulos; no prueba que el máximo continuo no esté entre candidatos.
+- La comparación de inclinaciones usa una malla discreta; no prueba que el mejor valor continuo no esté entre candidatos.
 - El prorrateo de facturas no está conectado al formulario.
 - Las coordenadas no se geocodifican ni se verifican contra el texto de ubicación.
 - El área se representa como un escalar; no se modelan geometría, pasillos obligatorios ni obstáculos individuales.

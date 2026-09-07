@@ -47,7 +47,7 @@ export async function optimizePvgisTilt(
     request.candidateTiltsDeg.length > MAX_PVGIS_TILT_CANDIDATES
   ) {
     throw new Error(
-      `La optimización admite entre 2 y ${MAX_PVGIS_TILT_CANDIDATES} inclinaciones por consulta.`,
+      `La comparación admite entre 2 y ${MAX_PVGIS_TILT_CANDIDATES} inclinaciones por consulta.`,
     );
   }
 
@@ -82,8 +82,8 @@ export async function optimizePvgisTilt(
     const detail = failedEvaluations[0]?.error;
     throw new Error(
       detail
-        ? `PVGIS no produjo suficientes escenarios para optimizar. ${detail}`
-        : "PVGIS no produjo suficientes escenarios para optimizar.",
+        ? `PVGIS no produjo suficientes escenarios para comparar. ${detail}`
+        : "PVGIS no produjo suficientes escenarios para comparar.",
     );
   }
 
@@ -119,7 +119,7 @@ export async function optimizePvgisTilt(
 
   const warnings = new Set(successful.flatMap((item) => item.dataset.warnings));
   warnings.add(
-    "La optimización compara una malla discreta: el máximo real podría estar entre dos ángulos evaluados.",
+    "Se eligió el mayor rendimiento únicamente entre los ángulos evaluados; no se afirma un máximo continuo.",
   );
   warnings.add(
     "Cada rendimiento específico de PVGIS ya incorpora las pérdidas configuradas; no se aplicó PR adicional.",

@@ -46,6 +46,109 @@ WHITE = "FFFFFF"
 BORDER = "B9C5CF"
 
 
+def fmt_decimal(value: float, decimals: int = 2) -> str:
+    """Format a number for Spanish-language academic tables."""
+    text = f"{value:,.{decimals}f}"
+    return text.replace(",", "X").replace(".", ",").replace("X", ".")
+
+# Casos reproducibles ejecutados con la versión 2026.2 del escenario. El consumo
+# no representa cinco viviendas medidas: se calibra con promedios oficiales de
+# la UPME/CORPOEMA y se mantiene constante durante los doce meses porque la
+# fuente no publica una estacionalidad mensual que permita variarlo sin inventar.
+CASES = (
+    {
+        "case": "Bogotá · piso frío",
+        "demand_basis": "SIN, > 1.500 m s. n. m.: 156 kWh/mes",
+        "annual_demand": 1872.0,
+        "pvgis_yield": 1260.65,
+        "pvwatts_yield": 1271.06,
+        "continuous_panels": 3.299885,
+        "pvgis_panels": 4,
+        "pvwatts_panels": 4,
+        "conservative_panels": 5,
+        "roof_area": 20.0,
+        "roof_max": 9,
+        "buildable_panels": 4,
+        "production": 2269.17,
+        "coverage": 121.216,
+        "minimum_coverage": 98.17,
+        "critical_month": "junio",
+    },
+    {
+        "case": "Barranquilla · piso cálido",
+        "demand_basis": "SIN, < 500 m s. n. m.: 279 kWh/mes",
+        "annual_demand": 3348.0,
+        "pvgis_yield": 1567.18,
+        "pvwatts_yield": 1643.33,
+        "continuous_panels": 4.747381,
+        "pvgis_panels": 5,
+        "pvwatts_panels": 5,
+        "conservative_panels": 6,
+        "roof_area": 35.0,
+        "roof_max": 16,
+        "buildable_panels": 5,
+        "production": 3526.16,
+        "coverage": 105.321,
+        "minimum_coverage": 92.31,
+        "critical_month": "noviembre",
+    },
+    {
+        "case": "Medellín · piso templado",
+        "demand_basis": "SIN, 500-1.500 m s. n. m.: 178 kWh/mes",
+        "annual_demand": 2136.0,
+        "pvgis_yield": 1387.56,
+        "pvwatts_yield": 1369.68,
+        "continuous_panels": 3.420873,
+        "pvgis_panels": 4,
+        "pvwatts_panels": 4,
+        "conservative_panels": 4,
+        "roof_area": 14.0,
+        "roof_max": 6,
+        "buildable_panels": 4,
+        "production": 2497.61,
+        "coverage": 116.929,
+        "minimum_coverage": 100.12,
+        "critical_month": "noviembre",
+    },
+    {
+        "case": "Cali · piso templado",
+        "demand_basis": "SIN, 500-1.500 m s. n. m.: 178 kWh/mes",
+        "annual_demand": 2136.0,
+        "pvgis_yield": 1235.28,
+        "pvwatts_yield": 1422.18,
+        "continuous_panels": 3.842584,
+        "pvgis_panels": 4,
+        "pvwatts_panels": 4,
+        "conservative_panels": 5,
+        "roof_area": 18.0,
+        "roof_max": 8,
+        "buildable_panels": 4,
+        "production": 2223.50,
+        "coverage": 104.097,
+        "minimum_coverage": 90.90,
+        "critical_month": "junio",
+    },
+    {
+        "case": "Quibdó rural · cálido y techo restringido",
+        "demand_basis": "Rural cálido: 118,8 kWh/mes",
+        "annual_demand": 1425.6,
+        "pvgis_yield": 898.28,
+        "pvwatts_yield": 1131.87,
+        "continuous_panels": 3.526740,
+        "pvgis_panels": 4,
+        "pvwatts_panels": 3,
+        "conservative_panels": 5,
+        "roof_area": 8.0,
+        "roof_max": 3,
+        "buildable_panels": 3,
+        "production": 1212.68,
+        "coverage": 85.064,
+        "minimum_coverage": 74.05,
+        "critical_month": "junio",
+    },
+)
+
+
 def set_cell_shading(cell, fill: str) -> None:
     tc_pr = cell._tc.get_or_add_tcPr()
     shd = tc_pr.find(qn("w:shd"))
@@ -492,6 +595,7 @@ def add_callout(doc: Document, label: str, text: str, *, fill: str = PALE_TEAL,
     p.paragraph_format.space_before = Pt(5)
     p.paragraph_format.space_after = Pt(9)
     p.paragraph_format.line_spacing = 1.2
+    p.paragraph_format.keep_together = True
     set_paragraph_shading(p, fill)
     set_paragraph_border(p, accent)
     r = p.add_run(f"{label}. ")
@@ -581,7 +685,7 @@ def add_figure(doc: Document, image_path: Path, caption: str) -> None:
     run = p.add_run()
     shape = run.add_picture(str(image_path), width=Inches(6.12))
     doc_pr = shape._inline.docPr
-    doc_pr.set("descr", "Pantalla de resultados del prototipo SolarFit Hogar con un escenario didáctico de cinco paneles y cobertura anual modelada de 102 por ciento.")
+    doc_pr.set("descr", "Pantalla de resultados del prototipo SolarFit Hogar con procedencia, resultados energéticos y advertencias del escenario seleccionado.")
     c = doc.add_paragraph(caption, style="Caption")
     c.paragraph_format.keep_with_next = False
 
@@ -631,7 +735,7 @@ def add_cover(doc: Document) -> None:
     p = doc.add_paragraph()
     p.alignment = WD_ALIGN_PARAGRAPH.CENTER
     p.paragraph_format.space_before = Pt(18)
-    set_run_font(p.add_run("Versión de trabajo preparada el 18 de agosto de 2026"), size=9.5, color=MUTED, italic=True)
+    set_run_font(p.add_run("Versión corregida preparada el 7 de septiembre de 2026"), size=9.5, color=MUTED, italic=True)
 def build_document() -> Document:
     doc = Document()
     configure_styles(doc)
@@ -663,7 +767,7 @@ def build_document() -> Document:
     add_callout(
         doc,
         "Lectura obligatoria",
-        "Este archivo integra el planteamiento, el desarrollo matemático, el prototipo y la ruta de validación. El software está implementado y verificado internamente, pero la serie de consumo, la ubicación general, el panel de referencia y la validación externa del caso definitivo —real o simulado documentado— siguen pendientes de decisión y cierre por el grupo. Por esa razón, ningún dato del modo demostración se presenta automáticamente como evidencia del caso definitivo.",
+        "Este archivo integra el planteamiento, el desarrollo matemático esencial, el prototipo y cinco simulaciones calibradas reproducibles. La demanda se basa en promedios oficiales UPME/CORPOEMA; la producción se estima con PVGIS y se contrasta con PVWatts. Los resultados no son mediciones de cinco viviendas ni una validación empírica: son aproximaciones documentadas para probar el sistema sin inventar datos domésticos.",
         fill=PALE_GOLD,
         accent=GOLD,
     )
@@ -672,17 +776,17 @@ def build_document() -> Document:
         ["Elemento", "Estado verificable"],
         [
             ("Planteamiento y modelo", "Desarrollado y revisado en esta versión acumulativa."),
-            ("Prototipo web", "Implementado en Next.js/TypeScript; verificación automática completa aprobada el 21/08/2026."),
-            ("Datos de la vivienda", "Pendientes: doce consumos trazables, área útil medida y ubicación general anonimizada."),
-            ("Panel de referencia", "Pendiente: fabricante, modelo, ficha técnica oficial y fecha de consulta."),
-            ("Simulación solar del caso", "Pendiente: ejecutar PVGIS con la ubicación y configuración definitivas y conservar la respuesta."),
-            ("Validación independiente", "Pendiente: comparar la serie del modelo con PVWatts u otra fuente independiente."),
+            ("Prototipo web", "Implementado en Next.js/TypeScript; 38 pruebas y compilación productiva aprobadas el 07/09/2026."),
+            ("Demanda de los cinco casos", "Calibrada con promedios SUI 2018 publicados por UPME/CORPOEMA; no son facturas ni promedios municipales."),
+            ("Panel de referencia", "LONGi LR5-54HTH de 450 W; potencia y dimensiones tomadas de ficha oficial."),
+            ("Estimación solar", "PVGIS ejecutado en cinco puntos de referencia, con 14 % de pérdidas y configuración conservada en la evidencia."),
+            ("Contraste independiente", "PVWatts ejecutado con la misma capacidad instalable, inclinación, azimut y pérdidas."),
             ("Autoría del grupo", "Pendiente: registrar nombres, aportes reales, decisiones y revisión humana."),
         ],
         [2700, 6660],
     )
     add_editable(doc, "reemplazar esta versión por la fecha real de entrega y confirmar en AVATA el plazo vigente.")
-    add_editable(doc, "completar nombres, códigos, caso de estudio, fuentes, mediciones, resultados y aportes antes de entregar.")
+    add_editable(doc, "completar nombres, códigos y aportes verificables de cada integrante antes de entregar.")
 
     add_section_title(doc, "Resumen ejecutivo", page_break=True)
     add_para(
@@ -695,7 +799,7 @@ def build_document() -> Document:
     )
     add_para(
         doc,
-        "La implementación es una aplicación web modular con formularios, importación CSV y JSON, visualizaciones, sensibilidad, incertidumbre, exportaciones y persistencia local. El 21 de agosto de 2026 se ejecutó la comprobación completa del repositorio: análisis estático, generación de tipos de rutas, verificación de TypeScript, 32 pruebas unitarias en 7 archivos y compilación productiva; todas finalizaron correctamente. Esta evidencia prueba coherencia interna del software, no validez empírica para una vivienda concreta.",
+        "La implementación es una aplicación web modular con formularios, importación CSV y JSON, visualizaciones, sensibilidad, incertidumbre, exportaciones y persistencia local. El 7 de septiembre de 2026 se ejecutó la comprobación completa del repositorio: análisis estático, verificación de TypeScript, 38 pruebas en 9 archivos y compilación productiva; todas finalizaron correctamente. Esta evidencia prueba coherencia interna del software, no exactitud empírica para una vivienda concreta.",
     )
     add_callout(
         doc,
@@ -704,7 +808,7 @@ def build_document() -> Document:
     )
     add_para(
         doc,
-        "El informe se organiza de forma acumulativa. El Hito 1 presenta el problema y el primer modelo; el Hito 2 desarrolla las derivadas, el algoritmo, las visualizaciones y los ajustes; el Hito 3 documenta el producto, la validación, la reflexión crítica y los anexos de cierre. Los campos rojos deben completarse con evidencia trazable del caso definitivo, sea real o simulado documentado.",
+        "El informe se organiza de forma acumulativa. El Hito 1 presenta el problema y el primer modelo; el Hito 2 desarrolla únicamente la derivada que cambia una decisión del proyecto, además del algoritmo y las visualizaciones; el Hito 3 documenta el producto, las cinco simulaciones calibradas, el contraste entre fuentes y los anexos de cierre.",
     )
 
     add_section_title(doc, "Guía de lectura y trazabilidad", page_break=True)
@@ -715,14 +819,14 @@ def build_document() -> Document:
         [
             ("Hito 1", "Contexto, pregunta, objetivos, fuentes, modelo inicial, organización y riesgos.", "Formulación y diseño."),
             ("Hito 2", "Desarrollo matemático, resultados intermedios, algoritmo, arquitectura, visualización y ajustes.", "Investigación y creación."),
-            ("Hito 3", "Producto, validación, reflexión, conclusiones, póster, pitch y evidencia acumulada.", "Comunicación y evaluación."),
-            ("Anexos", "Plantillas para el caso definitivo, trazabilidad, pruebas, IA y contribuciones.", "Soporte verificable."),
+            ("Hito 3", "Producto, casos calibrados, contraste, reflexión, conclusiones, póster y pitch.", "Comunicación y evaluación."),
+            ("Anexos", "Plantilla para un caso propio, trazabilidad, pruebas, IA y contribuciones.", "Soporte verificable."),
         ],
         [1600, 4560, 3200],
     )
     add_para(doc, "Convenciones de estado:", bold_lead="Convenciones de estado:")
     add_step(doc, "Implementado: existe en el prototipo y fue comprobado mediante el comando de verificación del repositorio.", conventions_id)
-    add_step(doc, "Demostración: dato sintético diseñado para probar la interfaz; no representa una vivienda.", conventions_id)
+    add_step(doc, "Simulación calibrada: dato construido con un promedio oficial y supuestos explícitos; no representa una vivienda medida.", conventions_id)
     add_step(doc, "Pendiente del grupo: requiere medición, decisión o autoría que no puede inventarse.", conventions_id)
     add_callout(
         doc,
@@ -745,7 +849,7 @@ def build_document() -> Document:
         doc,
         "Desde Ingeniería de Sistemas, el problema exige administrar datos heterogéneos, validar unidades y rangos, formular funciones, convertirlas en un algoritmo, separar capas de software, visualizar resultados y conservar trazabilidad. SolarFit Hogar se concibe como apoyo a decisiones: reduce la fricción de una evaluación inicial y deja visibles los supuestos para que el usuario entienda la recomendación.",
     )
-    add_callout(doc, "Pregunta de investigación", "Para una vivienda conectada a la red en Colombia, ¿qué potencia fotovoltaica, cuántos paneles y qué inclinación fija permiten compensar una proporción objetivo del consumo, considerando la variación mensual del recurso solar, las pérdidas y el área útil del techo?")
+    add_callout(doc, "Pregunta de investigación", "Para una vivienda conectada a la red en Colombia, ¿cuántos paneles de una potencia dada se requieren para compensar una proporción objetivo del consumo, según el rendimiento solar específico y el área útil del techo?")
 
     doc.add_paragraph("1.1 Usuarios y propuesta de valor", style="Heading 3")
     add_table(
@@ -754,22 +858,22 @@ def build_document() -> Document:
         [
             ("Propietario", "Comprender el orden de magnitud antes de solicitar cotizaciones.", "Escenarios explicables y advertencias."),
             ("Instalador", "Estandarizar el levantamiento inicial.", "Reporte trazable para una conversación comercial."),
-            ("Equipo académico", "Aplicar cálculo diferencial a un fenómeno contextualizado.", "Funciones, derivadas, algoritmo, gráfica y validación."),
+            ("Equipo académico", "Aplicar cálculo diferencial a un fenómeno contextualizado.", "Función n(Y), primera derivada, algoritmo, gráfica y contraste."),
         ],
         [1800, 3600, 3960],
     )
     add_para(doc, "La oportunidad de startup es una hipótesis, no un hallazgo validado. Una evolución comercial podría ofrecer evaluaciones iniciales gratuitas y herramientas profesionales para instaladores, pero requeriría entrevistas, análisis normativo, estructura de costos y validación de mercado.")
 
     doc.add_paragraph("2. Objetivos", style="Heading 2")
-    add_para(doc, "Objetivo general. Desarrollar y validar un modelo de prefactibilidad que estime la capacidad fotovoltaica y el número de paneles necesarios para compensar una proporción del consumo eléctrico de una vivienda conectada a la red, incorporando variación mensual, pérdidas y área disponible.", bold_lead="Objetivo general.")
+    add_para(doc, "Objetivo general. Desarrollar y contrastar un modelo de prefactibilidad que estime la capacidad fotovoltaica y el número de paneles necesarios para compensar una proporción del consumo eléctrico de una vivienda conectada a la red, incorporando el rendimiento solar y el área disponible.", bold_lead="Objetivo general.")
     add_para(doc, "Objetivos específicos:", bold_lead="Objetivos específicos:")
     for text in (
-        "Caracterizar el consumo mediante doce registros mensuales consecutivos, verificables y anonimizados.",
+        "Caracterizar el consumo mediante facturas trazables o promedios oficiales claramente rotulados como simulación calibrada.",
         "Obtener datos solares trazables y especificaciones oficiales de al menos un módulo comercial.",
         "Formular energía, cobertura y cantidad continua de paneles con variables, unidades, dominio y restricciones.",
-        "Aplicar límites, continuidad, tasas de cambio, derivadas, aproximación e ideas de optimización.",
+        "Interpretar la primera derivada de n(Y) para cuantificar cómo cambia la necesidad continua de paneles cuando cambia el rendimiento solar.",
         "Implementar un prototipo web que compare criterios, redondee al final y verifique el área del techo.",
-        "Contrastar el modelo con una fuente independiente y documentar errores, diferencias y limitaciones.",
+        "Contrastar PVGIS con PVWatts bajo parámetros comparables y documentar las diferencias y limitaciones.",
     ):
         add_step(doc, text, objectives_id)
 
@@ -790,34 +894,34 @@ def build_document() -> Document:
 
     sources_heading = doc.add_paragraph("4. Fuentes y plan de datos", style="Heading 2")
     sources_heading.paragraph_format.page_break_before = True
-    add_para(doc, "El modelo separa cada magnitud de su evidencia. Registrar un valor no es suficiente: el grupo debe conservar la factura anonimizada o la regla de simulación, la ficha técnica, la configuración solar y la fecha de consulta.", keep_with_next=True)
+    add_para(doc, "El modelo separa cada magnitud de su evidencia. En los cinco casos de prueba, el consumo mensual se fija con promedios oficiales UPME/CORPOEMA; se repite el promedio en los doce meses porque esa fuente no publica una estacionalidad mensual. Esto evita fabricar variaciones. El grupo conserva además la ficha del panel y las respuestas de PVGIS y PVWatts.", keep_with_next=True)
     add_table(
         doc,
         ["Dato", "Fuente prevista", "Control mínimo", "Estado"],
         [
-            ("Consumo", "12 facturas o serie simulada documentada", "kWh, días, continuidad y procedencia", "Pendiente"),
-            ("Ubicación", "Municipio/coordenadas generales", "No incluir dirección exacta", "Pendiente"),
-            ("Recurso solar", "PVGIS o fuente técnica", "Base, inclinación, azimut y pérdidas", "Demo sintético"),
-            ("Panel", "Ficha del fabricante", "Potencia STC y dimensiones", "Genérico de demo"),
-            ("Techo", "Medición documentada", "Área útil, obstáculos y método", "Pendiente"),
-            ("Contraste", "PVWatts u otra fuente", "Mismos supuestos y periodo", "Pendiente"),
+            ("Consumo", "UPME/CORPOEMA, promedios SUI 2018", "Piso térmico/sector y página de la tabla", "Calibrado"),
+            ("Ubicación", "Puntos urbanos de referencia", "Supuesto reproducible; no son viviendas", "Documentado"),
+            ("Recurso solar", "PVGIS 5.3", "Inclinación 10°, azimut 180° y pérdidas 14 %", "Ejecutado"),
+            ("Panel", "Ficha LONGi LR5-54HTH", "450 W; 1,722 m × 1,134 m", "Oficial"),
+            ("Techo", "Áreas de escenario", "Supuesto de prueba; no son mediciones", "Documentado"),
+            ("Contraste", "PVWatts V8", "Misma capacidad instalable y parámetros", "Ejecutado"),
         ],
         [1500, 2800, 3260, 1800],
         font_size=8.8,
     )
-    add_editable(doc, "insertar aquí la identificación anonimizada del caso, el inventario de soportes y la persona responsable de cada dato.")
+    add_callout(doc, "Alcance de los datos", "Los promedios UPME/CORPOEMA no son consumos de hogares concretos ni promedios de cada ciudad. Se usan para calibrar casos plausibles por piso térmico y sector. Las áreas de techo y los puntos de referencia son supuestos de prueba, no mediciones.", fill=PALE_GOLD, accent=GOLD)
 
     doc.add_paragraph("5. Primer modelo matemático", style="Heading 2")
-    add_para(doc, "Se define el índice mensual m = 1, ..., 12; Cₘ es el consumo mensual, P la potencia del panel en kWp, q la meta de cobertura como fracción, dₘ los días y Aᵤ el área útil. La energía de un panel se representa por Gₘ y la cantidad continua requerida por nₘ*. Los dos modos solares no deben mezclarse.")
+    add_para(doc, "Se define el índice mensual m = 1, ..., 12; Cₘ es el consumo mensual, P la potencia del panel en kWp, q la meta de cobertura como fracción, dₘ los días y Aᵤ el área útil. La energía de un panel se representa por Gₘ y la cantidad continua requerida por nₘ*. Los dos modos solares no deben mezclarse. Para el análisis diferencial se usa el rendimiento específico anual Y y la demanda anual D.")
     add_equation(doc, "Modo manual:     Gₘ = P · hₘ · dₘ · PRₘ")
     add_equation(doc, "Modo PVGIS:     Gₘ = P · Yₘ⁽ⁿᵉᵗ⁾", note="Yₘ⁽ⁿᵉᵗ⁾ se expresa en kWh/kWp y ya incorpora las pérdidas configuradas en la simulación.")
     add_equation(doc, "nₘ* = q · Cₘ / Gₘ")
     add_equation(doc, "n*ₐₙᵤₐₗ = q · ΣCₘ / ΣGₘ        |        n*conservador = máx. (nₘ*)")
     add_equation(doc, "N = ⌈n*⌉        |        Aₚₐₙₑₗ,inst = ancho · alto · fₐᵣₑₐ        |        Nₘₐₓ = ⌊Aᵤ / Aₚₐₙₑₗ,inst⌋")
-    add_callout(doc, "Decisión correcta", "La derivación se realiza sobre n*, que es continua. La función ceil se aplica una sola vez al final. Si el techo admite menos paneles, el sistema conserva la recomendación matemática y reporta por separado la cantidad instalable.")
+    add_equation(doc, "n(Y) = q · D / (P · Y)", note="Y es el rendimiento específico neto anual en kWh/kWp-año. Esta es la única función usada para el análisis diferencial.")
+    add_callout(doc, "Decisión correcta", "La derivada se calcula sobre n(Y), antes del redondeo. La función ceil se aplica una sola vez al final. Si el techo admite menos paneles, el sistema conserva la recomendación matemática y reporta por separado la cantidad instalable.")
 
-    risks_heading = doc.add_paragraph("6. Organización, riesgos y criterios de éxito", style="Heading 2")
-    risks_heading.paragraph_format.page_break_before = True
+    doc.add_paragraph("6. Organización, riesgos y criterios de éxito", style="Heading 2")
     add_table(
         doc,
         ["Riesgo", "Efecto", "Respuesta"],
@@ -835,51 +939,33 @@ def build_document() -> Document:
     doc.add_paragraph("Punto de control del Hito 1", style="Heading 3")
     for text in (
         "Problema delimitado y conectado con Ingeniería de Sistemas.",
-        "Objetivos medibles y modelo inicial con dominio, unidades y restricciones.",
+        "Objetivos medibles y modelo inicial con unidades y restricciones.",
         "Fuentes previstas, riesgos y campos de responsabilidad identificados.",
-        "Resultado numérico definitivo reservado hasta cerrar datos y supuestos trazables.",
+        "Cinco casos calibrados definidos con datos oficiales, supuestos trazables y alcance explícito.",
     ):
         add_step(doc, text, checkpoint_id)
 
     # HITO 2
     add_section_title(doc, "Hito 2 - Investigación y creación", page_break=True)
-    add_para(doc, "El segundo hito transforma el modelo inicial en un procedimiento reproducible. Esta fase agrega análisis diferencial, estrategia de dimensionamiento, validación dimensional, algoritmo, software y resultados intermedios verificables sin confundirlos con el caso definitivo.")
+    add_para(doc, "El segundo hito transforma el modelo inicial en un procedimiento reproducible. De acuerdo con la retroalimentación del profesor, el análisis diferencial se limita a la función y la primera derivada que sí cambian la interpretación del dimensionamiento. Los demás cálculos son balances energéticos, restricciones o comparaciones de apoyo.")
 
-    doc.add_paragraph("7. Desarrollo matemático completo", style="Heading 2")
-    doc.add_paragraph("7.1 Dominio, continuidad y límites", style="Heading 3")
-    add_para(doc, "Si se estudia un periodo con C, P, d, PR y q constantes, la cantidad continua depende de las horas solares pico h mediante una función racional. Se agrupan las constantes positivas en K.")
-    add_equation(doc, "K = q · C / (P · d · PR)        y        n(h) = K / h,     con h > 0")
-    add_equation(doc, "lim h→0+ n(h) = +∞        |        lim h→+∞ n(h) = 0")
-    add_para(doc, "La función es continua en todo su dominio físico h > 0. Cuando el recurso solar se aproxima a cero, la cantidad teórica crece sin cota. Cuando h aumenta, n(h) disminuye y se aproxima a cero, aunque el sistema real conserva restricciones discretas y físicas.")
+    doc.add_paragraph("7. Desarrollo matemático esencial", style="Heading 2")
+    doc.add_paragraph("7.1 Función directamente asociada con la decisión", style="Heading 3")
+    add_para(doc, "Sea D la demanda de energía del periodo, q la fracción de consumo que se desea compensar, P la potencia nominal de un panel y Y el rendimiento específico neto del sitio para ese mismo periodo. La cantidad continua de paneles es:")
+    add_equation(doc, "n(Y) = q · D / (P · Y),     con Y > 0")
+    add_para(doc, "Esta función conecta una entrada solar que cambia según el sitio y la configuración con la salida principal del proyecto. Primero se interpreta n(Y) como capacidad continua; después se aplica N = ⌈n(Y)⌉ para obtener paneles enteros. Así, el redondeo no distorsiona el análisis.")
 
-    doc.add_paragraph("7.2 Tasa promedio, primera derivada y segunda derivada", style="Heading 3")
-    add_equation(doc, "TVP[h₁,h₂] = [n(h₂) - n(h₁)] / (h₂ - h₁)")
-    add_equation(doc, "n'(h) = -K / h² < 0        |        n''(h) = 2K / h³ > 0")
-    add_para(doc, "El signo negativo prueba que una mejora del recurso solar reduce la necesidad continua. La segunda derivada positiva indica convexidad: la reducción marginal es grande cuando h es bajo y se modera al aumentar h. Por ello, un error pequeño de radiación tiene mayor impacto relativo en sitios o meses de recurso reducido.")
-    add_equation(doc, "Elasticidad = n'(h) · h / n(h) = -1", note="Un aumento relativo de 1 % en h produce, localmente, una disminución relativa aproximada de 1 % en n*, manteniendo lo demás constante.")
+    doc.add_paragraph("7.2 Primera derivada e interpretación práctica", style="Heading 3")
+    add_equation(doc, "n'(Y) = -q · D / (P · Y²) < 0")
+    add_para(doc, "La derivada mide el cambio local de la necesidad continua de paneles por cada unidad adicional de rendimiento específico. Su signo negativo tiene impacto directo: si PVGIS estima un mayor rendimiento, se requieren menos paneles continuos para la misma demanda, potencia y meta. La aplicación muestra esta sensibilidad antes del redondeo para que el usuario entienda si la recomendación está cerca de cambiar de entero.")
+    add_callout(doc, "Ejemplo con Bogotá", "Con D = 1.872 kWh/año, P = 0,45 kWp, q = 1 y Y = 1.260,65 kWh/kWp-año, se obtiene n(Y) = 3,300 y n'(Y) ≈ -0,002618 paneles por cada kWh/kWp-año. Cerca de ese punto, 100 unidades adicionales de rendimiento reducen la necesidad continua en aproximadamente 0,262 paneles. La decisión entera se recalcula después con ceil.")
+    add_callout(doc, "Alcance del cálculo diferencial", "El informe conserva únicamente la función n(Y) y su primera derivada porque ambas explican una variación con impacto directo en la decisión. Los contenidos que no cambian el dimensionamiento quedan fuera, de acuerdo con la retroalimentación docente.", fill=PALE_GOLD, accent=GOLD)
 
-    doc.add_paragraph("7.3 Regla del cociente y sensibilidad multivariable", style="Heading 3")
-    add_para(doc, "El mismo razonamiento puede aplicarse a otras entradas. Para n* = qC/(P h d PR), la función aumenta linealmente con C y q, y disminuye de forma hiperbólica con P, h, d y PR.")
-    add_equation(doc, "∂n*/∂C = q/(P h d PR) > 0        |        ∂n*/∂P = -qC/(P² h d PR) < 0")
-    add_equation(doc, "∂n*/∂PR = -qC/(P h d PR²) < 0")
-    add_para(doc, "Estas derivadas son del modelo continuo. No deben interpretarse como la posibilidad de instalar una fracción de panel; sirven para comparar sensibilidad antes del redondeo.")
+    doc.add_paragraph("7.3 Comparación discreta de inclinaciones", style="Heading 3")
+    add_para(doc, "La aplicación consulta en PVGIS una lista finita de inclinaciones candidatas y compara su rendimiento anual. Reporta el mejor valor entre los candidatos consultados. Este procedimiento es una comparación discreta de escenarios y no una aplicación adicional de cálculo diferencial.")
 
-    doc.add_paragraph("7.4 Razones relacionadas y aproximación lineal", style="Heading 3")
-    add_equation(doc, "dn/dt = (-K / h²) · dh/dt")
-    add_para(doc, "Si el recurso equivalente cambia con el tiempo, la razón relacionada traduce ese cambio en la velocidad de variación de la necesidad continua. Para perturbaciones pequeñas alrededor de h₀ se usa la aproximación lineal:")
-    add_equation(doc, "n(h₀ + Δh) ≈ n(h₀) + n'(h₀) · Δh")
-    add_para(doc, "La aplicación muestra la derivada en el punto de referencia y una variación aproximada para 0,1 HSP. El grupo debe explicar las unidades: paneles por HSP y paneles para el incremento considerado.")
-
-    doc.add_paragraph("7.5 Incertidumbre determinista", style="Heading 3")
-    add_para(doc, "Si u representa una variación fraccional simétrica del rendimiento, el modelo calcula un intervalo de escenarios. No es un intervalo estadístico de confianza; es una prueba determinista de sensibilidad.")
-    add_equation(doc, "n* (optimista) = n* / (1 + u)        |        n* (conservador) = n* / (1 - u),     0 ≤ u < 1")
-    add_para(doc, "Después se aplica ceil a cada extremo para mostrar cantidades enteras. El grupo debe justificar el valor de u con la fuente solar, incertidumbre de medición o un análisis de escenarios.")
-
-    doc.add_paragraph("7.6 Optimización de inclinación", style="Heading 3")
-    add_para(doc, "Para una inclinación fija beta se define el rendimiento anual Y(beta). Maximizar Y equivale a minimizar la necesidad continua, siempre que consumo, potencia y meta permanezcan constantes.")
-    add_equation(doc, "máx. Y(β)        ⇔        mín. n*(β) = q · ΣCₘ / [P · ΣYₘ(β)]")
-    add_equation(doc, "Y'(βᵢ) ≈ [Y(βᵢ₊₁) - Y(βᵢ₋₁)] / [βᵢ₊₁ - βᵢ₋₁]")
-    add_para(doc, "El prototipo consulta una rejilla de inclinaciones candidatas en PVGIS y selecciona la de mayor producción anual. Las derivadas se aproximan con diferencias finitas. El máximo encontrado pertenece a la rejilla consultada; no prueba por sí solo un máximo global continuo.")
+    doc.add_paragraph("7.4 Escenario de incertidumbre", style="Heading 3")
+    add_para(doc, "El rango configurado de incertidumbre es un apoyo para explorar cómo una variación del rendimiento podría cambiar el número entero recomendado. No se presenta como tema de cálculo diferencial ni como intervalo estadístico de confianza.")
 
     doc.add_paragraph("8. Variables, unidades y controles", style="Heading 2")
     add_table(
@@ -892,6 +978,7 @@ def build_document() -> Document:
             ("dₘ", "Días del periodo", "día/mes; 1 a 45", "Entrada"),
             ("PRₘ", "Factor global de rendimiento", "0 < PR ≤ 1", "Solo modo manual"),
             ("Yₘ⁽ⁿᵉᵗ⁾", "Rendimiento específico neto", "kWh/kWp-mes; > 0", "Modo PVGIS"),
+            ("Y", "Rendimiento específico neto del periodo", "kWh/kWp-periodo; > 0", "Variable de n(Y)"),
             ("q", "Meta de cobertura", "0 < q ≤ 1", "Decisión"),
             ("Aᵤ", "Área útil del techo", "m²; ≥ 0", "Restricción"),
             ("fₐᵣₑₐ", "Factor de separación/montaje", "1 a 3", "Parámetro"),
@@ -912,7 +999,8 @@ def build_document() -> Document:
         "Obtener nₘ*, el balance anual y el mes limitante.",
         "Elegir estrategia anual o conservadora; conservar n* y aplicar ceil solo al final.",
         "Calcular Nₘₐₓ del techo y separar recomendación de cantidad instalable.",
-        "Generar producción, cobertura, balances, sensibilidad, incertidumbre y advertencias.",
+        "Generar producción, cobertura, balances, sensibilidad n'(Y), incertidumbre y advertencias.",
+        "Comparar inclinaciones candidatas de forma discreta; no inferir un óptimo continuo.",
         "Exportar resultados con procedencia y conservar los soportes fuera de la aplicación.",
     ):
         add_step(doc, text, algorithm_id)
@@ -928,10 +1016,10 @@ def build_document() -> Document:
         [
             ("Presentación", "Formulario, navegación y estilos", "app/page, globals.css"),
             ("Interacción", "Estado, consulta, importación y exportación", "SolarFitApp"),
-            ("Dominio", "Cálculo, métricas, facturas y optimización", "domain/solar"),
+            ("Dominio", "Cálculo, contraste, facturas y comparación de inclinaciones", "domain/solar"),
             ("Servicios", "Normalización y proveedores solares", "services/pvgis, pvwatts"),
-            ("API", "Validación de parámetros y llamadas externas", "api/pvgis, optimize, pvwatts"),
-            ("Pruebas", "Casos de cálculo, archivos y proveedores", "7 archivos, 32 pruebas"),
+            ("API", "Control de parámetros y llamadas externas", "api/pvgis, optimize, pvwatts"),
+            ("Pruebas", "Casos de cálculo, archivos y proveedores", "9 archivos, 38 pruebas"),
         ],
         [1800, 4300, 3260],
         font_size=9.0,
@@ -944,94 +1032,104 @@ def build_document() -> Document:
         ["Problema detectado", "Ajuste", "Efecto"],
         [
             ("Posible duplicación de pérdidas", "Dos modos solares excluyentes.", "PVGIS no vuelve a multiplicarse por PR."),
-            ("Redondeo prematuro", "Se conserva n*.", "Las derivadas y comparaciones son coherentes."),
+            ("Redondeo prematuro", "Se conserva n*.", "La derivada n'(Y) y la decisión entera son coherentes."),
             ("Techo insuficiente", "Dos cantidades: requerida e instalable.", "La app no oculta la inviabilidad."),
             ("Factura no alineada con mes", "Utilidad de prorrateo diario.", "Permite calendarizar periodos reales."),
-            ("Fuente sin trazabilidad", "Metadatos de procedencia.", "Distingue sintético, usuario y oficial."),
-            ("Resultado puntual", "Sensibilidad e incertidumbre.", "La recomendación se interpreta como escenario."),
+            ("Fuente sin trazabilidad", "Metadatos de procedencia.", "Distingue simulación calibrada, usuario y fuente oficial."),
+            ("Exceso de temas matemáticos", "Se conserva solo n(Y) y n'(Y).", "Cada concepto de cálculo tiene impacto directo."),
+            ("Demanda arbitraria", "Promedios UPME/CORPOEMA y regla constante explícita.", "Casos calibrados sin estacionalidad inventada."),
         ],
         [2500, 3060, 3800],
         font_size=8.9,
     )
 
     doc.add_paragraph("12. Visualización y resultado intermedio", style="Heading 2")
-    add_para(doc, "La interfaz se divide en Datos, Modelo y Resultados. Presenta la recomendación, la capacidad continua, la cobertura anual, la restricción física, una serie mensual y la curva n(h). La captura siguiente demuestra el estado visual del software con datos sintéticos.")
+    add_para(doc, "La interfaz se divide en Datos, Modelo y Resultados. Presenta la recomendación, la capacidad continua, la cobertura anual, la restricción física, una serie mensual y la curva n(Y). El caso inicial está rotulado como simulación calibrada y permite distinguir datos oficiales, estimaciones de proveedor y supuestos de prueba.")
     if RESULTS_IMAGE.exists():
-        add_figure(doc, RESULTS_IMAGE, "Figura 1. Pantalla de resultados con el escenario didáctico. Esta captura demuestra la ejecución visual del prototipo, pero sus valores no constituyen por sí solos el caso definitivo. Elaboración propia.")
+        add_figure(doc, RESULTS_IMAGE, "Figura 1. Pantalla de resultados del prototipo. La captura demuestra la ejecución visual; las cifras deben leerse junto con la procedencia y los supuestos del caso. Elaboración propia.")
     else:
-        add_callout(doc, "Figura pendiente", "No se encontró la captura del prototipo en la ruta prevista. Inserte una captura real de la versión verificada.", fill=PALE_RED, accent=RED)
+        add_callout(doc, "Figura pendiente", "No se encontró la captura del prototipo en la ruta prevista. Inserte una captura actual de la versión verificada.", fill=PALE_RED, accent=RED)
 
     # HITO 3
     add_section_title(doc, "Hito 3 - Comunicación y evaluación", page_break=True)
-    add_para(doc, "El tercer hito integra el proceso completo, demuestra el producto y establece cómo validar las conclusiones. Los resultados del caso definitivo deben reemplazar los campos editables de esta sección. La rúbrica permite condiciones reales o simuladas; si se elige simulación, debe declararse, justificarse y conservar su regla de construcción.")
+    add_para(doc, "El tercer hito integra el proceso completo, demuestra el producto y documenta cinco simulaciones calibradas. Esta ruta se adopta porque levantar cinco instalaciones reales no es viable en el tiempo del curso. Cada caso conserva la fuente de demanda, los parámetros, las respuestas de PVGIS y PVWatts y las limitaciones de interpretación.")
 
     doc.add_paragraph("13. Producto final", style="Heading 2")
     add_para(doc, "El producto es un prototipo web de prefactibilidad denominado SolarFit Hogar. Su salida principal es una recomendación explicable de potencia y paneles, acompañada por cantidad continua, producción y cobertura mensuales, balance, sensibilidad, incertidumbre, viabilidad por área y advertencias de alcance.")
     add_table(
         doc,
-        ["Capacidad", "Estado al 21/08/2026", "Evidencia"],
+        ["Capacidad", "Estado al 07/09/2026", "Evidencia"],
         [
             ("Formulario de 12 meses", "Implementado", "Interfaz y dominio"),
             ("Importación CSV", "Implementado", "Parser mensual"),
             ("Cálculo anual y conservador", "Implementado", "calculateSolarProject"),
             ("PVGIS neto", "Implementado", "Ruta /api/pvgis"),
-            ("Optimización por rejilla", "Implementado", "Interfaz y ruta /api/pvgis/optimize"),
+            ("Comparación discreta de inclinaciones", "Implementado", "Interfaz y ruta técnica /api/pvgis/optimize"),
             ("PVWatts independiente", "Implementado", "Interfaz y ruta /api/pvwatts; requiere NLR_API_KEY"),
             ("Gráficos y tabla mensual", "Implementado", "SVG e interfaz"),
             ("Importación/exportación JSON y exportación CSV/PDF", "Implementado", "Restauración, descargas e impresión"),
-            ("Caso definitivo del grupo", "Pendiente", "Ruta real o simulada por documentar"),
+            ("Cinco simulaciones calibradas", "Ejecutadas", "UPME/CORPOEMA + PVGIS + PVWatts + ficha LONGi"),
         ],
         [2900, 2800, 3660],
         font_size=8.9,
     )
-    add_callout(doc, "Resultado de la verificación técnica", "El comando pnpm check finalizó correctamente el 21/08/2026: ESLint sin errores, tipos de rutas generados, TypeScript sin errores, 7 archivos de pruebas con 32 pruebas aprobadas y compilación productiva de Next.js completada. Las rutas generadas fueron /, /api/pvgis, /api/pvgis/optimize y /api/pvwatts.")
+    add_callout(doc, "Resultado de la verificación técnica", "El comando pnpm check finalizó correctamente el 07/09/2026: ESLint sin errores, TypeScript sin errores, 9 archivos de pruebas con 38 pruebas aprobadas y compilación productiva de Next.js completada. Esta verificación demuestra consistencia interna del software, no desempeño medido de una instalación solar.")
 
-    doc.add_paragraph("14. Resultados del caso de estudio", style="Heading 2")
-    add_editable(doc, "consumo anual = [___] kWh; periodo analizado = [___]; fuente = [facturas anonimizadas o serie simulada documentada].")
-    add_editable(doc, "ubicación general = [___]; latitud/longitud aproximadas = [___]; fecha de consulta solar = [___].")
-    add_editable(doc, "panel = [fabricante/modelo]; potencia = [___] Wp; dimensiones = [___] m; ficha adjunta = [sí/no].")
-    add_editable(doc, "área útil = [___] m²; método de medición y descuento de obstáculos = [___].")
-    add_editable(doc, "estrategia elegida = [anual/conservadora]; meta q = [___] %; justificación = [___].")
+    doc.add_paragraph("14. Resultados de los cinco casos calibrados", style="Heading 2")
+    add_para(doc, "Los cinco casos usan meta q = 100 %, panel LONGi de 450 W, inclinación de 10°, azimut de 180°, pérdidas de 14 % y factor de área de 1,10. El consumo permanece constante durante doce meses: esa regla reproduce el promedio oficial disponible y evita inventar estacionalidad. Las áreas de techo son supuestos deliberados para probar tanto escenarios viables como uno restringido.")
     add_table(
         doc,
-        ["Resultado del caso", "Valor", "Unidad", "Interpretación del grupo"],
+        ["Caso calibrado", "Base mensual de demanda", "Demanda anual", "Techo supuesto"],
         [
-            ("Cantidad continua n*", "[___]", "paneles", "[___]"),
-            ("Cantidad recomendada N", "[___]", "paneles", "[___]"),
-            ("Capacidad recomendada", "[___]", "kWp", "[___]"),
-            ("Máximo por techo", "[___]", "paneles", "[___]"),
-            ("Cobertura anual modelada", "[___]", "%", "[___]"),
-            ("Mes limitante", "[___]", "mes", "[___]"),
-            ("Inclinación candidata seleccionada", "[___]", "grados", "[___]"),
-            ("Rango por incertidumbre", "[___] a [___]", "paneles", "[___]"),
+            (
+                case["case"],
+                case["demand_basis"],
+                f'{fmt_decimal(case["annual_demand"], 1)} kWh',
+                f'{fmt_decimal(case["roof_area"], 1)} m²; máximo {case["roof_max"]} paneles',
+            )
+            for case in CASES
         ],
-        [2800, 1700, 1500, 3360],
+        [2100, 3400, 1700, 2160],
         font_size=8.8,
     )
-    add_callout(doc, "Prohibición de sustitución", "No copie automáticamente los 5 paneles ni el 102 % que aparecen en la captura de demostración. Esos valores prueban la ejecución visual del software; solo pueden convertirse en resultado del caso si el grupo formaliza y documenta ese escenario simulado.", fill=PALE_RED, accent=RED)
+    add_table_source(doc, "Fuente de demanda: UPME/CORPOEMA (2019), promedio SUI 2018 por altura para el SIN (p. 28) y por clima para el sector rural (p. 81). Bogotá, Barranquilla, Medellín y Cali se calibran por rango altitudinal; Quibdó usa el promedio rural cálido. No son promedios municipales ni facturas domésticas.")
+    add_table(
+        doc,
+        ["Caso", "Y PVGIS / PVWatts", "n(Y) y decisión", "Instalable y cobertura", "Mínimo mensual"],
+        [
+            (
+                case["case"],
+                f'{fmt_decimal(case["pvgis_yield"])} / {fmt_decimal(case["pvwatts_yield"])} kWh/kWp-año',
+                f'{fmt_decimal(case["continuous_panels"], 3)}; N {case["pvgis_panels"]} / {case["pvwatts_panels"]}; conservador {case["conservative_panels"]}',
+                f'{case["buildable_panels"]} paneles; {fmt_decimal(case["production"])} kWh; {fmt_decimal(case["coverage"])} %',
+                f'{fmt_decimal(case["minimum_coverage"])} % en {case["critical_month"]}',
+            )
+            for case in CASES
+        ],
+        [1700, 1900, 2050, 2350, 1360],
+        font_size=7.8,
+    )
+    add_table_source(doc, "Y es rendimiento específico neto anual. La decisión muestra paneles por balance anual con PVGIS / PVWatts; el valor conservador corresponde al mes más exigente. Producción y cobertura usan únicamente la capacidad físicamente instalable en PVGIS.")
+    add_callout(doc, "Hallazgo de borde", "Quibdó requiere 4 paneles por balance anual PVGIS, pero el techo supuesto solo admite 3. Por eso la aplicación no promete la meta: informa 85,06 % de cobertura anual estimada y 74,05 % en junio. PVWatts, contrastado sobre esos mismos 3 paneles, entrega un rendimiento mayor y sí cambia la decisión energética a 3; la discrepancia se conserva como incertidumbre entre modelos, no se oculta.", fill=PALE_GOLD, accent=GOLD)
+    add_callout(doc, "Interpretación responsable", "Estos resultados son simulaciones calibradas y reproducibles. Sirven para probar el cálculo, comparar escenarios y sustentar el funcionamiento del MVP. No demuestran cuánto producirá una instalación específica ni reemplazan facturas, medición de techo, sombras, inspección estructural o diseño eléctrico.", fill=PALE_GOLD, accent=GOLD)
 
-    doc.add_paragraph("15. Plan y métricas de validación", style="Heading 2")
-    add_para(doc, "La validación se desarrolla en capas para no confundir exactitud numérica con validez del fenómeno.")
+    doc.add_paragraph("15. Verificación y contraste de resultados", style="Heading 2")
+    add_para(doc, "La evidencia se organiza en capas para no confundir corrección del algoritmo con exactitud física. Al no existir mediciones de sistemas instalados, el trabajo no afirma validación empírica.")
     add_table(
         doc,
         ["Capa", "Prueba", "Criterio"],
         [
             ("Dimensional", "Revisar unidades de cada ecuación.", "Gₘ en kWh/panel-mes y n* adimensional en paneles."),
-            ("Analítica", "Monotonicidad y derivadas.", "Aumentar P o h reduce n*; aumentar C o q lo incrementa."),
+            ("Analítica", "Comprobar n'(Y).", "Al aumentar Y debe disminuir n(Y) antes del redondeo."),
             ("Algorítmica", "Casos manuales y unitarios.", "Coincidencia dentro de tolerancia y redondeo al final."),
             ("Restricciones", "Techo insuficiente y extremos.", "Advertencia explícita; no truncar recomendación."),
-            ("Externa", "Comparar PVGIS con PVWatts u otra fuente.", "Mismos sitio, potencia, inclinación, azimut y pérdidas."),
-            ("Empírica", "Si existen mediciones de generación.", "Comparación mensual y explicación de desviaciones."),
+            ("Contraste externo", "Comparar PVGIS con PVWatts.", "Misma capacidad instalable, sitio de referencia, inclinación, azimut y pérdidas."),
+            ("Trazabilidad", "Reconstruir cada caso.", "Fuente oficial, supuesto, entrada, transformación y salida identificables."),
         ],
         [1600, 3960, 3800],
         font_size=8.8,
     )
-    add_equation(doc, "MAE = (1/M) · Σ|Eₘ - Rₘ|")
-    add_equation(doc, "RMSE = √[(1/M) · Σ(Eₘ - Rₘ)²]")
-    add_equation(doc, "MAPE = (100/M⁺) · Σ|(Eₘ - Rₘ) / Rₘ|")
-    add_equation(doc, "Sesgo anual (%) = 100 · [ΣEₘ - ΣRₘ] / ΣRₘ")
-    add_para(doc, "Eₘ representa la energía modelada y Rₘ la referencia del mes m; M⁺ cuenta únicamente meses con referencia positiva. El MAE conserva kWh; RMSE penaliza más los errores grandes; MAPE facilita lectura porcentual pero no se define para referencia cero; el sesgo identifica sobreestimación o subestimación anual.")
-    add_editable(doc, "registrar herramienta independiente, fecha, parámetros iguales, series mensuales, MAE, RMSE, MAPE, sesgo y explicación de diferencias.")
+    add_para(doc, "El contraste principal usa dos magnitudes comprensibles para la decisión: rendimiento anual estimado por cada proveedor y cantidad entera de paneles resultante. En cuatro casos ambas fuentes producen la misma decisión anual; en Quibdó difieren en un panel. Esta comparación no determina cuál proveedor es empíricamente más exacto porque no hay producción medida en sitio.")
 
     doc.add_paragraph("16. Limitaciones e interpretación responsable", style="Heading 2")
     for text in (
@@ -1041,8 +1139,10 @@ def build_document() -> Document:
         "El factor de área aproxima separaciones; no modela geometría, pasillos, cargas de viento ni estructura.",
         "La ficha de potencia nominal no describe por sí sola temperatura, degradación, tolerancias ni compatibilidad eléctrica.",
         "El criterio conservador puede sobredimensionar si la red permite compensar excedentes entre periodos; su elección debe justificarse.",
-        "La optimización por rejilla selecciona el mejor candidato probado, no una solución continua exacta.",
+        "La comparación de inclinaciones selecciona el mejor candidato probado, no un óptimo continuo.",
         "La incertidumbre configurada es un escenario determinista y no un intervalo probabilístico calibrado.",
+        "Los consumos UPME/CORPOEMA son promedios por piso térmico o sector; no describen cada ciudad ni sustituyen las facturas de una vivienda.",
+        "Las coordenadas de referencia y áreas de techo son supuestos reproducibles de prueba; no son levantamientos de inmuebles.",
     ):
         add_step(doc, text, limitations_id)
 
@@ -1052,26 +1152,26 @@ def build_document() -> Document:
         ["Corte", "Pregunta dominante", "Avance acumulado", "Evidencia"],
         [
             ("Hito 1", "¿Qué problema se modela?", "Contexto, objetivos, fuentes, variables, primer modelo y plan.", "Anteproyecto revisado."),
-            ("Hito 2", "¿Cómo funciona y cambia el modelo?", "Derivadas, sensibilidad, algoritmo, arquitectura, pruebas y visualizaciones.", "Prototipo verificable."),
-            ("Hito 3", "¿Por qué la solución es válida y cómo se comunica?", "Validación, limitaciones, reflexión, documento, póster y pitch.", "Paquete final y caso trazable."),
+            ("Hito 2", "¿Cómo funciona y cambia el modelo?", "n(Y), n'(Y), algoritmo, arquitectura, pruebas y visualizaciones.", "Prototipo verificable."),
+            ("Hito 3", "¿Qué evidencia lo respalda y cómo se comunica?", "Casos calibrados, contraste, limitaciones, reflexión, documento, póster y pitch.", "Paquete final trazable."),
         ],
         [1300, 2200, 3660, 2200],
         font_size=8.8,
     )
-    add_para(doc, "La coherencia se conserva porque la pregunta original no cambia; cada corte añade profundidad. El principal cambio metodológico fue separar el modo manual del rendimiento neto de PVGIS. También se distinguieron recomendación energética y capacidad física, y se agregó trazabilidad para no presentar datos sintéticos como reales.")
+    add_para(doc, "La coherencia se conserva porque la pregunta original no cambia; cada corte añade evidencia. La corrección más importante fue retirar temas matemáticos que no incidían en la decisión y concentrar el cálculo diferencial en n(Y) y n'(Y). También se distinguieron recomendación energética y capacidad física, y se calibraron los casos con datos oficiales sin presentarlos como mediciones reales.")
 
     doc.add_paragraph("18. Reflexión crítica sobre matemática e IA", style="Heading 2")
-    add_para(doc, "La matemática aporta una estructura explicable. La función n(h) permite demostrar dirección, intensidad y curvatura del cambio; la optimización y las diferencias finitas conectan el problema con valores máximos y mínimos; el análisis de incertidumbre muestra que una recomendación entera surge de un modelo continuo sometido a datos imperfectos. Sin estas herramientas, la aplicación sería una calculadora opaca.")
+    add_para(doc, "La matemática aporta una estructura explicable. La función n(Y) convierte demanda, potencia y rendimiento en una necesidad continua; su primera derivada cuantifica directamente cómo cambia esa necesidad cuando cambia la estimación solar. El redondeo y la restricción del techo convierten luego el resultado continuo en una decisión física. Esta relación es suficiente para el objetivo del proyecto; agregar otros temas del curso no mejoraría la decisión.")
     add_para(doc, "La IA se utilizó como apoyo para analizar requisitos, proponer alternativas, revisar fórmulas, estructurar código, generar pruebas y preparar documentación. Su utilidad fue acelerar la exploración y detectar riesgos, especialmente la duplicación de pérdidas. Sus respuestas no se aceptaron como autoridad: se contrastaron con los archivos del curso, el código ejecutado, pruebas unitarias y documentación oficial.")
-    add_callout(doc, "Aprendizaje", "Una salida computacional puede ser precisa respecto del algoritmo y aun así ser inválida para el mundo real si las entradas, unidades o supuestos no son trazables. La validación debe abarcar datos, modelo, código e interpretación.")
+    add_callout(doc, "Aprendizaje", "Una salida computacional puede ser precisa respecto del algoritmo y aun así no describir una vivienda concreta si las entradas son promedios y supuestos. Por eso el informe distingue verificación del código, contraste entre modelos y validación empírica, que aquí no se realizó.")
 
     doc.add_paragraph("19. Conclusiones", style="Heading 2")
     for text in (
         "La cantidad de paneles depende del consumo, la meta, el recurso solar, la potencia, las pérdidas y el área; no existe una cifra universal para una vivienda.",
         "El modelo manual y el modelo con rendimiento neto son alternativas, no factores acumulables.",
-        "La solución continua permite interpretar derivadas; ceil convierte esa solución en una decisión física solo al final.",
+        "La solución continua n(Y) y su primera derivada aportan la sensibilidad directamente útil; ceil convierte esa solución en una decisión física solo al final.",
         "La restricción de techo debe reportarse por separado para no ocultar una meta energéticamente requerida pero físicamente inviable.",
-        "El prototipo está técnicamente implementado y verificado internamente, pero la conclusión del caso exige datos y validación externa del grupo.",
+        "El prototipo está técnicamente implementado, verificado internamente y probado con cinco simulaciones calibradas; ninguna equivale a una validación empírica en una vivienda.",
         "El potencial de startup existe como hipótesis de valor y requiere validación comercial, legal y operacional fuera del alcance académico actual.",
     ):
         add_step(doc, text, conclusions_id)
@@ -1081,9 +1181,9 @@ def build_document() -> Document:
     add_para(doc, "Herramienta utilizada. ChatGPT/Codex de OpenAI.", bold_lead="Herramienta utilizada.")
     add_para(doc, "Propósitos. Análisis de fuentes y rúbricas; organización del trabajo; exploración y revisión del modelo; apoyo en arquitectura, programación, pruebas, redacción y diseño de entregables.", bold_lead="Propósitos.")
     add_para(doc, "Aportes aceptados. Separación de los dos modos solares; conservación de la solución continua; advertencias de techo; diseño modular; pruebas de monotonicidad y de no duplicación de pérdidas; estructura acumulativa del informe.", bold_lead="Aportes aceptados.")
-    add_para(doc, "Aportes modificados. Las propuestas iniciales se ajustaron a las unidades del problema, los archivos del curso, las restricciones del prototipo y la necesidad de distinguir demostración de evidencia real.", bold_lead="Aportes modificados.")
+    add_para(doc, "Aportes modificados. Las propuestas iniciales se ajustaron a las unidades del problema, los archivos del curso y la retroalimentación docente: se retiraron cálculos accesorios, se calibró la demanda con una fuente oficial y se distinguió simulación de medición real.", bold_lead="Aportes modificados.")
     add_para(doc, "Aportes rechazados o no incorporados. Cualquier dato numérico no soportado, referencias no verificadas, promesas de ahorro, diseño eléctrico detallado y atribuciones personales no demostrables.", bold_lead="Aportes rechazados o no incorporados.")
-    add_para(doc, "Validación. Revisión dimensional y analítica, pruebas unitarias, verificación de tipos, análisis estático, compilación productiva, comparación con documentos oficiales del curso y lectura de documentación oficial de los servicios solares.", bold_lead="Validación.")
+    add_para(doc, "Verificación. Revisión dimensional y analítica, pruebas unitarias, verificación de tipos, análisis estático, compilación productiva y contraste de PVGIS con PVWatts bajo parámetros comparables.", bold_lead="Verificación.")
     add_callout(doc, "Responsabilidad académica", "El grupo debe comprender, revisar y poder explicar todas las fórmulas, decisiones, resultados y limitaciones. La IA no sustituye la sustentación ni la autoría estudiantil.", fill=PALE_GOLD, accent=GOLD)
     add_editable(doc, "anexar o enlazar los prompts y respuestas relevantes que el profesor solicite; indicar quién revisó cada aporte y qué cambió.")
 
@@ -1104,15 +1204,15 @@ def build_document() -> Document:
 
     add_section_title(doc, "Plan de comunicación del Hito 3", page_break=False)
     doc.add_paragraph("22. Póster académico", style="Heading 2")
-    add_para(doc, "La tercera entrega exige un póster académico virtual o impreso. Debe permitir comprender el problema, el método, el resultado del caso definitivo y la validación sin leer el informe completo. La información debe coincidir con la versión final de este documento.")
+    add_para(doc, "La tercera entrega exige un póster académico virtual o impreso. Debe permitir comprender el problema, el método, los resultados de los casos calibrados y su contraste sin leer el informe completo. La información debe coincidir con la versión final de este documento.")
     for text in (
         "Título y pregunta de investigación.",
         "Contexto y alcance: conectado a red, sin baterías, prefactibilidad.",
         "Entradas del caso y fuentes trazables.",
         "Dos ecuaciones centrales y explicación del redondeo.",
         "Resultado principal del caso y restricción de techo.",
-        "Gráfica mensual y sensibilidad/optimización.",
-        "Validación independiente y métricas.",
+        "Gráfica mensual, función n(Y) y significado de n'(Y).",
+        "Contraste PVGIS/PVWatts y límites de la simulación.",
         "Limitaciones, declaración de IA y autores.",
     ):
         add_step(doc, text, poster_id)
@@ -1126,7 +1226,7 @@ def build_document() -> Document:
             ("0:00-0:35", "Problema, usuario y pregunta.", "¿Qué problema abordamos?"),
             ("0:35-1:35", "Datos, ecuaciones, derivada y algoritmo.", "¿Cómo lo resolvimos?"),
             ("1:35-2:20", "Resultado del caso, gráfica y techo.", "¿Qué encontramos?"),
-            ("2:20-2:50", "Validación, incertidumbre y limitaciones.", "¿Por qué es válido?"),
+            ("2:20-2:50", "Contraste, supuestos y limitaciones.", "¿Qué respalda y limita el resultado?"),
             ("2:50-3:00", "Cierre y propuesta de valor.", "¿Por qué importa?"),
         ],
         [1600, 4400, 3360],
@@ -1147,14 +1247,17 @@ def build_document() -> Document:
         "European Commission, Joint Research Centre. (s. f.). PVGIS non-interactive service. https://joint-research-centre.ec.europa.eu/photovoltaic-geographical-information-system-pvgis/using-pvgis-5/api-non-interactive-service_en",
         "European Commission, Joint Research Centre. (s. f.). PVGIS 5 user manual. https://joint-research-centre.ec.europa.eu/photovoltaic-geographical-information-system-pvgis/using-pvgis-5/pvgis-5-user-manual_en",
         "National Laboratory of the Rockies. (s. f.). PVWatts V8 API. https://developer.nlr.gov/docs/solar/pvwatts/v8/",
+        "Unidad de Planeación Minero Energética y CORPOEMA. (2019). Estimación de los consumos de subsistencia en energía eléctrica, gas natural y GLP en territorio nacional SIN y ZNI: informe final. https://bdigital.upme.gov.co/handle/001/1367",
+        "LONGi Solar. (s. f.). Hi-MO X6 Explorer LR5-54HTH 445-455M: ficha técnica oficial del módulo fotovoltaico. https://static.longi.com/Hi_MO_X6_LR_5_54_HTH_445_455_M_V1_30_30_and_15_V19_ES_09bf28ff6d.pdf",
         "Equipo SolarFit Hogar. (2026). Código fuente y documentación técnica del prototipo SolarFit Hogar [Repositorio local del proyecto].",
     )
     for ref in references:
         add_step(doc, ref, references_id)
-    add_editable(doc, "agregar la ficha técnica oficial del módulo, la fuente de cada factura/medición y cualquier normativa o fuente adicional efectivamente usada.")
+    add_editable(doc, "agregar cualquier normativa o fuente adicional que el grupo use efectivamente y conservar copia de las respuestas de los proveedores solares.")
 
     # ANNEXES
-    add_section_title(doc, "Anexo A - Ficha del caso definitivo", page_break=True)
+    add_section_title(doc, "Anexo A - Ficha para un caso propio opcional", page_break=True)
+    add_para(doc, "Los cinco casos calibrados ya documentan la prueba del MVP. Esta ficha permite que el grupo o un compañero agregue después una vivienda propia; sus datos no deben mezclarse con los casos oficiales calibrados.")
     add_table(
         doc,
         ["Campo", "Registro del grupo", "Soporte"],
@@ -1182,7 +1285,7 @@ def build_document() -> Document:
 
     add_section_title(doc, "Anexo B - Protocolo reproducible", page_break=True)
     for text in (
-        "Elegir ruta real o simulada; archivar facturas anonimizadas o documentar la regla de generación de la serie.",
+        "Elegir ruta: facturas anonimizadas o simulación calibrada con una estadística oficial; documentar la decisión.",
         "Si un periodo cruza meses, documentar el prorrateo diario aplicado.",
         "Medir el área útil y descontar obstáculos, bordes y zonas no utilizables.",
         "Elegir un panel real y guardar la ficha técnica oficial.",
@@ -1190,7 +1293,7 @@ def build_document() -> Document:
         "Consultar PVGIS con potencia normalizada de 1 kWp y guardar configuración y respuesta.",
         "Ejecutar el cálculo; revisar solución continua, redondeo, cobertura y advertencias.",
         "Consultar una fuente independiente con parámetros comparables.",
-        "Calcular métricas y explicar discrepancias, no solo reportar porcentajes.",
+        "Contrastar rendimiento y decisión de paneles; explicar las discrepancias sin atribuir exactitud empírica.",
         "Actualizar informe, póster y pitch con exactamente los mismos resultados.",
         "Hacer revisión cruzada: cada integrante explica una sección que no lideró.",
     ):
@@ -1203,14 +1306,14 @@ def build_document() -> Document:
         ["Requisito", "Ubicación en el informe", "Estado antes de entrega"],
         [
             ("Contextualización y objetivos", "Secciones 1-2", "Desarrollado"),
-            ("Información previa y fuentes", "Sección 4 y Referencias", "Completar fuentes del caso"),
+            ("Información previa y fuentes", "Sección 4 y Referencias", "Desarrollado para cinco casos"),
             ("Primer modelo", "Sección 5", "Desarrollado"),
             ("Desarrollo matemático", "Sección 7", "Desarrollado; grupo debe sustentarlo"),
-            ("Resultados intermedios", "Secciones 11-12", "Demo claramente rotulado"),
+            ("Resultados intermedios", "Secciones 11-12", "Simulación calibrada rotulada"),
             ("Visualización/simulación", "Figura 1 y prototipo", "Implementado"),
             ("Ajustes y revisión", "Sección 11", "Desarrollado"),
             ("Producto funcional", "Sección 13", "Verificado internamente"),
-            ("Validación del caso", "Sección 15", "Pendiente del grupo"),
+            ("Contraste de casos", "Secciones 14-15", "PVGIS/PVWatts ejecutado"),
             ("Reflexión crítica", "Sección 18", "Borrador para revisión personal"),
             ("IA y contribuciones", "Secciones 20-21", "Contribuciones pendientes"),
             ("Póster y pitch", "Secciones 22-23", "Preparar con datos finales"),
@@ -1218,10 +1321,10 @@ def build_document() -> Document:
         [3200, 3000, 3160],
         font_size=8.8,
     )
-    add_callout(doc, "Condición de cierre", "El documento puede considerarse listo para entrega solo cuando no queden campos rojos, el caso definitivo —real o simulado documentado— haya sido validado, el póster coincida con el informe y todo el equipo pueda explicar el proyecto completo.", fill=PALE_GOLD, accent=GOLD)
+    add_callout(doc, "Condición de cierre", "El contenido técnico y los cinco casos están desarrollados. Antes de entregar, el grupo debe completar nombres y aportes reales, comprobar que el póster muestre las mismas cifras y asegurarse de que todos puedan explicar el proyecto.", fill=PALE_GOLD, accent=GOLD)
 
     add_section_title(doc, "Anexo D - Evidencia técnica de software", page_break=True)
-    add_para(doc, "Comando ejecutado el 21 de agosto de 2026:")
+    add_para(doc, "Comando ejecutado el 7 de septiembre de 2026:")
     add_equation(doc, "pnpm check")
     add_table(
         doc,
@@ -1229,30 +1332,30 @@ def build_document() -> Document:
         [
             ("ESLint", "Sin errores", "Calidad estática del código"),
             ("TypeScript", "Sin errores de tipos", "Coherencia de contratos"),
-            ("Vitest", "7 archivos; 32 pruebas aprobadas", "Motor, métricas, archivos, persistencia, proveedores y optimización"),
+            ("Vitest", "9 archivos; 38 pruebas aprobadas", "Motor, archivos, persistencia, proveedores, interfaz, contraste e inclinaciones"),
             ("Next build", "Compilación productiva exitosa", "Página estática y tres familias de rutas API"),
         ],
         [2100, 3000, 4260],
         font_size=9.0,
     )
-    add_para(doc, "Casos cubiertos por las pruebas incluyen redondeo al final, no duplicación de PR, techo inviable, monotonicidad ante mayor recurso solar, criterio conservador, primera y segunda derivada, métricas de comparación, prorrateo de facturas, normalización de rendimientos y análisis de inclinaciones.")
-    add_callout(doc, "Alcance de esta evidencia", "Una compilación correcta y 32 pruebas aprobadas demuestran consistencia interna del prototipo en los casos programados. No verifican por sí solas disponibilidad futura de APIs externas, exactitud de una factura, sombras del sitio ni viabilidad normativa.")
+    add_para(doc, "Las pruebas cubren redondeo al final, no duplicación de pérdidas, techo inviable, monotonicidad de n(Y), criterio conservador, primera derivada, prorrateo de facturas, normalización de rendimientos, contraste a igual capacidad y comparación de inclinaciones.")
+    add_callout(doc, "Alcance de esta evidencia", "Una compilación correcta y 38 pruebas aprobadas demuestran consistencia interna del prototipo en los casos programados. No verifican por sí solas disponibilidad futura de APIs externas, producción física, sombras del sitio ni viabilidad normativa.")
 
     add_section_title(doc, "Anexo E - Lista de cierre del grupo", page_break=True)
     checklist = (
         "[ ] Nombres y códigos completos en portada y declaración de contribuciones.",
-        "[ ] Ruta elegida: caso real con facturas anonimizadas o caso simulado con regla y propósito documentados.",
+        "[ ] Los cinco casos se presentan como simulaciones calibradas, no como viviendas medidas.",
         "[ ] Periodos y días revisados; prorrateo explicado cuando corresponde.",
         "[ ] Área útil, método de medición y obstáculos documentados.",
         "[ ] Ficha oficial del panel archivada y citada.",
         "[ ] PVGIS ejecutado con configuración final; respuesta conservada.",
         "[ ] Fuente independiente ejecutada con supuestos comparables.",
-        "[ ] MAE, RMSE, MAPE y sesgo calculados o no aplicabilidad justificada.",
-        "[ ] Resultados del caso definitivo reemplazan todos los campos rojos.",
-        "[ ] Demo sintético permanece rotulado y separado de la evidencia.",
+        "[ ] PVGIS y PVWatts se contrastan usando la misma capacidad instalable y parámetros comparables.",
+        "[ ] Resultados de los cinco casos coinciden con los archivos de evidencia.",
+        "[ ] Promedios oficiales, estimaciones solares y supuestos aparecen diferenciados.",
         "[ ] Póster y documento muestran cifras idénticas.",
         "[ ] Pitch cronometrado en 3 minutos y apoyado solo en el póster.",
-        "[ ] Cada integrante puede explicar modelo, derivadas, algoritmo, validación y límites.",
+        "[ ] Cada integrante puede explicar n(Y), n'(Y), algoritmo, contraste y límites.",
         "[ ] Declaración de IA revisada; prompts/evidencias anexados si se solicitan.",
         "[ ] Fecha operativa confirmada en AVATA.",
     )

@@ -34,8 +34,9 @@ La tabla resume tareas, no sustituye el historial completo. Cuando la rúbrica e
 | IA-07 | 18-08-2026 | Crear documentación técnica honesta basada en el código real | README, arquitectura, modelo, diccionario, plan, trazabilidad y guía | Marcadores explícitos para todo dato humano o empírico faltante | Revisión de rutas, tipos y fuentes del repositorio |
 | IA-08 | 18–21-08-2026 | Construir el informe completo, póster y guion del pitch | Borradores acumulativos en Word, póster editable y guion oral | Se conservaron marcadores para nombres y aportes; el demo no se declaró caso final | Renderización y revisión visual; revisión humana del equipo pendiente |
 | IA-09 | 21-08-2026 | “Continuar con la ejecución y el cierre de la construcción” | Importador JSON, esquema Zod, accesibilidad, APIs, pruebas, documentación y empaquetado reproducible | Se cerró el producto técnico sin inventar aportes personales | `pnpm check`, QA de navegador y humo de proveedores |
-| IA-10 | 21-08-2026 | Simular cinco usos cercanos a la realidad con fuentes exactas y construir los entregables restantes | Cinco fixtures, runner LIVE, PVGIS/PVWatts, métricas, JSON/CSV, libro de validación, informes, póster, pitch y roadmap | Se eligió la ruta `simulated_formal` permitida por la rúbrica y se rotuló como no experimental | Diez consultas externas, 37 pruebas, hashes, revisión de fórmulas, render de documentos y QA del póster |
+| IA-10 | 21-08-2026 | Simular cinco usos cercanos a la realidad con fuentes exactas y construir los entregables restantes | Cinco fixtures, runner LIVE, PVGIS/PVWatts, métricas, JSON/CSV, libro de validación, informes, póster, pitch y roadmap | Se eligió la ruta `simulated_formal` permitida por la rúbrica y se rotuló como no experimental | Diez consultas externas, hashes, revisión de fórmulas, render de documentos y QA del póster |
 | IA-11 | 21-08-2026 | Explicar la siguiente fase para convertir el MVP en startup | Hoja de ruta B2B2C, piloto medido, regulación, privacidad, métricas y modelo de negocio | Se separaron hechos oficiales de metas internas recomendadas | Enlaces oficiales de MinEnergía, UPME, CREG, RETIE y leyes colombianas |
+| IA-12 | 07-09-2026 | Corregir aplicación y entregables según la retroalimentación del profesor | Simplificación a `n(Y)` y `n′(Y)`; consumos recalibrados con promedios SUI 2018; nuevo contraste a igual capacidad; guía de uso y regeneración de artefactos | Se retiraron temas de cálculo sin impacto directo y toda estacionalidad de consumo no respaldada | PDF de retroalimentación, informe UPME/CORPOEMA, diez consultas LIVE, 38 pruebas, revisión de documentos y navegador |
 
 ## 5. Decisiones influenciadas por IA
 
@@ -53,6 +54,9 @@ La tabla resume tareas, no sustituye el historial completo. Cuando la rúbrica e
 | Rotular la demostración como sintética | Evita confundir prueba de software con evidencia | `demo-project.ts`; interfaz |
 | Guardar borrador local y minimizar datos | Reduce tratamiento de datos personales | `project-storage.ts`; interfaz |
 | Usar cinco escenarios simulados formales | La rúbrica permite condiciones simuladas y no había tiempo ni recursos para una instalación medida | `cases/fixtures/v1/`; `cases/evidence/latest/` |
+| Conservar solo `n(Y)` y `n′(Y)` como cálculo diferencial | La derivada cuantifica una variación que sí afecta el dimensionamiento; los demás temas no cambiaban la decisión | `calculate.ts`; `mathematical-model.md`; retroalimentación docente |
+| Repetir el promedio oficial en los doce meses simulados | La fuente respalda el promedio por piso térmico, pero no una estacionalidad mensual; repetirlo evita inventarla | Informe UPME/CORPOEMA 2019; fixtures v1 |
+| Contrastar ambos proveedores con la capacidad construible | Hace comparables las coberturas, especialmente cuando el techo limita el número de paneles | `formal-case-evidence.ts`; caso Quibdó |
 
 ### Modificadas por el equipo o durante la revisión
 
@@ -81,12 +85,12 @@ La tabla resume tareas, no sustituye el historial completo. Cuando la rúbrica e
 |---|---|---|
 | Requisitos académicos | Lectura del sílabo, instructivos y rúbricas originales | Revisado técnicamente; `[APROBACIÓN DEL EQUIPO]` pendiente |
 | Fórmulas y unidades | Derivación manual, análisis dimensional y pruebas controladas | Codificado; registrar revisión humana |
-| Implementación | Lint, tipos, pruebas y build mediante `pnpm check` | 37/37 pruebas, lint, typegen, TypeScript y build aprobados el 21-08-2026 |
+| Implementación | Lint, tipos, pruebas y build mediante `pnpm check` | 38/38 pruebas, lint, typegen, TypeScript y build aprobados el 07-09-2026 |
 | Parámetros PVGIS | Documentación de JRC y validación del contrato | Revisado en fuente oficial |
 | Parámetros PVWatts | Documentación vigente de NLR | Revisado y ejecutado mediante clave solo servidor |
 | Casos simulados formales | Protocolo con regla, propósito, supuestos, entradas y salidas | Cinco casos completos; no son validación experimental |
 | Ficha de panel | PDF oficial LONGi LR5-54HTH-450M | Verificada y citada |
-| Resultados cruzados | PVGIS frente a PVWatts con doce pares por ciudad | Completo; MAPE 4,43–20,39 % y limitaciones documentadas |
+| Resultados cruzados | PVGIS frente a PVWatts con doce pares por ciudad y capacidad física comparable | Completo; rendimiento anual, decisión entera y limitaciones documentadas |
 | Texto final | Lectura y reescritura por cada integrante | Pendiente |
 
 ## 7. Registro detallado reutilizable
@@ -118,8 +122,8 @@ Antes de entregar, cada integrante debe poder explicar sin leer:
 - cuándo se usa PR y cuándo no;
 - diferencia entre `n*`, `N` y `N_max`;
 - por qué la derivada es negativa;
-- qué datos son reales y cuáles sintéticos;
-- cómo se validó el resultado;
+- qué datos proceden de fuentes oficiales, cuáles son resultados de modelo y cuáles son supuestos;
+- cómo se verificó el software y cómo se contrastaron los modelos;
 - qué no puede garantizar el prototipo;
 - qué aportó y qué revisó personalmente.
 

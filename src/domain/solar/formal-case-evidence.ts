@@ -35,8 +35,8 @@ export interface FormalCaseMonthlyComparison {
   pvgisSpecificYieldKwhPerKwp: number;
   pvwattsSpecificYieldKwhPerKwp: number;
   specificYieldDifferenceKwhPerKwp: number;
-  pvgisGenerationAtRecommendedCapacityKwh: number;
-  pvwattsGenerationAtRecommendedCapacityKwh: number;
+  pvgisGenerationAtComparedCapacityKwh: number;
+  pvwattsGenerationAtComparedCapacityKwh: number;
   generationDifferenceKwh: number;
   pvgisBuildableCoveragePct: number | null;
 }
@@ -82,7 +82,7 @@ export interface FormalCaseEvidenceCore {
     monthlySeries: FormalCaseMonthlyComparison[];
     metrics: {
       specificYield: EnergySeriesComparison;
-      generationAtRecommendedCapacity: EnergySeriesComparison;
+      generationAtComparedCapacity: EnergySeriesComparison;
     };
     recommendationDifference: {
       continuousPanels: number;
@@ -300,7 +300,9 @@ export function buildFormalCaseEvidence(args: {
   const pvwattsInput = providerInput(fixture, pvwatts);
   const pvgisResult = calculateSolarProject(pvgisInput);
   const pvwattsResult = calculateSolarProject(pvwattsInput);
-  const capacityUsedKwp = pvgisResult.recommendedCapacityKwp;
+  // Compare both providers at the same physically installable capacity. Using the
+  // PVGIS recommendation here would make roof-constrained cases incomparable.
+  const capacityUsedKwp = pvgisResult.buildableCapacityKwp;
   const pvgisGeneration = pvgis.monthlyKwhPerKwp.map((value) => value * capacityUsedKwp);
   const pvwattsGeneration = pvwatts.monthlyKwhPerKwp.map((value) => value * capacityUsedKwp);
   const monthlySeries = MONTHS.map((month, index): FormalCaseMonthlyComparison => ({
@@ -311,8 +313,8 @@ export function buildFormalCaseEvidence(args: {
     pvwattsSpecificYieldKwhPerKwp: pvwatts.monthlyKwhPerKwp[index],
     specificYieldDifferenceKwhPerKwp:
       pvgis.monthlyKwhPerKwp[index] - pvwatts.monthlyKwhPerKwp[index],
-    pvgisGenerationAtRecommendedCapacityKwh: pvgisGeneration[index],
-    pvwattsGenerationAtRecommendedCapacityKwh: pvwattsGeneration[index],
+    pvgisGenerationAtComparedCapacityKwh: pvgisGeneration[index],
+    pvwattsGenerationAtComparedCapacityKwh: pvwattsGeneration[index],
     generationDifferenceKwh: pvgisGeneration[index] - pvwattsGeneration[index],
     pvgisBuildableCoveragePct: pvgisResult.monthly[index].buildableCoveragePct,
   }));
@@ -347,7 +349,7 @@ export function buildFormalCaseEvidence(args: {
       modelProvider: "PVGIS",
       referenceProvider: "PVWATTS",
       comparisonScope:
-        "Comparación mensual del rendimiento específico AC neto y de la generación equivalente a la capacidad recomendada por PVGIS.",
+        "Contraste mensual del rendimiento específico AC neto y de la generación de ambos proveedores usando exactamente la misma capacidad construible según el techo declarado.",
       capacityUsedKwp,
       monthlySeries,
       metrics: {
@@ -355,7 +357,7 @@ export function buildFormalCaseEvidence(args: {
           pvgis.monthlyKwhPerKwp,
           pvwatts.monthlyKwhPerKwp,
         ),
-        generationAtRecommendedCapacity: compareEnergySeries(
+        generationAtComparedCapacity: compareEnergySeries(
           pvgisGeneration,
           pvwattsGeneration,
         ),
@@ -465,8 +467,8 @@ export function renderMonthlySeriesCsv(evidence: readonly FormalCaseEvidence[]) 
     "pvgis_specific_yield_kwh_per_kwp",
     "pvwatts_specific_yield_kwh_per_kwp",
     "specific_yield_difference_kwh_per_kwp",
-    "pvgis_generation_at_recommended_capacity_kwh",
-    "pvwatts_generation_at_recommended_capacity_kwh",
+    "pvgis_generation_at_compared_capacity_kwh",
+    "pvwatts_generation_at_compared_capacity_kwh",
     "generation_difference_kwh",
     "pvgis_buildable_coverage_pct",
   ]);
@@ -480,8 +482,8 @@ export function renderMonthlySeriesCsv(evidence: readonly FormalCaseEvidence[]) 
       rounded(month.pvgisSpecificYieldKwhPerKwp, 6),
       rounded(month.pvwattsSpecificYieldKwhPerKwp, 6),
       rounded(month.specificYieldDifferenceKwhPerKwp, 6),
-      rounded(month.pvgisGenerationAtRecommendedCapacityKwh, 6),
-      rounded(month.pvwattsGenerationAtRecommendedCapacityKwh, 6),
+      rounded(month.pvgisGenerationAtComparedCapacityKwh, 6),
+      rounded(month.pvwattsGenerationAtComparedCapacityKwh, 6),
       rounded(month.generationDifferenceKwh, 6),
       rounded(month.pvgisBuildableCoveragePct),
     ])));
@@ -500,19 +502,19 @@ export function renderEvidenceMarkdown(evidence: readonly FormalCaseEvidence[]) 
     "",
     `Ejecución: ${ordered[0].generatedAt}`,
     "",
-    "> Clasificación: `simulated_formal`. Los consumos y las áreas de techo son supuestos declarados; no son facturas ni levantamientos físicos. El recurso solar sí fue consultado en PVGIS y PVWatts por medio de los endpoints de producción.",
+    "> Clasificación: `simulated_formal`. Los consumos representan promedios oficiales agregados aplicados a escenarios residenciales hipotéticos; las áreas de techo son supuestos declarados. No son facturas ni levantamientos físicos. El recurso solar fue consultado en PVGIS y PVWatts por medio de los endpoints de producción.",
     "",
     "## Resumen",
     "",
-    "| Caso | Consumo anual (kWh) | PVGIS (kWh/kWp·año) | PVWatts (kWh/kWp·año) | Paneles PVGIS | Paneles PVWatts | Techo viable | MAPE (%) |",
+    "| Caso | Consumo anual (kWh) | PVGIS (kWh/kWp·año) | PVWatts (kWh/kWp·año) | Paneles PVGIS | Paneles PVWatts | Techo viable | Diferencia anual (%) |",
     "|---|---:|---:|---:|---:|---:|:---:|---:|",
     ...ordered.map((item) =>
-      `| ${item.fixture.title} | ${markdownNumber(item.results.pvgis.totalConsumptionKwh, 0)} | ${markdownNumber(item.providerResponses.pvgis.annualKwhPerKwp)} | ${markdownNumber(item.providerResponses.pvwatts.annualKwhPerKwp)} | ${item.results.pvgis.recommendedPanelCount} | ${item.results.pvwatts.recommendedPanelCount} | ${item.results.pvgis.roofFeasible ? "Sí" : "No"} | ${markdownNumber(item.validation.metrics.specificYield.mapePct)} |`,
+      `| ${item.fixture.title} | ${markdownNumber(item.results.pvgis.totalConsumptionKwh, 0)} | ${markdownNumber(item.providerResponses.pvgis.annualKwhPerKwp)} | ${markdownNumber(item.providerResponses.pvwatts.annualKwhPerKwp)} | ${item.results.pvgis.recommendedPanelCount} | ${item.results.pvwatts.recommendedPanelCount} | ${item.results.pvgis.roofFeasible ? "Sí" : "No"} | ${markdownNumber(item.validation.metrics.specificYield.annualBiasPct)} |`,
     ),
     "",
     "## Método de contraste",
     "",
-    "Para cada ubicación se consultó primero PVGIS y después PVWatts, sin paralelizar solicitudes. El motor `calculateSolarProject` se ejecutó una vez con cada serie mensual. `compareEnergySeries` calculó MAE, RMSE, MAPE y sesgo anual, usando PVWatts como referencia de contraste, no como medición de campo.",
+    "Para cada ubicación se consultó primero PVGIS y después PVWatts, sin paralelizar solicitudes. El motor `calculateSolarProject` se ejecutó una vez con cada serie mensual. La presentación compara el rendimiento anual, la cobertura con la misma capacidad física y el cambio —o no— en la cantidad entera de paneles; PVWatts es una referencia de contraste, no una medición de campo.",
     "",
     "## Resultados por caso",
     "",
@@ -528,7 +530,7 @@ export function renderEvidenceMarkdown(evidence: readonly FormalCaseEvidence[]) 
       `- Recomendación PVGIS: ${result.recommendedPanelCount} paneles (${markdownNumber(result.recommendedCapacityKwp)} kWp).`,
       `- Capacidad construible por techo: ${result.buildablePanelCount} paneles; viabilidad: ${result.roofFeasible ? "sí" : "no"}.`,
       `- Cobertura anual construible según PVGIS: ${markdownNumber(result.buildableAnnualCoveragePct)} %.`,
-      `- Cobertura equivalente al contrastar la capacidad recomendada con PVWatts: ${markdownNumber(item.validation.pvwattsEquivalentAnnualCoveragePct)} %.`,
+      `- Cobertura equivalente al contrastar la misma capacidad física construible con PVWatts: ${markdownNumber(item.validation.pvwattsEquivalentAnnualCoveragePct)} %.`,
       `- Diferencia de recomendación PVGIS − PVWatts: ${item.validation.recommendationDifference.roundedPanels} panel(es).`,
       `- Integridad SHA-256: \`${item.integrity.sha256}\``,
       "",
@@ -538,7 +540,7 @@ export function renderEvidenceMarkdown(evidence: readonly FormalCaseEvidence[]) 
   lines.push(
     "## Alcance",
     "",
-    "Esta evidencia valida reproducibilidad del cálculo y contrasta dos modelos solares oficiales. No reemplaza facturas reales, medición de sombras, visita estructural, diseño eléctrico, cotización ni estudio de conexión a red.",
+    "Esta evidencia comprueba reproducibilidad del cálculo y contrasta dos modelos solares oficiales. No demuestra exactitud frente a una instalación ni reemplaza facturas, medición de sombras, visita estructural, diseño eléctrico, cotización o estudio de conexión a red.",
     "",
   );
   return lines.join("\n");

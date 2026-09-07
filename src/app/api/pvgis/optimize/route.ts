@@ -58,7 +58,7 @@ export async function POST(request: Request) {
     if (!body.success) {
       return NextResponse.json(
         {
-          error: "Los parámetros para optimizar la inclinación no son válidos.",
+          error: "Los parámetros para comparar inclinaciones no son válidos.",
           details: body.error.flatten().fieldErrors,
         },
         { status: 400 },
@@ -74,7 +74,7 @@ export async function POST(request: Request) {
   } catch (error) {
     const message = error instanceof Error
       ? error.message
-      : "No fue posible optimizar la inclinación con PVGIS.";
+      : "No fue posible comparar las inclinaciones con PVGIS.";
     return NextResponse.json({ error: message }, { status: 502 });
   }
 }

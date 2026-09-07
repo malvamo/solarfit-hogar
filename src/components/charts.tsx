@@ -105,16 +105,16 @@ export function SensitivityChart({ sensitivity }: { sensitivity: SensitivityResu
   const right = 732;
   const top = 22;
   const bottom = 218;
-  const minX = sensitivity.points[0].hsp;
-  const maxX = sensitivity.points.at(-1)?.hsp ?? minX + 1;
+  const minX = sensitivity.points[0].yieldValue;
+  const maxX = sensitivity.points.at(-1)?.yieldValue ?? minX + 1;
   const maxY = Math.max(...sensitivity.points.map((point) => point.continuousPanels));
   const minY = Math.min(...sensitivity.points.map((point) => point.continuousPanels));
   const x = (value: number) => left + ((value - minX) / (maxX - minX)) * (right - left);
   const y = (value: number) => bottom - ((value - minY) / (maxY - minY)) * (bottom - top);
   const path = sensitivity.points
-    .map((point, index) => `${index === 0 ? "M" : "L"}${x(point.hsp).toFixed(1)} ${y(point.continuousPanels).toFixed(1)}`)
+    .map((point, index) => `${index === 0 ? "M" : "L"}${x(point.yieldValue).toFixed(1)} ${y(point.continuousPanels).toFixed(1)}`)
     .join(" ");
-  const referencePanels = sensitivity.kConstant / sensitivity.referenceHsp;
+  const referencePanels = sensitivity.kConstant / sensitivity.referenceYield;
 
   return (
     <figure className="chart-shell sensitivity-shell">
@@ -133,21 +133,21 @@ export function SensitivityChart({ sensitivity }: { sensitivity: SensitivityResu
       >
         <title id="sensitivity-title">Curva de paneles continuos frente al recurso solar</title>
         <desc id="sensitivity-desc">
-          La curva es decreciente y convexa. Un mayor valor de {sensitivity.resourceLabel} reduce la necesidad continua de paneles.
+          Un mayor valor de {sensitivity.resourceLabel} reduce la necesidad continua de paneles.
         </desc>
         <line className="chart-grid" x1={left} x2={right} y1={bottom} y2={bottom} />
         <line className="chart-grid" x1={left} x2={left} y1={top} y2={bottom} />
         <path className="sensitivity-line" d={path} fill="none" />
         <line
           className="reference-line"
-          x1={x(sensitivity.referenceHsp)}
-          x2={x(sensitivity.referenceHsp)}
+          x1={x(sensitivity.referenceYield)}
+          x2={x(sensitivity.referenceYield)}
           y1={top}
           y2={bottom}
         />
         <circle
           className="reference-dot"
-          cx={x(sensitivity.referenceHsp)}
+          cx={x(sensitivity.referenceYield)}
           cy={y(referencePanels)}
           r="6"
         />
@@ -162,7 +162,7 @@ export function SensitivityChart({ sensitivity }: { sensitivity: SensitivityResu
         </text>
       </svg>
       <figcaption>
-        Evaluación en {sensitivity.referenceLabel}. La derivada local es {formatNumber(sensitivity.derivativeAtReference, 2)} paneles por {sensitivity.resourceUnit}.
+        En {sensitivity.referenceLabel}, aumentar Y en {formatNumber(sensitivity.practicalYieldStep, 0)} {sensitivity.resourceUnit} cambia n* aproximadamente {formatNumber(sensitivity.estimatedPanelChange, 2)} paneles. Es una estimación local antes del redondeo.
       </figcaption>
     </figure>
   );

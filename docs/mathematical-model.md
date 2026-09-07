@@ -204,67 +204,28 @@ E_anual(K) = Σ(E_generada,m(K))
 Cobertura_anual(K) = E_anual(K) / C_anual · 100 %
 ```
 
-## 10. Cálculo diferencial y sensibilidad
+## 10. Cálculo diferencial esencial: sensibilidad al rendimiento solar
 
-### 10.1 Función base
-
-Manteniendo consumo, potencia, días, objetivo y rendimiento constantes:
+La retroalimentación docente indicó que solo deben conservarse los conceptos con interpretación real y significativa. Por ello, el proyecto usa una sola función derivable ligada directamente a la decisión:
 
 ```text
-n(h) = K / h
+n(Y) = q · D / (P · Y) = K / Y
+K = q · D / P
 ```
 
-En el modo manual:
+`D` es la demanda del periodo estudiado, `P` la potencia del panel en kWp, `q` la fracción objetivo y `Y` el rendimiento específico neto en kWh/kWp del mismo periodo. En balance anual se usan `D = ΣC_m` y `Y = ΣY_m`; en el criterio conservador se usan la demanda y el rendimiento del mes crítico.
+
+La primera derivada es:
 
 ```text
-K = q · C / (P · PR · d)
+n'(Y) = −K / Y² = −q · D / (P · Y²)
 ```
 
-El dominio físico es `h > 0`. Sus derivadas son:
+Su utilidad es concreta: `n'(Y) < 0` indica que un mayor rendimiento solar reduce la necesidad continua de paneles, y su magnitud estima cuánto cambia esa necesidad cerca del escenario analizado. La aplicación muestra una variación local de 100 kWh/kWp·año en balance anual o de 10 kWh/kWp·mes en el criterio conservador.
 
-```text
-n'(h) = −K / h²
-n''(h) = 2K / h³
-```
+La derivada se interpreta antes del redondeo. El número instalable sigue siendo entero y se obtiene con `N = ceil(n*)`; por eso una variación de `n*` solo cambia la decisión física si cruza el siguiente entero. No se incluyen límites, segunda derivada, elasticidad, reglas de derivación adicionales ni optimización continua porque no son necesarios para resolver o justificar la decisión del proyecto.
 
-Para `K > 0` y `h > 0`:
-
-- `n'(h) < 0`: al aumentar el recurso solar disminuye la necesidad de paneles;
-- `n''(h) > 0`: la curva es convexa y la reducción marginal se hace menos intensa;
-- `lim h→0+ n(h) = +∞`;
-- `lim h→∞ n(h) = 0`.
-
-La elasticidad es constante:
-
-```text
-ε_n,h = n'(h) · h / n(h) = −1
-```
-
-Por tanto, en el modelo continuo, un cambio relativo pequeño del 1 % en `h` produce aproximadamente un cambio de −1 % en `n`, con los demás factores constantes.
-
-### 10.2 Aproximación lineal
-
-Alrededor de un valor de referencia `h₀`:
-
-```text
-n(h₀ + Δh) ≈ n(h₀) + n'(h₀) · Δh
-```
-
-La aplicación expone la estimación para `Δh = 0.1` mediante:
-
-```text
-Δn ≈ n'(h₀) · 0.1
-```
-
-El gráfico evalúa 25 puntos desde aproximadamente `0.55h₀` hasta `1.55h₀`, con un mínimo numérico de 0.25 para el extremo izquierdo.
-
-### 10.3 Referencia usada por el software
-
-- Criterio conservador: se usa el mes con mayor `n_m*`.
-- Balance anual manual: `h₀` es el promedio de HSP ponderado por los días facturados.
-- Balance anual PVGIS: `h₀ = Σ(Y_m)/Σ(d_m)`, un rendimiento específico diario neto equivalente.
-
-En PVGIS, esa última variable no es una HSP manual independiente; es una parametrización diaria equivalente de la producción específica. La derivada conserva el significado “paneles por unidad adicional de rendimiento diario”, pero debe nombrarse correctamente al sustentar.
+El gráfico evalúa 25 puntos alrededor del rendimiento de referencia para visualizar esta relación inversa; no añade una segunda conclusión matemática.
 
 ## 11. Incertidumbre
 
@@ -284,7 +245,7 @@ n_conservador* = n* / (1 − u)
 
 Cada extremo se redondea hacia arriba. El formulario limita `u` a 50 %, de modo que el denominador conservador permanece positivo.
 
-## 12. Métricas de validación disponibles
+## 12. Métricas de contraste disponibles
 
 Para una serie modelada `M_i` y una serie de referencia `R_i`, `compareEnergySeries` calcula:
 
@@ -298,7 +259,7 @@ MAPE = (100/n⁺) · Σ|M_i − R_i|/R_i, solo donde R_i > 0
 Sesgo anual = 100 · [ΣM_i − ΣR_i] / ΣR_i
 ```
 
-Si ninguna referencia es positiva, MAPE es `null`. Si el total de referencia es cero, el sesgo es `null`. La interfaz calcula estas métricas al contrastar la serie actual con PVWatts; no ofrece todavía carga manual de una tercera serie medida.
+Si ninguna referencia es positiva, MAPE es `null`. Si el total de referencia es cero, el sesgo es `null`. Estas métricas describen diferencias entre PVGIS y PVWatts; no miden exactitud frente a una instalación real. La interfaz prioriza el rendimiento anual, la diferencia porcentual y si cambia la cantidad entera de paneles.
 
 ## 13. Periodos de facturación que cruzan meses
 
@@ -310,9 +271,9 @@ consumo_diario = consumo_factura / días_facturados
 
 Luego asigna el mismo consumo diario a cada fecha del intervalo `[inicio, fin)`. Rechaza periodos superpuestos y advierte sobre huecos. La hipótesis uniforme es una aproximación y debe declararse. Esta utilidad todavía no está conectada al formulario visible.
 
-## 14. Optimización de inclinación
+## 14. Comparación discreta de inclinaciones
 
-El backend `/api/pvgis/optimize` evalúa una malla de entre 2 y 13 inclinaciones. Para cada ángulo `θ_i`, PVGIS entrega un rendimiento anual neto `Y_i`. El criterio implementado es:
+El backend `/api/pvgis/optimize` conserva su ruta por compatibilidad, pero su función es comparar una malla de entre 2 y 13 inclinaciones. Para cada ángulo `θ_i`, PVGIS entrega un rendimiento anual neto `Y_i`. Se selecciona el mayor valor observado:
 
 ```text
 θ_seleccionado = arg maxθ_i Y_i
@@ -324,24 +285,7 @@ Si existe una inclinación de referencia incluida en la malla:
 ganancia % = 100 · (Y_seleccionado − Y_referencia) / Y_referencia
 ```
 
-En puntos interiores, la primera derivada se aproxima con una diferencia central que también funciona para espaciados no uniformes en su versión secante entre vecinos:
-
-```text
-Y'(θ_i) ≈ (Y_(i+1) − Y_(i−1)) / (θ_(i+1) − θ_(i−1))
-```
-
-En los extremos usa diferencia hacia adelante o hacia atrás. La segunda derivada interior se estima mediante:
-
-```text
-Y''(θ_i) ≈ 2 · [
-  (Y_(i+1)−Y_i)/(θ_(i+1)−θ_i)
-  − (Y_i−Y_(i−1))/(θ_i−θ_(i−1))
-] / (θ_(i+1)−θ_(i−1))
-```
-
-Los extremos no reciben segunda derivada (`null`). Si hay empate numérico, se conserva el menor ángulo porque los candidatos se ordenan de menor a mayor y solo se reemplaza el máximo ante una mejora estricta mayor que `10⁻⁹`.
-
-Es una búsqueda discreta y una aproximación por diferencias finitas, no una demostración de que el máximo continuo no esté entre candidatos. La interfaz evalúa una malla de 0° a 40° cada 5° e incluye el ángulo actual cuando no pertenece a la malla; después permite aplicar la serie mensual seleccionada. `analysis.ts` conserva además un helper anterior, `optimizeTilt`, que compara proyectos completos y minimiza `continuousPanelCount`.
+Si hay empate numérico, se conserva el menor ángulo. La interfaz evalúa de 0° a 40° cada 5° e incluye el ángulo actual cuando no pertenece a la malla. Esta operación es una comparación técnica de escenarios, no una aplicación adicional de cálculo diferencial ni una prueba de máximo continuo.
 
 ## 15. Algoritmo implementado
 
@@ -392,7 +336,7 @@ calcular totales, sensibilidad, incertidumbre y advertencias
 | Longitud de la API | −180° a 180° |
 | Inclinación de la API | 0° a 90° |
 | Azimut de brújula de la API | 0° a menos de 360° |
-| Inclinaciones para optimizar | 2 a 13 valores únicos, cada uno entre 0° y 90° |
+| Inclinaciones para comparar | 2 a 13 valores únicos, cada uno entre 0° y 90° |
 
 El motor valida actualmente `PR` y pérdidas PVGIS aunque solo uno participe en el método elegido. Es una restricción de implementación que conviene conservar en valores válidos.
 
@@ -417,7 +361,8 @@ No puede afirmarse que:
 ## 18. Fuentes
 
 - Modelo implementado: `src/domain/solar/calculate.ts`, `analysis.ts`, `optimization.ts`, `bills.ts` y `types.ts`.
-- Material local de la materia: `...\Material de apoyo\Plantilla para planteamiento de modelos.pdf` y presentaciones S4, S5, S12–S15 del directorio oficial del curso.
+- Material local de la materia: `...\Material de apoyo\Plantilla para planteamiento de modelos.pdf` y material de derivada disponible en el directorio oficial del curso.
+- [UPME/CORPOEMA, estimación de consumos de subsistencia (2019)](https://bdigital.upme.gov.co/handle/001/1367)
 - [PVGIS de la Comisión Europea](https://joint-research-centre.ec.europa.eu/photovoltaic-geographical-information-system-pvgis_en)
 - [Manual oficial de PVGIS 5](https://joint-research-centre.ec.europa.eu/photovoltaic-geographical-information-system-pvgis/using-pvgis-5/pvgis-5-user-manual_en)
 - [PVWatts V8 API](https://developer.nlr.gov/docs/solar/pvwatts/v8/)

@@ -24,117 +24,122 @@ CASES = [
     {
         "id": "SIM-BOG-001",
         "city": "Bogotá",
-        "context": "Hogar de referencia nacional",
+        "context": "Escenario residencial urbano de clima frío (>1.500 m)",
         "coords": "4,705583; −74,150667",
         "roof": 20,
-        "consumption": [157] * 12,
+        "consumption": [156] * 12,
         "pvgis": 1260.65,
-        "pvwatts": 1271.06,
-        "n_cont": 3.321,
+        "pvwatts": 1271.0638046,
+        "n_cont": 3.299885,
         "panels": 4,
+        "pvwatts_panels": 4,
         "conservative_panels": 5,
         "buildable": 4,
         "max_roof": 9,
         "kwp": 1.80,
         "production": 2269.17,
-        "coverage": 120.44,
-        "min_coverage": 97.54,
-        "mape": 4.65,
-        "annual_diff": -0.82,
+        "coverage": 121.216,
+        "min_coverage": 98.17,
+        "mape": 4.653,
+        "annual_diff": -0.819,
         "critical": "junio",
-        "rule": "157 kWh/mes: referencia histórica de hogar promedio nacional UPME (base 2015).",
+        "rule": "156 kWh/mes: promedio SUI 2018 reportado por UPME/CORPOEMA para usuarios del SIN ubicados por encima de 1.500 m s. n. m. [5, p. 28].",
     },
     {
         "id": "SIM-BAQ-002",
         "city": "Barranquilla",
-        "context": "Vivienda cálida con aire acondicionado",
+        "context": "Escenario residencial urbano de clima cálido (<500 m)",
         "coords": "11,040000; −74,820833",
         "roof": 35,
-        "consumption": [350, 360, 380, 400, 420, 440, 450, 445, 430, 400, 370, 355],
+        "consumption": [279] * 12,
         "pvgis": 1567.18,
-        "pvwatts": 1643.33,
-        "n_cont": 6.806,
-        "panels": 7,
-        "conservative_panels": 9,
-        "buildable": 7,
+        "pvwatts": 1643.3257448,
+        "n_cont": 4.747381,
+        "panels": 5,
+        "pvwatts_panels": 5,
+        "conservative_panels": 6,
+        "buildable": 5,
         "max_roof": 16,
-        "kwp": 3.15,
-        "production": 4936.62,
-        "coverage": 102.85,
-        "min_coverage": 84.01,
-        "mape": 4.74,
-        "annual_diff": -4.63,
-        "critical": "junio",
-        "rule": "Perfil sintético de 4.800 kWh/año; promedio 400 kWh/mes = 2,31× el umbral cálido de 173 kWh/mes.",
+        "kwp": 2.25,
+        "production": 3526.16,
+        "coverage": 105.321,
+        "min_coverage": 92.31,
+        "mape": 4.741,
+        "annual_diff": -4.634,
+        "critical": "noviembre",
+        "rule": "279 kWh/mes: promedio SUI 2018 reportado por UPME/CORPOEMA para usuarios del SIN ubicados por debajo de 500 m s. n. m. [5, p. 28].",
     },
     {
         "id": "SIM-MDE-003",
         "city": "Medellín",
-        "context": "Hogar eficiente de clima templado",
+        "context": "Escenario residencial urbano de clima templado (500–1.500 m)",
         "coords": "6,220611; −75,588972",
         "roof": 14,
-        "consumption": [130, 128, 129, 128, 127, 126, 128, 130, 132, 131, 134, 137],
-        "pvgis": 1387.55,
-        "pvwatts": 1369.68,
-        "n_cont": 2.498,
-        "panels": 3,
+        "consumption": [178] * 12,
+        "pvgis": 1387.56,
+        "pvwatts": 1369.6765144,
+        "n_cont": 3.420873,
+        "panels": 4,
+        "pvwatts_panels": 4,
         "conservative_panels": 4,
-        "buildable": 3,
+        "buildable": 4,
         "max_roof": 6,
-        "kwp": 1.35,
-        "production": 1873.19,
-        "coverage": 120.077,
-        "min_coverage": 99.75,
-        "mape": 4.43,
-        "annual_diff": 1.31,
+        "kwp": 1.80,
+        "production": 2497.61,
+        "coverage": 116.929,
+        "min_coverage": 100.12,
+        "mape": 4.427,
+        "annual_diff": 1.306,
         "critical": "noviembre",
-        "rule": "Perfil de 1.560 kWh/año, calibrado alrededor del umbral de subsistencia de 130 kWh/mes para ≥1.000 m.",
+        "rule": "178 kWh/mes: promedio SUI 2018 reportado por UPME/CORPOEMA para usuarios del SIN ubicados entre 500 y 1.500 m s. n. m. [5, p. 28].",
     },
     {
         "id": "SIM-CLO-004",
         "city": "Cali",
-        "context": "Hogar con teletrabajo y consumo medio-alto",
+        "context": "Escenario residencial urbano de clima templado (500–1.500 m)",
         "coords": "3,454500; −76,499722",
         "roof": 18,
-        "consumption": [230, 228, 232, 238, 242, 245, 250, 252, 248, 244, 240, 231],
-        "pvgis": 1235.27,
-        "pvwatts": 1422.18,
-        "n_cont": 5.181,
-        "panels": 6,
-        "conservative_panels": 7,
-        "buildable": 6,
+        "consumption": [178] * 12,
+        "pvgis": 1235.28,
+        "pvwatts": 1422.1844213,
+        "n_cont": 3.842584,
+        "panels": 4,
+        "pvwatts_panels": 4,
+        "conservative_panels": 5,
+        "buildable": 4,
         "max_roof": 8,
-        "kwp": 2.70,
-        "production": 3335.23,
-        "coverage": 115.808,
-        "min_coverage": 99.06,
-        "mape": 13.17,
-        "annual_diff": -13.14,
+        "kwp": 1.80,
+        "production": 2223.50,
+        "coverage": 104.097,
+        "min_coverage": 90.90,
+        "mape": 13.167,
+        "annual_diff": -13.142,
         "critical": "junio",
-        "rule": "Perfil sintético de 2.880 kWh/año para mayor permanencia, equipos y teletrabajo; no es promedio municipal.",
+        "rule": "178 kWh/mes: promedio SUI 2018 reportado por UPME/CORPOEMA para usuarios del SIN ubicados entre 500 y 1.500 m s. n. m. [5, p. 28].",
     },
     {
         "id": "SIM-UIB-005",
         "city": "Quibdó",
-        "context": "Bajo recurso solar y techo insuficiente",
+        "context": "Escenario residencial rural de clima cálido con techo restringido",
         "coords": "5,690556; −76,643778",
         "roof": 8,
-        "consumption": [208, 210, 213, 216, 223, 228, 233, 236, 228, 223, 213, 209],
+        "consumption": [118.8] * 12,
         "pvgis": 898.28,
-        "pvwatts": 1131.87,
-        "n_cont": 6.531,
-        "panels": 7,
-        "conservative_panels": 8,
+        "pvwatts": 1131.8748349,
+        "n_cont": 3.526740,
+        "panels": 4,
+        "pvwatts_panels": 3,
+        "conservative_panels": 5,
         "buildable": 3,
         "max_roof": 3,
-        "kwp": 3.15,
+        "kwp": 1.80,
         "production": 1212.68,
-        "coverage": 45.935,
-        "min_coverage": 38.58,
+        "coverage": 85.064,
+        "min_coverage": 74.05,
         "mape": 20.386,
-        "annual_diff": -20.64,
+        "annual_diff": -20.638,
         "critical": "junio",
-        "rule": "Perfil sintético de 2.640 kWh/año; promedio 220 kWh/mes = 1,27× el umbral cálido. Techo pequeño deliberado.",
+        "rule": "118,8 kWh/mes: promedio rural SUI 2018 reportado por UPME/CORPOEMA para clima cálido [5, p. 81]. El techo de 8 m² es un supuesto de prueba, no una medición.",
     },
 ]
 
@@ -144,17 +149,20 @@ REFERENCES = [
     ("[2]", "Rúbrica de la tercera entrega, semana 14: documento acumulativo, póster y pitch de 3 minutos, archivos oficiales del curso."),
     ("[3]", "JRC, ‘PVGIS 5.3 API non-interactive service’. https://joint-research-centre.ec.europa.eu/photovoltaic-geographical-information-system-pvgis/using-pvgis-5/api-non-interactive-service_en"),
     ("[4]", "NLR, ‘PVWatts V8 API’. https://developer.nlr.gov/docs/solar/pvwatts/v8/"),
-    ("[5]", "UPME, ‘Balance de Energía Útil — sector residencial’. https://www1.upme.gov.co/DemandayEficiencia/Documents/Balance_energia_util/BEU-Residencial.pdf"),
-    ("[6]", "UPME, Resolución 355 de 2004: consumos de subsistencia de 130 y 173 kWh/mes. https://gestornormativo.creg.gov.co/gestor/entorno/docs/resolucion_upme_0355_2004.htm"),
-    ("[7]", "IDEAM, ‘Promedios climatológicos de radiación global’, actualización 2025. https://www.ideam.gov.co/sala-de-prensa/informes/publicacion-dom-04052025-1200"),
-    ("[8]", "LONGi, ficha oficial LR5-54HTH-445–455M. https://static.longi.com/Hi_MO_X6_LR_5_54_HTH_445_455_M_V1_30_30_and_15_V19_ES_09bf28ff6d.pdf"),
-    ("[9]", "CREG, Resolución 174 de 2021, versión consolidada. https://gestornormativo.creg.gov.co/gestor/entorno/docs/resolucion_creg_0174_2021.htm"),
-    ("[10]", "MinEnergía, portal oficial RETIE. https://www.minenergia.gov.co/es/misional/energia-electrica-2/reglamentos-tecnicos/reglamento-t%C3%A9cnico-de-instalaciones-el%C3%A9ctricas-retie/"),
+    ("[5]", "UPME y CORPOEMA (2019), ‘Estimación de los consumos de subsistencia en energía eléctrica, gas natural y GLP en territorio nacional SIN y ZNI: informe final’. Promedios SUI 2018 por piso térmico (p. 28) y sector rural (p. 81). https://bdigital.upme.gov.co/handle/001/1367"),
+    ("[6]", "LONGi, ficha oficial LR5-54HTH-445–455M. https://static.longi.com/Hi_MO_X6_LR_5_54_HTH_445_455_M_V1_30_30_and_15_V19_ES_09bf28ff6d.pdf"),
+    ("[7]", "CREG, Resolución 174 de 2021, versión consolidada. https://gestornormativo.creg.gov.co/gestor/entorno/docs/resolucion_creg_0174_2021.htm"),
+    ("[8]", "MinEnergía, portal oficial RETIE. https://www.minenergia.gov.co/es/misional/energia-electrica-2/reglamentos-tecnicos/reglamento-t%C3%A9cnico-de-instalaciones-el%C3%A9ctricas-retie/"),
 ]
 
 
-def annual_consumption(case: dict) -> int:
-    return int(sum(case["consumption"]))
+def annual_consumption(case: dict) -> float:
+    return float(sum(case["consumption"]))
+
+
+def format_kwh(value: float) -> str:
+    decimals = 0 if value.is_integer() else 1
+    return f"{value:,.{decimals}f}".replace(",", "X").replace(".", ",").replace("X", ".")
 
 
 def _font(size: int, *, bold: bool = False):
@@ -228,7 +236,7 @@ def build_coverage_chart(path: Path) -> None:
         draw.text((center - 58, y1 - 45), f"{value:.1f}%", fill="#123F42", font=bold_small)
         draw.text((center - 75, bottom + 28), case["city"], fill="#123F42", font=bold_small)
         draw.text((center - 65, bottom + 72), f"{case['buildable']}/{case['panels']} paneles", fill="#52666A", font=small)
-    draw.text((90, 905), "Paneles usados/requeridos. El modelo conserva 7 requeridos en Quibdó y advierte que solo caben 3.", fill="#52666A", font=small)
+    draw.text((90, 905), "Paneles usados/requeridos. El modelo conserva 4 requeridos en Quibdó y advierte que solo caben 3.", fill="#52666A", font=small)
     img.save(path, quality=95)
 
 
@@ -279,7 +287,7 @@ def new_document(title: str, subtitle: str, label: str) -> Document:
     paragraph = doc.add_paragraph()
     paragraph.alignment = WD_ALIGN_PARAGRAPH.CENTER
     paragraph.paragraph_format.space_before = Pt(14)
-    sf.set_run_font(paragraph.add_run("Versión académica: 21 de agosto de 2026"), size=9.5, color=sf.MUTED, italic=True)
+    sf.set_run_font(paragraph.add_run("Versión académica corregida: 7 de septiembre de 2026"), size=9.5, color=sf.MUTED, italic=True)
     content = doc.add_section(WD_SECTION.NEW_PAGE)
     content.header.is_linked_to_previous = False
     content.footer.is_linked_to_previous = False
@@ -299,7 +307,7 @@ def add_case_summary_table(doc: Document, *, include_conservative: bool = False)
             state += f" · REVISAR ({case['buildable']} caben)"
         rows.append((
             f"{case['id']}\n{case['city']}",
-            f"{annual_consumption(case):,.0f} kWh".replace(",", "."),
+            f"{format_kwh(annual_consumption(case))} kWh",
             f"{case['pvgis']:,.2f} kWh/kWp·año".replace(",", "X").replace(".", ",").replace("X", "."),
             panels,
             state.replace(".", ","),
@@ -361,9 +369,9 @@ def build_hito2() -> Document:
         doc,
         ["Elemento", "Evidencia incluida", "Estado"],
         [
-            ("Desarrollo matemático", "Modelo continuo, derivadas, reglas de derivación y unidades", "Cerrado"),
-            ("Resultados intermedios", "Cinco ciudades y dos criterios de dimensionamiento", "Cerrado"),
-            ("Visualización / simulación", "Dos gráficas y respuestas oficiales PVGIS/PVWatts", "Cerrado"),
+            ("Desarrollo matemático", "Balance energético y sensibilidad directa n(Y), n′(Y)", "Cerrado"),
+            ("Resultados intermedios", "Cinco ubicaciones y dos criterios de dimensionamiento", "Cerrado"),
+            ("Visualización / simulación", "Dos gráficas y estimaciones PVGIS/PVWatts", "Cerrado"),
             ("Ajustes del modelo", "Pérdidas sin doble conteo, techo no truncado, comparación externa", "Cerrado"),
             ("Identidad y aportes", "Debe completarlos el grupo", "Pendiente humano"),
         ],
@@ -388,14 +396,14 @@ def build_hito2() -> Document:
     )
 
     sf.add_section_title(doc, "2. Datos y protocolo de simulación", page_break=True)
-    sf.add_para(doc, "Los cinco escenarios son viviendas hipotéticas ubicadas mediante referencias urbanas o estaciones IDEAM. El recurso solar se consultó en servicios oficiales; el área del techo y los perfiles de demanda son supuestos de prueba documentados. Esta combinación permite evaluar el algoritmo sin invadir la privacidad de una familia ni fingir una instalación.")
+    sf.add_para(doc, "Los cinco escenarios son simulaciones calibradas, no viviendas observadas. La demanda mensual se fija con promedios SUI 2018 publicados por UPME/CORPOEMA para el piso térmico o sector rural correspondiente, sin inventar estacionalidad que la fuente no documenta. El recurso solar se estima con PVGIS y se contrasta con PVWatts. Las coordenadas y el área del techo son supuestos de prueba identificados expresamente.")
     sf.add_table(
         doc,
         ["Componente", "Dato confirmado", "Supuesto / transformación", "Impacto"],
         [
-            ("Panel", "LONGi LR5-54HTH-450M: 450 Wp; 1,722 × 1,134 m [8]", "Factor de instalación 1,10", "Área reservada: 2,148 m² por panel."),
-            ("Demanda", "UPME: 157 kWh/mes histórico [5]; umbrales 130/173 [6]", "Perfiles sintéticos por contexto", "No representan promedios municipales actuales."),
-            ("Ubicación", "Referencias IDEAM [7]", "No es dirección de una vivienda", "No modela sombra ni geometría local."),
+            ("Panel", "LONGi LR5-54HTH-450M: 450 Wp; 1,722 × 1,134 m [6]", "Factor de instalación 1,10", "Área reservada: 2,148 m² por panel."),
+            ("Demanda", "Promedios SUI 2018 por piso térmico y sector rural [5]", "El promedio se repite 12 meses", "Calibra el caso, pero no representa una factura ni un promedio municipal."),
+            ("Ubicación", "Sin vivienda o estación observada", "Punto geográfico de referencia", "No modela sombra ni geometría local."),
             ("Producción", "PVGIS 5.3 y PVWatts V8 [3][4]", "10°, sur, 14 % pérdidas", "Contraste intermodelo, no medición."),
             ("Techo", "Ninguna medición física", "8–35 m² útiles según caso", "Prueba lógica de viabilidad preliminar."),
         ],
@@ -407,23 +415,19 @@ def build_hito2() -> Document:
         sf.add_para(doc, f"{case['id']} {case['city']}: " + ", ".join(str(v) for v in case["consumption"]) + " kWh. " + case["rule"], align=WD_ALIGN_PARAGRAPH.LEFT, after=4)
 
     sf.add_section_title(doc, "3. Desarrollo matemático", page_break=True)
-    sf.add_para(doc, "Para el modo PVGIS, Yₘ es el rendimiento específico neto del mes m en kWh/kWp. Si P es la potencia de un panel en kWp, q la meta y Cₘ el consumo, entonces:")
+    sf.add_para(doc, "Para PVGIS, Yₘ es el rendimiento específico neto del mes m en kWh/kWp. Si P es la potencia de un panel en kWp, q la meta y Cₘ el consumo, entonces:")
     sf.add_equation(doc, "Gₘ = P·Yₘ       y       nₘ* = q·Cₘ / Gₘ")
     sf.add_para(doc, "El criterio anual compensa energía total, mientras el criterio conservador pretende alcanzar la meta en cada mes:")
     sf.add_equation(doc, "n*anual = q·ΣCₘ / (P·ΣYₘ)       n*conservador = máxₘ(q·Cₘ / (P·Yₘ))")
     sf.add_equation(doc, "N = ceil(n*)       Nmáx = floor(Aᵤ /(ancho·alto·fA))")
     sf.add_para(doc, "N se redondea una sola vez al final. Si N > Nmáx, el sistema mantiene N como necesidad energética y calcula por separado Nconstruible = Nmáx.")
-    doc.add_paragraph("3.1 Continuidad, límites y tasa de cambio", style="Heading 2")
-    sf.add_equation(doc, "n(h) = K/h,  h > 0;     lím h→0⁺ n(h)=+∞;     lím h→∞ n(h)=0")
-    sf.add_para(doc, "La función es continua en su dominio físico h>0. Para K constante, la derivada por la regla de la potencia es:")
-    sf.add_equation(doc, "n′(h)=−K/h² < 0       n″(h)=2K/h³ > 0")
-    sf.add_para(doc, "La primera derivada negativa demuestra que más recurso solar reduce la capacidad continua requerida. La segunda derivada positiva muestra convexidad: la sensibilidad es mayor en zonas con poco recurso.")
-    doc.add_paragraph("3.2 Reglas del segundo corte", style="Heading 2")
-    sf.add_para(doc, "El cociente anual usa la regla del cociente cuando demanda D(t) y rendimiento Y(t) cambian: n(t)=D(t)/(P·Y(t)).")
-    sf.add_equation(doc, "n′(t) = [D′(t)·Y(t) − D(t)·Y′(t)] /(P·Y(t)²)")
-    sf.add_para(doc, "La inclinación β introduce una función compuesta n(Y(β)); por regla de la cadena:")
-    sf.add_equation(doc, "dn/dβ = −D·Y′(β)/(P·Y(β)²)")
-    sf.add_para(doc, "La derivación logarítmica de n = q·D·P⁻¹·Y⁻¹ permite leer elasticidades: un aumento relativo de 1 % en D aumenta n aproximadamente 1 %, mientras un aumento relativo de 1 % en P o Y reduce n aproximadamente 1 %.")
+    doc.add_paragraph("3.1 Sensibilidad que sí afecta la decisión", style="Heading 2")
+    sf.add_para(doc, "Sea D=ΣCₘ la demanda anual y Y=ΣYₘ el rendimiento específico anual. Antes de redondear, la necesidad de paneles como función del recurso solar es:")
+    sf.add_equation(doc, "n(Y)=q·D/(P·Y)       n′(Y)=−q·D/(P·Y²)")
+    sf.add_para(doc, "Como n′(Y)<0, un mayor rendimiento solar reduce la necesidad continua de paneles. El valor de n′(Y) cuantifica el cambio local esperado ante una variación pequeña de Y y ayuda a explicar por qué la recomendación puede ser más sensible en una ubicación que en otra. Esta relación tiene impacto directo en el dimensionamiento; no se agregan procedimientos matemáticos que no cambien la decisión del proyecto.")
+    sf.add_callout(doc, "Aplicación directa", "En Bogotá, n′(1.260,65)=−0,00262 paneles por cada kWh/kWp·año. Cerca de ese escenario, una diferencia de 100 kWh/kWp·año cambia la necesidad continua en aproximadamente 0,262 paneles, antes del redondeo. Por eso contrastar el recurso solar puede afectar la recomendación entera.")
+    doc.add_paragraph("3.2 Comparación discreta de inclinaciones", style="Heading 2")
+    sf.add_para(doc, "La aplicación consulta un conjunto finito de inclinaciones y compara el rendimiento anual devuelto por PVGIS. Reporta la alternativa de mayor rendimiento dentro de ese conjunto, sin afirmar que sea un máximo exacto ni usar esa comparación como un ejercicio adicional de derivación.")
 
     sf.add_section_title(doc, "4. Representación algorítmica")
     steps = [
@@ -433,36 +437,36 @@ def build_hito2() -> Document:
         "Redondear n* hacia arriba una sola vez para obtener N.",
         "Calcular Nmáx con el área útil y separar recomendación de cantidad construible.",
         "Simular producción, cobertura y balance de cada mes.",
-        "Consultar PVWatts con supuestos comparables y calcular MAE, RMSE, MAPE y sesgo.",
+        "Consultar PVWatts con supuestos comparables y contrastar rendimiento anual y decisión entera.",
         "Exportar configuración, series, resultados y hashes para reproducibilidad.",
     ]
     for item in steps:
         sf.add_bullet(doc, item, 0)
-    sf.add_callout(doc, "Implementación", "El mismo motor TypeScript utilizado por la aplicación web procesa los escenarios; no se usó una calculadora paralela para construir las conclusiones. La versión auditada aprobó 37/37 pruebas automatizadas, ESLint, TypeScript y build productivo el 21 de agosto de 2026.")
+    sf.add_callout(doc, "Implementación", "El mismo motor TypeScript utilizado por la aplicación web procesa los escenarios; no se usó una calculadora paralela para construir las conclusiones. La versión corregida aprobó 38/38 pruebas automatizadas, ESLint, TypeScript y build productivo el 7 de septiembre de 2026.")
 
     sf.add_section_title(doc, "5. Resultados intermedios de cinco casos", page_break=True)
     add_case_summary_table(doc, include_conservative=True)
-    sf.add_table_source(doc, "Fuente: ejecución del MVP el 21 de agosto de 2026. Demanda sintética; producción modelada. La cobertura de Quibdó usa los 3 paneles construibles, no los 7 requeridos.")
-    add_figure(doc, ASSET_DIR / "coverage-cases.png", "Figura 1. Cobertura anual con la cantidad construible. Cuatro casos superan la meta anual; Quibdó queda limitado por área.", "Gráfico de barras de cobertura anual para Bogotá, Barranquilla, Medellín, Cali y Quibdó; Quibdó alcanza 45,94 por ciento por la restricción de techo.")
-    sf.add_callout(doc, "Lectura principal", "El criterio anual puede dejar meses por debajo de 100 %. Barranquilla obtiene 102,85 % anual, pero su mínimo mensual es 84,01 %; el criterio conservador aumenta de 7 a 9 paneles.")
+    sf.add_table_source(doc, "Fuente: ejecución reproducible del MVP el 7 de septiembre de 2026. Demanda calibrada con promedios oficiales agregados; producción estimada. La cobertura de Quibdó usa los 3 paneles construibles, no los 4 requeridos.")
+    add_figure(doc, ASSET_DIR / "coverage-cases.png", "Figura 1. Cobertura anual con la cantidad construible. Cuatro casos superan la meta anual; Quibdó queda limitado por área.", "Gráfico de barras de cobertura anual para Bogotá, Barranquilla, Medellín, Cali y Quibdó; Quibdó alcanza 85,06 por ciento por la restricción de techo.")
+    sf.add_callout(doc, "Lectura principal", "El criterio anual puede dejar meses por debajo de 100 %. Barranquilla obtiene 105,32 % anual, pero su mínimo mensual es 92,31 % en noviembre; el criterio conservador aumenta de 5 a 6 paneles.")
 
     sf.add_section_title(doc, "6. Contraste PVGIS–PVWatts", page_break=True)
     sf.add_table(
         doc,
-        ["Ciudad", "PVGIS", "PVWatts", "Diferencia anual", "MAPE mensual"],
-        [(c["city"], f"{c['pvgis']:.2f}", f"{c['pvwatts']:.2f}", f"{c['annual_diff']:+.2f} %", f"{c['mape']:.2f} %") for c in CASES],
+        ["Ciudad", "PVGIS", "PVWatts", "Diferencia anual", "Paneles P / W"],
+        [(c["city"], f"{c['pvgis']:.2f}", f"{c['pvwatts']:.2f}", f"{c['annual_diff']:+.2f} %", f"{c['panels']} / {c['pvwatts_panels']}") for c in CASES],
         [1650, 1700, 1700, 2100, 2210],
         font_size=9.1,
     )
     add_figure(doc, ASSET_DIR / "yield-comparison.png", "Figura 2. Rendimiento específico anual calculado por PVGIS y PVWatts bajo una configuración comparable.", "Barras agrupadas que comparan el rendimiento anual de PVGIS y PVWatts en cinco ciudades; las mayores diferencias aparecen en Cali y Quibdó.")
-    sf.add_para(doc, "Bogotá, Barranquilla y Medellín conservan la misma decisión entera con ambos proveedores. En Cali, PVGIS recomienda 6 paneles y PVWatts 5; en Quibdó, 7 frente a 6. No se elige automáticamente el valor más favorable: la divergencia se reporta como incertidumbre de modelo.")
+    sf.add_para(doc, "Bogotá, Barranquilla, Medellín y Cali conservan la misma decisión entera con ambos proveedores. En Quibdó, PVGIS recomienda 4 paneles y PVWatts 3. No se elige automáticamente el valor más favorable: la divergencia se reporta como incertidumbre de modelo.")
     sf.add_callout(doc, "Interpretación correcta", "PVGIS y PVWatts no son verdad de campo. Usan bases meteorológicas y modelos diferentes. Su comparación comprueba orden de magnitud, detecta sensibilidad y evita una confianza falsa en una sola fuente.")
 
     sf.add_section_title(doc, "7. Importancia académica de las simulaciones")
     for text in (
-        "Permiten probar de forma reproducible cinco combinaciones de clima, demanda y área sin fabricar facturas.",
-        "Ejercitan casos favorables y uno adverso; el caso de Quibdó demuestra que el software advierte inviabilidad.",
-        "Conectan derivadas con una decisión: n′<0, n″>0 y mayor sensibilidad en bajo recurso.",
+        "Permiten probar de forma reproducible cinco combinaciones de clima, demanda y área sin fabricar facturas ni patrones mensuales.",
+        "Ejercitan casos favorables y uno adverso; el caso de Quibdó muestra que el software advierte una restricción de área.",
+        "Conectan n′(Y) con una decisión: su signo negativo y su magnitud explican cómo cambia la necesidad continua cuando varía el recurso solar.",
         "Permiten comparar criterios anual y conservador sin esperar doce meses de una instalación.",
         "Conservan entradas y proveedores para que otro equipo repita la ejecución.",
     ):
@@ -472,9 +476,9 @@ def build_hito2() -> Document:
     sf.add_section_title(doc, "8. Conclusiones del Hito 2")
     conclusions = [
         "El modelo ya es dimensionalmente coherente y ejecutable con doce periodos.",
-        "Las reglas de derivación explican dirección, sensibilidad y convexidad de la necesidad continua.",
+        "La derivada n′(Y) explica la dirección y sensibilidad de la necesidad continua frente al rendimiento solar.",
         "Cuatro escenarios satisfacen la meta anual con el techo supuesto; uno activa correctamente la advertencia de área.",
-        "La validación cruzada descubre divergencias materiales en Cali y Quibdó que deben conservarse como riesgo.",
+        "El contraste entre simuladores descubre divergencias materiales en Cali y Quibdó que deben conservarse como riesgo.",
         "El avance cumple la función del Hito 2: desarrollo matemático, simulación, resultados intermedios y ajustes justificables.",
     ]
     for item in conclusions:
@@ -489,14 +493,14 @@ def build_hito2() -> Document:
 def build_final() -> Document:
     doc = new_document(
         "SolarFit Hogar - Informe final acumulativo",
-        "Prefactibilidad fotovoltaica residencial explicable y validada con cinco simulaciones",
+        "Prefactibilidad fotovoltaica residencial explicable y evaluada con cinco simulaciones calibradas",
         "INFORME FINAL ACUMULATIVO · HITOS 1, 2 Y 3 · SEMANA 14",
     )
     sf.add_section_title(doc, "Resumen ejecutivo")
     sf.add_callout(
         doc,
         "Resultado",
-        "SolarFit Hogar es un MVP web desplegado que dimensiona paneles por balance anual o criterio conservador, verifica el límite preliminar del techo, explica sensibilidad mediante cálculo diferencial y contrasta PVGIS con PVWatts. Cinco escenarios simulados calibrados muestran cuatro soluciones viables y un caso correctamente rechazado por área.",
+        "SolarFit Hogar es un MVP web desplegado que dimensiona paneles por balance anual o criterio conservador, verifica el límite preliminar del techo, explica sensibilidad mediante cálculo diferencial y contrasta PVGIS con PVWatts. Cinco escenarios simulados calibrados muestran cuatro casos que cumplen la meta anual y uno que activa una advertencia de área insuficiente.",
     )
     sf.add_para(doc, "El producto responde una pregunta de prefactibilidad: qué potencia y cuántos paneles podrían compensar una meta energética bajo entradas declaradas. No certifica una instalación, no garantiza factura cero y no sustituye el diseño profesional.")
     sf.add_table(
@@ -504,8 +508,8 @@ def build_final() -> Document:
         ["Entrega", "Contenido acumulado", "Evidencia"],
         [
             ("Hito 1", "Contexto, pregunta, objetivos, variables y modelo inicial", "Problema y alcance definidos"),
-            ("Hito 2", "Derivadas, algoritmo, simulación y ajustes", "Cinco casos + PVGIS/PVWatts"),
-            ("Hito 3", "Producto, validación, optimización, reflexión y comunicación", "MVP en Vercel, póster y pitch"),
+            ("Hito 2", "Sensibilidad directa, algoritmo, simulación y ajustes", "Cinco casos + PVGIS/PVWatts"),
+            ("Hito 3", "Producto, contraste, reflexión y comunicación", "MVP en Vercel, póster y pitch"),
         ],
         [1700, 4000, 3660],
         font_size=9.2,
@@ -516,11 +520,11 @@ def build_final() -> Document:
     doc.add_paragraph("1.1 Pregunta", style="Heading 2")
     sf.add_callout(doc, "Pregunta orientadora", "¿Cuántos paneles y qué potencia fotovoltaica nominal necesita una vivienda conectada a red para compensar una fracción de su consumo bajo doce periodos, recurso solar modelado y área útil declarada?")
     doc.add_paragraph("1.2 Objetivo general", style="Heading 2")
-    sf.add_para(doc, "Desarrollar y validar un MVP de prefactibilidad que convierta consumos mensuales, recurso solar, características del módulo y área útil en una recomendación explicable de potencia, paneles, cobertura y viabilidad preliminar.")
+    sf.add_para(doc, "Desarrollar y evaluar un MVP de prefactibilidad que convierta consumos mensuales, recurso solar, características del módulo y área útil en una recomendación explicable de potencia, paneles, cobertura y viabilidad preliminar.")
     doc.add_paragraph("1.3 Objetivos específicos", style="Heading 2")
     for text in (
         "Formular un modelo matemático con variables, unidades, dominio, supuestos y dos criterios de dimensionamiento.",
-        "Relacionar límites, continuidad, derivadas, regla del cociente, cadena, diferenciales y optimización con decisiones del proyecto.",
+        "Aplicar n(Y) y n′(Y) para explicar cómo el rendimiento solar cambia directamente la necesidad continua de paneles.",
         "Implementar el modelo en una aplicación web con validación, persistencia local y exportaciones.",
         "Evaluar cinco escenarios reproducibles y contrastar la fuente principal con un segundo modelo oficial.",
         "Comunicar resultados, incertidumbre, limitaciones y ruta de escalamiento sin confundir simulación con medición.",
@@ -534,32 +538,31 @@ def build_final() -> Document:
         doc,
         ["Entrada", "Fuente", "Tratamiento"],
         [
-            ("Consumo", "UPME [5][6]", "Perfiles sintéticos calibrados; nunca facturas reales."),
-            ("Radiación de contexto", "IDEAM [7]", "Referencia climática; no se convierte directamente en energía del panel."),
+            ("Consumo", "UPME/CORPOEMA [5]", "Promedios agregados SUI 2018 repetidos 12 meses; nunca facturas reales."),
+            ("Ubicación", "Supuesto de escenario", "Punto geográfico reproducible; no corresponde a una vivienda ni estación medida."),
             ("Producción principal", "JRC PVGIS 5.3 [3]", "Serie mensual neta para 1 kWp, inclinación 10°, sur, 14 % pérdidas."),
             ("Contraste", "NLR PVWatts V8 [4]", "Mismos parámetros comparables; base y modelos internos distintos."),
-            ("Módulo", "LONGi LR5-54HTH-450M [8]", "450 Wp, 1,722 × 1,134 m; factor de área supuesto 1,10."),
+            ("Módulo", "LONGi LR5-54HTH-450M [6]", "450 Wp, 1,722 × 1,134 m; factor de área supuesto 1,10."),
             ("Techo", "Supuesto de escenario", "Área útil escalar; no prueba disposición geométrica ni estructura."),
         ],
         [1700, 2600, 5060],
         font_size=8.8,
     )
-    sf.add_callout(doc, "Control de supuestos", "Dato confirmado: especificación del panel y respuestas de APIs. Supuesto: consumo y techo de cada vivienda hipotética. Razón: no se dispone de doce facturas, medición del techo ni un sistema instalado. Impacto: los resultados validan el comportamiento del modelo, no una vivienda real.", fill=sf.PALE_GOLD, accent=sf.GOLD)
+    sf.add_callout(doc, "Control de supuestos", "Dato confirmado: promedios agregados de consumo publicados, especificación del panel y respuestas de APIs. Supuesto: coordenada de referencia y techo de cada escenario residencial hipotético. Razón: no se dispone de doce facturas, medición del techo ni un sistema instalado. Impacto: los resultados verifican el comportamiento esperado del modelo en escenarios calibrados, no una vivienda real.", fill=sf.PALE_GOLD, accent=sf.GOLD)
 
     sf.add_section_title(doc, "3. Modelo matemático", page_break=True)
     sf.add_para(doc, "Con Cₘ en kWh, q como meta, P en kWp y Yₘ como rendimiento específico neto en kWh/kWp:")
     sf.add_equation(doc, "Gₘ=P·Yₘ      Tₘ=q·Cₘ      nₘ*=Tₘ/Gₘ")
     sf.add_equation(doc, "n*anual=q·ΣCₘ/(P·ΣYₘ)      n*conservador=máxₘ(q·Cₘ/(P·Yₘ))")
     sf.add_equation(doc, "N=ceil(n*)      Nmáx=floor(Aᵤ/(ancho·alto·fA))      Nconstruible=mín(N,Nmáx)")
-    sf.add_para(doc, "En el modo HSP alternativo, Yₘ=hₘ·dₘ·PR. Los modos son excluyentes: si PVGIS ya entrega producción con pérdidas, PR no se aplica otra vez.")
-    doc.add_paragraph("3.1 Interpretación diferencial", style="Heading 2")
-    sf.add_equation(doc, "n(h)=K/h;   n′(h)=−K/h²;   n″(h)=2K/h³")
-    sf.add_para(doc, "n′<0 explica que un mayor recurso reduce la necesidad; n″>0 indica convexidad. La elasticidad es −1: un cambio relativo pequeño de +1 % en el recurso reduce aproximadamente 1 % la necesidad continua antes del redondeo.")
-    sf.add_equation(doc, "Δn ≈ n′(h)·Δh")
-    sf.add_para(doc, "La aproximación lineal permite construir un intervalo de sensibilidad. El entero N puede permanecer igual aunque n* cambie; por eso se analiza primero la variable continua.")
-    doc.add_paragraph("3.2 Optimización de inclinación", style="Heading 2")
-    sf.add_equation(doc, "β*=arg máxβ Y(β)      dn/dβ=−D·Y′(β)/(P·Y(β)²)")
-    sf.add_para(doc, "El MVP consulta una malla discreta de inclinaciones y aproxima Y′ e Y″ con diferencias finitas. En una prueba de Bogotá, 5° produjo 1.280,17 kWh/kWp·año frente a 1.279,19 a 10°: la ganancia fue apenas 0,077 %, por lo que la optimización debe leerse con precisión razonable y no como certeza geométrica.")
+    sf.add_para(doc, "Si se usa la entrada alternativa de horas solares, Yₘ se construye con hₘ·dₘ·PR. Los modos son excluyentes: cuando PVGIS ya entrega energía con pérdidas configuradas, PR no se aplica otra vez.")
+    doc.add_paragraph("3.1 Sensibilidad diferencial con impacto directo", style="Heading 2")
+    sf.add_para(doc, "Con D=ΣCₘ y Y=ΣYₘ, la necesidad continua anual se puede expresar únicamente en función del rendimiento específico:")
+    sf.add_equation(doc, "n(Y)=q·D/(P·Y)       n′(Y)=−q·D/(P·Y²)")
+    sf.add_para(doc, "n′(Y)<0 demuestra que, si la demanda, la meta y el panel permanecen constantes, un aumento del rendimiento solar reduce la necesidad continua. Su magnitud permite estimar y comparar sensibilidad antes del redondeo entero. Esta es la aplicación de cálculo diferencial conservada porque modifica la interpretación de la recomendación.")
+    sf.add_callout(doc, "Interpretación numérica", "En Bogotá, n′(1.260,65)=−0,00262 paneles por cada kWh/kWp·año; cerca de ese punto, 100 kWh/kWp·año adicionales reducen la necesidad continua en aproximadamente 0,262 paneles. En Quibdó, la magnitud es mayor: |n′(898,28)|≈0,00393. La comparación ayuda a priorizar cautela donde el recurso estimado es menor.")
+    doc.add_paragraph("3.2 Comparación discreta de inclinaciones", style="Heading 2")
+    sf.add_para(doc, "El MVP consulta varias inclinaciones predeterminadas y ordena los rendimientos anuales estimados por PVGIS. Esta función es una comparación de escenarios: identifica la mejor alternativa evaluada, pero no afirma un máximo exacto ni añade operaciones diferenciales sin efecto necesario en el producto.")
 
     sf.add_section_title(doc, "4. Producto funcional y arquitectura", page_break=True)
     sf.add_para(doc, "El MVP está desplegado en https://solarfit-hogar.vercel.app y versionado en el repositorio privado malvamo/solarfit-hogar. El frontend recibe los datos; las rutas de servidor consultan proveedores externos sin exponer la clave de PVWatts; el dominio valida y calcula; el navegador conserva un borrador local.")
@@ -568,71 +571,71 @@ def build_final() -> Document:
         ["Capa", "Responsabilidad", "Evidencia"],
         [
             ("Interfaz", "Doce consumos, ubicación, panel, techo, meta y estrategia", "Next.js 16 + React 19"),
-            ("Dominio", "Unidades, criterios, redondeo, techo, balances y sensibilidad", "TypeScript puro con pruebas"),
-            ("PVGIS", "Rendimiento mensual y optimización de inclinación", "API JRC desde backend"),
+            ("Dominio", "Unidades, criterios, redondeo, techo, balances y n′(Y)", "TypeScript puro con pruebas"),
+            ("PVGIS", "Rendimiento mensual y comparación discreta de inclinaciones", "API JRC desde backend"),
             ("PVWatts", "Serie AC mensual independiente", "Clave NLR solo en Vercel"),
             ("Evidencia", "JSON/CSV/Markdown por escenario y libro de validación", "Entradas, series, métricas y hash"),
         ],
         [1600, 4020, 3740],
         font_size=9.0,
     )
-    sf.add_callout(doc, "Pruebas", "La versión auditada aprobó ESLint, TypeScript, build productivo y 37 pruebas automatizadas. Estas pruebas verifican la implementación; no reemplazan la validación del contexto físico.")
+    sf.add_callout(doc, "Pruebas", "La versión auditada aprobó ESLint, TypeScript, build productivo y 38 pruebas automatizadas. Estas pruebas verifican la implementación; no reemplazan la validación del contexto físico.")
 
     sf.add_section_title(doc, "5. Protocolo de los cinco casos")
     for case in CASES:
         sf.add_para(doc, f"{case['id']} — {case['city']}. {case['context']}. Coordenada de referencia {case['coords']}; techo útil supuesto {case['roof']} m²; {case['rule']}", align=WD_ALIGN_PARAGRAPH.LEFT, after=4)
-    sf.add_para(doc, "Configuración común: panel LONGi de 450 Wp; factor de área 1,10; meta 100 %; criterio anual; 10° de inclinación; azimut brújula 180°; pérdidas 14 %; incertidumbre ±10 %; consulta del 21 de agosto de 2026.")
+    sf.add_para(doc, "Configuración común: panel LONGi de 450 Wp; factor de área 1,10; meta 100 %; criterio anual; 10° de inclinación; azimut brújula 180°; pérdidas 14 %; incertidumbre ±10 %; ejecución reproducible del 7 de septiembre de 2026.")
 
     sf.add_section_title(doc, "6. Resultados multicase")
     add_case_summary_table(doc, include_conservative=True)
-    add_figure(doc, ASSET_DIR / "coverage-cases.png", "Figura 1. Cobertura anual construible en los cinco escenarios simulados.", "Gráfico de cobertura anual que muestra cuatro casos sobre 100 por ciento y Quibdó en 45,94 por ciento.")
-    sf.add_para(doc, "El caso negativo de Quibdó es un resultado funcional, no un error. El modelo calcula 6,531 paneles equivalentes, recomienda 7, reconoce que el techo admite 3 y reporta 45,94 % de cobertura construible. No trunca silenciosamente la necesidad.")
+    add_figure(doc, ASSET_DIR / "coverage-cases.png", "Figura 1. Cobertura anual construible en los cinco escenarios simulados.", "Gráfico de cobertura anual que muestra cuatro casos sobre 100 por ciento y Quibdó en 85,06 por ciento.")
+    sf.add_para(doc, "El caso restringido de Quibdó es un resultado funcional, no un error. El modelo calcula 3,527 paneles equivalentes, recomienda 4, reconoce que el techo supuesto admite 3 y reporta 85,06 % de cobertura construible. No trunca silenciosamente la necesidad.")
 
     sf.add_section_title(doc, "7. Caso principal: Bogotá")
     bog = CASES[0]
-    sf.add_para(doc, "Se selecciona Bogotá como caso principal del póster y el pitch porque utiliza una demanda plana basada en una referencia nacional histórica, facilita la reproducción manual y conserva un margen de techo amplio. No representa el consumo actual de un hogar bogotano.")
+    sf.add_para(doc, "Se selecciona Bogotá como caso principal del póster y el pitch porque utiliza el promedio SUI 2018 publicado para usuarios del SIN ubicados por encima de 1.500 m, facilita la reproducción manual y conserva un margen de techo amplio. No representa el consumo actual de un hogar bogotano ni sustituye sus facturas.")
     sf.add_table(
         doc,
         ["Magnitud", "Valor", "Cálculo / origen"],
         [
-            ("Demanda anual D", "1.884 kWh", "12 × 157 kWh"),
+            ("Demanda anual D", "1.872 kWh", "12 × 156 kWh"),
             ("Rendimiento anual Y", "1.260,65 kWh/kWp", "PVGIS 5.3"),
             ("Potencia por panel P", "0,450 kWp", "Ficha LONGi"),
-            ("Necesidad continua n*", "3,321", "1.884 /(0,450 × 1.260,65)"),
-            ("Recomendación N", "4 paneles", "ceil(3,321)"),
+            ("Necesidad continua n*", "3,300", "1.872 /(0,450 × 1.260,65)"),
+            ("Recomendación N", "4 paneles", "ceil(3,300)"),
             ("Potencia nominal", "1,80 kWp", "4 × 0,450"),
             ("Producción anual", "2.269,17 kWh", "1,80 × 1.260,65"),
-            ("Cobertura anual", "120,44 %", "2.269,17 /1.884"),
+            ("Cobertura anual", "121,22 %", "2.269,17 /1.872"),
             ("Máximo de techo", "9 paneles", "⌊20 /(1,722×1,134×1,10)⌋"),
         ],
         [2600, 2100, 4660],
         font_size=9.2,
     )
-    sf.add_callout(doc, "Decisión", "Cuatro paneles compensan la meta anual en el modelo y caben por área. Sin embargo, junio llega a 97,54 % mensual; para garantizar 100 % en todos los meses modelados se requieren 5 paneles. El usuario debe elegir el criterio.")
+    sf.add_callout(doc, "Decisión", "Cuatro paneles compensan la meta anual en el modelo y caben por área. Sin embargo, junio llega a 98,17 % mensual; para alcanzar 100 % en todos los meses modelados se requieren 5 paneles. El usuario debe elegir el criterio.")
 
-    sf.add_section_title(doc, "8. Validación cruzada e incertidumbre", page_break=True)
+    sf.add_section_title(doc, "8. Contraste entre simuladores e incertidumbre", page_break=True)
     sf.add_table(
         doc,
         ["Ciudad", "PVGIS", "PVWatts", "Diferencia anual", "Decisión entera"],
         [
-            (c["city"], f"{c['pvgis']:.2f}", f"{c['pvwatts']:.2f}", f"{c['annual_diff']:+.2f} %", f"{c['panels']} / " + ("6" if c["city"] == "Quibdó" else "5" if c["city"] == "Cali" else str(c["panels"])))
+            (c["city"], f"{c['pvgis']:.2f}", f"{c['pvwatts']:.2f}", f"{c['annual_diff']:+.2f} %", f"{c['panels']} / {c['pvwatts_panels']}")
             for c in CASES
         ],
         [1600, 1500, 1500, 2150, 2610],
         font_size=9.0,
     )
     add_figure(doc, ASSET_DIR / "yield-comparison.png", "Figura 2. Contraste intermodelo del rendimiento específico anual.", "Comparación anual de PVGIS y PVWatts para cinco ubicaciones colombianas.")
-    sf.add_para(doc, "Las diferencias absolutas anuales abarcan 0,82 %–20,64 %. Cali y Quibdó superan 10 % y cambian la decisión entera. Esto demuestra por qué un reporte responsable debe conservar proveedor, versión, base meteorológica y rango, en vez de ofrecer un único número como certeza.")
-    sf.add_callout(doc, "Sin validación experimental", "No se comparó contra generación medida porque no se dispone de un sistema real comparable. Las cinco ejecuciones validan coherencia matemática, software y robustez entre simuladores; no validan ahorro real ni desempeño del techo.", fill=sf.PALE_GOLD, accent=sf.GOLD)
+    sf.add_para(doc, "Las diferencias absolutas anuales abarcan 0,82 %–20,64 %. Cali y Quibdó superan 10 %, pero solo Quibdó cambia la decisión entera: 4 paneles con PVGIS y 3 con PVWatts. Esto demuestra por qué un reporte responsable debe conservar proveedor, versión, base meteorológica y rango, en vez de ofrecer un único número como certeza.")
+    sf.add_callout(doc, "Sin validación experimental", "No se comparó contra generación medida porque no se dispone de un sistema real comparable. Las cinco ejecuciones permiten observar el comportamiento matemático del modelo, comprobar el software en casos programados y hacer visibles las discrepancias entre simuladores: son especialmente altas en Cali y Quibdó, y solo Quibdó cambia la decisión entera. No demuestran exactitud en campo, ahorro real ni desempeño del techo.", fill=sf.PALE_GOLD, accent=sf.GOLD)
 
     sf.add_section_title(doc, "9. Por qué las simulaciones son esenciales")
-    sf.add_para(doc, "Una instalación física exige capital, permisos, condiciones seguras y al menos varios meses de medición. Para un curso semestral, la simulación permite explorar inmediatamente condiciones contrastantes, repetir los cálculos y auditar todas las transformaciones. Su importancia no depende de fingir que es realidad; depende de declarar qué valida y qué deja pendiente.")
+    sf.add_para(doc, "Una instalación física exige capital, permisos, condiciones seguras y al menos varios meses de medición. Para un curso semestral, la simulación permite explorar condiciones contrastantes, repetir los cálculos y auditar las transformaciones. Esta evidencia sirve para la verificación interna del modelo y del software; la validación experimental queda pendiente hasta disponer de una instalación y producción medida.")
     sf.add_table(
         doc,
         ["Sí demuestran", "No demuestran"],
         [
             ("Que las ecuaciones producen resultados consistentes", "Que una estructura soporte el sistema"),
-            ("Que mayor recurso reduce n* y que la sensibilidad aumenta con bajo recurso", "Que una factura llegue a cero"),
+            ("Que n′(Y) cuantifica cómo el recurso cambia la necesidad continua", "Que una factura llegue a cero"),
             ("Que el techo inviable se reporta sin ocultar la necesidad", "Que no haya sombras u obstáculos"),
             ("Que dos proveedores pueden cambiar una decisión", "Que un proveedor sea la verdad física"),
             ("Que el proceso es repetible con entradas archivadas", "Que exista disposición a pagar o product–market fit"),
@@ -644,9 +647,9 @@ def build_final() -> Document:
     sf.add_section_title(doc, "10. Conclusiones")
     conclusions = [
         "SolarFit responde la pregunta académica con una potencia continua y una cantidad entera, sin mezclar kW con kWh.",
-        "Las derivadas hacen explicable la recomendación: n′<0, n″>0 y Quibdó es el escenario más sensible al recurso.",
+        "La derivada n′(Y) hace explicable la recomendación: su signo negativo y magnitud relacionan directamente recurso solar y necesidad continua.",
         "El balance anual y el criterio conservador resuelven preguntas distintas; el producto no debe ocultar esa decisión.",
-        "Cuatro casos satisfacen la meta anual con el área supuesta; Quibdó demuestra la detección correcta de inviabilidad.",
+        "Cuatro casos satisfacen la meta anual con el área supuesta; Quibdó activa correctamente una advertencia de inviabilidad por área.",
         "PVGIS y PVWatts coinciden en orden de magnitud, pero las diferencias de Cali y Quibdó impiden presentar un único resultado como certeza.",
         "El MVP es una herramienta de prefactibilidad explicable; la fase siguiente debe validar facturas, techos, propuestas profesionales y producción medida.",
     ]
@@ -668,11 +671,11 @@ def build_final() -> Document:
         [2300, 3860, 3200],
         font_size=8.6,
     )
-    sf.add_para(doc, "Los umbrales son objetivos internos recomendados, no exigencias regulatorias. Antes de vender, SolarFit debe versionar reglas CREG, mantener el informe como prefactibilidad, aplicar RETIE y proteger los datos de facturas. Véanse [9][10].")
+    sf.add_para(doc, "Los umbrales son objetivos internos recomendados, no exigencias regulatorias. Antes de vender, SolarFit debe versionar reglas CREG, mantener el informe como prefactibilidad, aplicar RETIE y proteger los datos de facturas. Véanse [7][8].")
 
     sf.add_section_title(doc, "12. Limitaciones y riesgos")
     for text in (
-        "El consumo es sintético y no refleja simultaneidad horaria.",
+        "La demanda usa promedios oficiales agregados repetidos cada mes; no refleja una vivienda, estacionalidad ni simultaneidad horaria.",
         "El área útil es un escalar y no sustituye un plano, visita o revisión estructural.",
         "PVGIS y PVWatts no capturan todas las sombras, suciedad, indisponibilidad o decisiones de montaje.",
         "La cobertura energética no equivale a ahorro monetario ni factura cero.",
@@ -688,9 +691,9 @@ def build_final() -> Document:
         ["Tiempo", "Pregunta", "Mensaje"],
         [
             ("0:00–0:35", "¿Qué problema?", "Consumo y potencia no bastan; importan mes, clima, pérdidas y techo."),
-            ("0:35–1:25", "¿Cómo se resolvió?", "Modelo continuo, dos criterios, techo separado, MVP y APIs oficiales."),
-            ("1:25–2:25", "¿Por qué es válido?", "Cinco simulaciones, 37 pruebas y contraste PVGIS–PVWatts."),
-            ("2:25–3:00", "¿Qué aprendimos?", "Quibdó prueba el rechazo; el siguiente paso es piloto con datos medidos."),
+            ("0:35–1:25", "¿Cómo se resolvió?", "Balance energético, n(Y), n′(Y), techo separado, MVP y APIs oficiales."),
+            ("1:25–2:25", "¿Qué respalda el resultado y cuáles son sus límites?", "Cinco simulaciones, 38 pruebas y contraste PVGIS–PVWatts; no hay validación experimental."),
+            ("2:25–3:00", "¿Qué aprendimos?", "Quibdó activa una advertencia de inviabilidad por restricción de techo; el siguiente paso es un piloto medido."),
         ],
         [1500, 2300, 5560],
         font_size=9.2,
@@ -707,7 +710,7 @@ def build_final() -> Document:
         [1050, 1660, 1660, 1660, 1660, 1670],
         font_size=8.8,
     )
-    sf.add_table_source(doc, "Unidad: kWh/mes. Todos los valores son sintéticos y se usan exclusivamente para simulación reproducible.")
+    sf.add_table_source(doc, "Unidad: kWh/mes. Valores calibrados con promedios agregados SUI 2018 [5] y repetidos durante los doce meses porque la fuente no publica estacionalidad por caso. No son facturas ni mediciones de viviendas.")
     sf.add_section_title(doc, "Anexo B · Checklist de entrega", page_break=True)
     for item in (
         "[ ] Completar nombres, códigos y contribuciones reales en Word, póster y registro de IA.",
@@ -716,7 +719,7 @@ def build_final() -> Document:
         "[ ] Adjuntar o conservar el libro de validación y la carpeta de evidencia.",
         "[ ] Verificar que póster, pitch e informe usan las mismas cifras.",
         "[ ] Ensayar el pitch a 3 minutos usando únicamente el póster.",
-        "[ ] Asegurar que cada integrante pueda explicar modelo, derivadas, algoritmo, resultados y límites.",
+        "[ ] Asegurar que cada integrante pueda explicar el balance, n(Y), n′(Y), el algoritmo, los resultados y las limitaciones.",
     ):
         sf.add_para(doc, item, align=WD_ALIGN_PARAGRAPH.LEFT, after=5)
     finalize_doc(doc)

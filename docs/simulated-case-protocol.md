@@ -2,29 +2,22 @@
 
 ## Cuándo usarlo
 
-La rúbrica revisada admite validación con datos o condiciones reales o simuladas. Esta ruta evita usar información privada, pero no autoriza presentar el demo arbitrario como evidencia. El escenario debe ser contextualizado, reproducible y declarado como hipotético en todos los artefactos.
+La rúbrica revisada admite condiciones reales o simuladas. Esta ruta evita usar información privada, pero exige que cada valor esté respaldado o identificado como supuesto. El escenario debe ser contextualizado, reproducible y declarado como hipotético en todos los artefactos.
 
 ## Declaración mínima
 
-> Caso simulado de una vivienda hipotética conectada a red en `[MUNICIPIO]`. No representa una vivienda, factura o instalación existente. Los datos se generaron mediante las reglas y fuentes documentadas a continuación para evaluar el comportamiento matemático del modelo SolarFit Hogar.
+> Escenario residencial simulado conectado a red en `[MUNICIPIO]`. No representa una vivienda, factura o instalación existente. Los datos se generaron mediante las reglas y fuentes documentadas a continuación para evaluar el comportamiento matemático del modelo SolarFit Hogar.
 
 ## 1. Demanda reproducible
 
-Defina antes de calcular:
+Use una de estas rutas, en orden de preferencia:
 
-- consumo base mensual `C_base`;
-- amplitudes `a` y `b`;
-- regla de redondeo;
-- días de cada periodo;
-- propósito de la variación estacional.
+1. doce facturas anonimizadas de una vivienda observada;
+2. una serie oficial mensual que corresponda al contexto;
+3. un promedio oficial agregado repetido en los doce meses cuando la fuente no publica estacionalidad;
+4. un inventario de equipos, potencias y horas de uso con cada supuesto documentado.
 
-Una regla posible, que el equipo debe parametrizar y aprobar, es:
-
-```text
-C_m = redondear(C_base · [1 + a·sen(2π(m−1)/12) + b·cos(4π(m−1)/12)])
-```
-
-Guarde la fórmula, los parámetros y las doce salidas. No ajuste los parámetros después de ver el número de paneles sin registrar el cambio.
+No añada variación estacional mediante una fórmula elegida por el equipo si una fuente no respalda su forma y sus parámetros. En los cinco casos de referencia se usa un valor mensual constante porque UPME/SUI publica promedios por piso térmico, no perfiles mensuales por vivienda.
 
 ## 2. Vivienda y techo hipotéticos
 
@@ -60,7 +53,7 @@ Si se simulan HSP en lugar de usar PVGIS, documente también la regla generadora
 1. Ejecute balance anual y criterio conservador.
 2. Justifique cuál responde la pregunta del escenario.
 3. Reproduzca manualmente un mes, el total anual, `n*`, `N` y `N_max`.
-4. Compruebe unidades y monotonicidad.
+4. Compruebe unidades y el signo de `n′(Y)`.
 5. Contraste con PVWatts, otra herramienta o un cálculo independiente si está disponible; si no, explique el límite sin inventar métricas.
 6. Discuta incertidumbre, techo, sombras y diferencia entre compensación energética y factura cero.
 
@@ -74,7 +67,7 @@ Copie exactamente los mismos valores a:
 - guion del pitch;
 - registro de IA y aportes.
 
-Use siempre la expresión **caso simulado** o **vivienda hipotética**. No escriba “facturas”, “medición” o “producción real” si no existen.
+Use siempre la expresión **caso simulado** o **escenario residencial hipotético**. No escriba “facturas”, “medición” o “producción real” si no existen.
 
 ## Registro de decisión
 
@@ -89,4 +82,3 @@ Fuente solar y configuración: [ ]
 Método de validación: [ ]
 Integrantes que revisaron: [ ]
 ```
-

@@ -99,12 +99,31 @@ describe("formal case evidence", () => {
   it("usa los motores existentes y calcula métricas verificables", () => {
     const item = evidence();
 
-    expect(item.results.pvgis.recommendedPanelCount).toBe(5);
+    expect(item.results.pvgis.recommendedPanelCount).toBe(4);
     expect(item.validation.metrics.specificYield.maeKwh).toBe(10);
     expect(item.validation.metrics.specificYield.rmseKwh).toBe(10);
     expect(item.validation.metrics.specificYield.mapePct).toBeCloseTo(100 / 11, 8);
-    expect(item.validation.metrics.generationAtRecommendedCapacity.maeKwh).toBe(22.5);
+    expect(item.validation.metrics.generationAtComparedCapacity.maeKwh).toBe(18);
     expect(item.validation.monthlySeries).toHaveLength(12);
+  });
+
+  it("contrasta ambos proveedores con la misma capacidad cuando el techo limita", () => {
+    const constrainedFixture = fixture();
+    constrainedFixture.input.roofUsableM2 = 4.4;
+    const item = buildFormalCaseEvidence({
+      fixture: constrainedFixture,
+      pvgis: dataset("PVGIS", 100),
+      pvwatts: dataset("PVWATTS", 110),
+      generatedAt: "2026-09-07T16:30:00.000Z",
+      baseUrl: "https://solarfit-hogar.vercel.app",
+      runnerVersion: "test",
+      retryPolicy: { maximumAttempts: 1, initialBackoffMs: 0, requestTimeoutMs: 1000 },
+    });
+
+    expect(item.results.pvgis.buildablePanelCount).toBe(2);
+    expect(item.validation.capacityUsedKwp).toBeCloseTo(0.9, 8);
+    expect(item.validation.monthlySeries[0].pvgisGenerationAtComparedCapacityKwh).toBe(90);
+    expect(item.validation.monthlySeries[0].pvwattsGenerationAtComparedCapacityKwh).toBe(99);
   });
 
   it("produce el mismo JSON y hash para entradas idénticas", () => {

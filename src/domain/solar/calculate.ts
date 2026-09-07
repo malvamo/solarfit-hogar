@@ -46,7 +46,6 @@ function buildSensitivity(
   targetFraction: number,
 ): SensitivityResult {
   const isConservative = input.sizingStrategy === "monthly-conservative";
-  const isManualHsp = input.solarSourceMode === "manual-hsp";
   const limitingIndex = monthlyContinuous.reduce(
     (best, value, index, values) => (value > values[best] ? index : best),
     0,
@@ -54,44 +53,30 @@ function buildSensitivity(
   const selectedMonths = isConservative ? [input.months[limitingIndex]] : input.months;
   const selectedYields = isConservative ? [specificYields[limitingIndex]] : specificYields;
   const referenceConsumption = selectedMonths.reduce((sum, month) => sum + month.consumptionKwh, 0);
-  const referenceDays = selectedMonths.reduce((sum, month) => sum + month.billingDays, 0);
-
-  const effectivePerformanceRatio = isManualHsp
-    ? input.performanceRatioPct / 100
-    : 1;
-  const referenceHsp = isManualHsp
-    ? selectedMonths.reduce(
-        (sum, month) => sum + (month.hsp ?? 0) * month.billingDays,
-        0,
-      ) / referenceDays
-    : selectedYields.reduce((sum, value) => sum + value, 0) / referenceDays;
-
-  const kConstant =
-    (targetFraction * referenceConsumption) /
-    (panelPowerKw * effectivePerformanceRatio * referenceDays);
-  const derivativeAtReference = -kConstant / referenceHsp ** 2;
-  const minHsp = Math.max(0.25, referenceHsp * 0.55);
-  const maxHsp = referenceHsp * 1.55;
+  const referenceYield = selectedYields.reduce((sum, value) => sum + value, 0);
+  const kConstant = (targetFraction * referenceConsumption) / panelPowerKw;
+  const derivativeAtReference = -kConstant / referenceYield ** 2;
+  const practicalYieldStep = isConservative ? 10 : 100;
+  const minYield = Math.max(0.1, referenceYield * 0.55);
+  const maxYield = referenceYield * 1.55;
   const points = Array.from({ length: 25 }, (_, index) => {
-    const hsp = minHsp + ((maxHsp - minHsp) * index) / 24;
-    return { hsp, continuousPanels: kConstant / hsp };
+    const yieldValue = minYield + ((maxYield - minYield) * index) / 24;
+    return { yieldValue, continuousPanels: kConstant / yieldValue };
   });
 
   return {
-    resourceSymbol: isManualHsp ? "h" : "y_d",
-    resourceLabel: isManualHsp
-      ? "horas solares pico"
-      : "rendimiento específico neto diario equivalente",
-    resourceUnit: isManualHsp ? "HSP" : "kWh/kWp·día",
+    resourceSymbol: "Y",
+    resourceLabel: "rendimiento específico neto",
+    resourceUnit: isConservative ? "kWh/kWp·mes" : "kWh/kWp·año",
     referenceMonth: isConservative ? input.months[limitingIndex].month : null,
     referenceLabel: isConservative
       ? `mes crítico: ${MONTHS[limitingIndex].label}`
-      : "balance anual equivalente",
+      : "balance anual",
     kConstant,
-    referenceHsp,
+    referenceYield,
     derivativeAtReference,
-    changeForPointOneHsp: derivativeAtReference * 0.1,
-    elasticity: -1,
+    practicalYieldStep,
+    estimatedPanelChange: derivativeAtReference * practicalYieldStep,
     points,
   };
 }

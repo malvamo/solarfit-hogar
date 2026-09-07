@@ -9,8 +9,6 @@ export interface TiltYieldCandidate {
 }
 
 export interface TiltYieldEvaluation extends TiltYieldCandidate {
-  estimatedFirstDerivativeKwhPerKwpDeg: number;
-  estimatedSecondDerivativeKwhPerKwpDeg2: number | null;
   isSelectedMaximum: boolean;
 }
 
@@ -39,9 +37,8 @@ function validateCandidate(candidate: TiltYieldCandidate) {
 }
 
 /**
- * Selecciona el máximo de rendimiento anual y aproxima derivadas con
- * diferencias finitas. No modifica los rendimientos netos recibidos ni aplica
- * PR/pérdidas adicionales.
+ * Selecciona el mayor rendimiento anual entre los ángulos evaluados. Es una
+ * comparación discreta, no una optimización por cálculo diferencial.
  */
 export function analyzeTiltOptimization(
   candidates: readonly TiltYieldCandidate[],
@@ -100,34 +97,10 @@ export function analyzeTiltOptimization(
     }
   }
 
-  const evaluations = ordered.map<TiltYieldEvaluation>((candidate, index) => {
-    const previous = ordered[index - 1];
-    const next = ordered[index + 1];
-    const firstDerivative = previous && next
-      ? (next.annualKwhPerKwp - previous.annualKwhPerKwp) /
-        (next.tiltDeg - previous.tiltDeg)
-      : next
-        ? (next.annualKwhPerKwp - candidate.annualKwhPerKwp) /
-          (next.tiltDeg - candidate.tiltDeg)
-        : (candidate.annualKwhPerKwp - previous.annualKwhPerKwp) /
-          (candidate.tiltDeg - previous.tiltDeg);
-
-    const secondDerivative = previous && next
-      ? (2 *
-          ((next.annualKwhPerKwp - candidate.annualKwhPerKwp) /
-            (next.tiltDeg - candidate.tiltDeg) -
-            (candidate.annualKwhPerKwp - previous.annualKwhPerKwp) /
-              (candidate.tiltDeg - previous.tiltDeg))) /
-        (next.tiltDeg - previous.tiltDeg)
-      : null;
-
-    return {
-      ...candidate,
-      estimatedFirstDerivativeKwhPerKwpDeg: firstDerivative,
-      estimatedSecondDerivativeKwhPerKwpDeg2: secondDerivative,
-      isSelectedMaximum: Math.abs(candidate.tiltDeg - selected.tiltDeg) <= ANGLE_EPSILON,
-    };
-  });
+  const evaluations = ordered.map<TiltYieldEvaluation>((candidate) => ({
+    ...candidate,
+    isSelectedMaximum: Math.abs(candidate.tiltDeg - selected.tiltDeg) <= ANGLE_EPSILON,
+  }));
 
   const gainVsReferencePct = !reference || reference.annualKwhPerKwp === 0
     ? null

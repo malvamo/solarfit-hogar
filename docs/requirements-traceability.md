@@ -2,7 +2,7 @@
 
 ## 1. Autoridad y fecha de esta matriz
 
-Matriz elaborada el 18 de agosto de 2026 y actualizada el 21 de agosto de 2026 a partir de los originales de la carpeta de la materia:
+Matriz elaborada el 18 de agosto de 2026 y actualizada el 7 de septiembre de 2026 a partir de los originales de la carpeta de la materia y la retroalimentación escrita del profesor sobre el primer entregable:
 
 ```text
 CÁLCULO DIFERENCIAL (502116-12-2S-2026)/
@@ -14,6 +14,8 @@ Orden de autoridad aplicado:
 2. `Sylabus CD G-12.pdf`;
 3. información operativa exportada de AVATA, informando conflictos;
 4. materiales y plantillas docentes.
+
+La retroalimentación posterior al Hito 1 tiene prioridad para la corrección: no se deben tratar todos los contenidos del curso, sino únicamente aquellos con interpretación real y significativa en el modelo. En SolarFit se conserva la derivada de `n(Y)=qD/(P·Y)` porque cuantifica el impacto del recurso solar en la necesidad de paneles; se retiran límites, continuidad, segunda derivada, elasticidad y reglas de derivación que no cambian la decisión.
 
 Fuentes principales:
 
@@ -49,9 +51,9 @@ Esta matriz describe el repositorio, no garantiza una calificación.
 
 | Requisito | Evidencia del proyecto | Estado | Acción antes de entregar |
 |---|---|---|---|
-| Contextualización del problema y usuario | `README.md`; pregunta y alcance en `docs/mathematical-model.md` | Parcial | Integrar en el documento académico con la vivienda anonimizada y necesidad real |
+| Contextualización del problema y usuario | `README.md`; pregunta y alcance en `docs/mathematical-model.md` | Cubierto | Conservar la distinción entre escenario residencial simulado y vivienda observada |
 | Objetivo general y objetivos específicos medibles | La arquitectura y el modelo delimitan variables y salidas | Parcial | Redactar objetivos finales, revisar verbos y asignar criterio de logro |
-| Revisión de información y fuentes | Fuentes PVGIS oficiales y catálogo local citados en la documentación | Parcial | Completar bibliografía con las fuentes realmente consultadas por el equipo y la ficha del panel |
+| Revisión de información y fuentes | UPME/SUI 2018, PVGIS, PVWatts y ficha LONGi citados en la documentación | Cubierto | Verificar enlaces y explicar qué dato respalda cada fuente |
 | Variables, restricciones, unidades e incógnita | `docs/mathematical-model.md`; `docs/data-dictionary.md` | Cubierto | Trasladar el cuadro pertinente al entregable y explicarlo con palabras propias |
 | Primer modelo matemático | Modos HSP/PVGIS, estrategias anual/mensual, redondeo y área | Cubierto | Usar uno de los cinco escenarios formales y mostrar al menos un cálculo reproducible |
 | Representación simbólica y gráfica inicial | Fórmulas visibles en la aplicación y gráfico de sensibilidad | Cubierto | Incorporar captura legible y explicación, no solo imagen |
@@ -62,19 +64,19 @@ Esta matriz describe el repositorio, no garantiza una calificación.
 
 ### Riesgo principal del Hito 1
 
-El software abre con una demostración sintética, separada de los cinco escenarios `simulated_formal` archivados. Ninguno debe presentarse como facturas o mediciones de una vivienda. La evidencia formal usa reglas de consumo declaradas, techo hipotético, ficha LONGi y salidas completas de PVGIS/PVWatts.
+El software abre con uno de los cinco escenarios `simulated_formal`: demanda calibrada con un promedio oficial agregado, techo hipotético, ficha LONGi y salida PVGIS archivada. Ninguno debe presentarse como factura, vivienda observada, producción medida o diseño definitivo.
 
 ## 6. Hito 2 — desarrollo intermedio
 
 | Requisito | Evidencia del proyecto | Estado | Acción antes de entregar |
 |---|---|---|---|
-| Desarrollo matemático completo hasta el corte | `docs/mathematical-model.md`; motor en `src/domain/solar/` | Cubierto como base | Adaptar al contenido efectivamente visto y mostrar pasos con datos reales |
-| Uso explícito de conceptos de Cálculo Diferencial | Dominio, límites, continuidad, primera/segunda derivada, aproximación lineal, monotonía y concavidad | Cubierto | El informe relaciona cada concepto con necesidad, sensibilidad u optimización |
+| Desarrollo matemático pertinente hasta el corte | `docs/mathematical-model.md`; motor en `src/domain/solar/` | Cubierto como base | Mostrar el modelo energético y la derivada de sensibilidad con datos trazables |
+| Uso significativo de Cálculo Diferencial | Función `n(Y)=qD/(P·Y)` y primera derivada `n′(Y)=−qD/(P·Y²)` | Cubierto | Explicar cómo la sensibilidad puede cambiar la decisión al cruzar un entero |
 | Resultados intermedios | Cinco casos formales con valores mensuales, anuales y restricción de techo | Cubierto | Evidencia en `cases/evidence/latest/` y libro de validación |
 | Representaciones simbólica, algorítmica y gráfica | Ecuaciones; algoritmo documentado; gráficos SVG y tablas | Cubierto | Seleccionar evidencias legibles y explicar correspondencia entre ellas |
 | Visualización, simulación o prototipo | Aplicación web y consulta PVGIS | Cubierto | Registrar versión, ejecución, capturas y ruta de acceso o instrucciones |
 | Ajustes al modelo y su justificación | Separación de modos, redondeo final, restricción de techo y comparación inicial→final | Cubierto | Conservar la evolución en el informe acumulativo |
-| Validación | 37 pruebas, cinco consultas PVGIS, cinco PVWatts, métricas y hashes | Cubierto | No confundir contraste intermodelo con medición de campo |
+| Validación | 38 pruebas, cinco consultas PVGIS, cinco PVWatts, métricas y hashes | Cubierto | No confundir contraste intermodelo con medición de campo |
 | Registro actualizado de IA | `docs/ai-log.md` | Parcial | Añadir usos del periodo y decisiones humanas |
 | Aportes individuales actualizados | Plantilla pendiente | Pendiente | Completar por integrante y conservar soporte |
 
@@ -86,8 +88,8 @@ La rúbrica específica de semana 14 es la fuente principal de esta sección.
 |---|---|---|---|
 | Documento final acumulado | `Proyecto_Final_SolarFit_Hogar_Hito_3.docx` con modelo, casos, validación, conclusiones y anexos | Parcial | Completar nombres/aportes y confirmar formato o límite con el profesor |
 | Evolución a través de los cortes | Hito 1→2→3 con ajustes, hallazgos y validaciones | Cubierto | Mantener la secuencia en la versión entregada |
-| Integración de contenidos del curso | Sensibilidad, derivadas, aproximación, extremos y optimización discreta aplicados | Cubierto | Preparar explicación oral de los conceptos realmente usados |
-| Producto funcional | Aplicación Next.js con cálculo, APIs, gráficos, restauración y exportación | Cubierto | Verificación 21-08-2026: lint, tipos, 37 pruebas, build y diez consultas LIVE |
+| Integración pertinente de contenidos del curso | Función de necesidad continua y primera derivada respecto del rendimiento solar | Cubierto | Preparar la explicación de su interpretación y no añadir temas sin efecto real |
+| Producto funcional | Aplicación Next.js con cálculo, APIs, gráficos, restauración y exportación | Cubierto | Verificación 07-09-2026: lint, tipos, 38 pruebas, build y diez consultas LIVE |
 | Resultados y validación | Cinco escenarios formales, PVGIS/PVWatts, métricas, series y restricción de techo | Cubierto | Declarar que es validación intermodelo, no experimental |
 | Reflexión y conclusiones | Conclusiones técnicas y reflexión borrador en documento final | Parcial | Cada integrante debe revisarlas y adaptarlas con palabras propias |
 | Póster académico | `Poster_Academico_SolarFit_Hogar_Hito_3.pptx`, una diapositiva vertical, sin desbordamientos | Parcial | Completar nombres/aportes y confirmar si el profesor exige plantilla institucional |
@@ -105,7 +107,7 @@ La rúbrica específica de semana 14 es la fuente principal de esta sección.
 | Numérica | Tabla mensual y exportaciones | De dónde viene cada entrada y cómo se obtiene cada salida |
 | Gráfica | Barras demanda/producción y curva `K/h` | Tendencia, mes crítico y efecto marginal |
 | Algorítmica | Pseudocódigo y TypeScript | Validación, elección de estrategia, redondeo y restricción |
-| Producto | Aplicación web | Flujo completo con datos reales y manejo de errores |
+| Producto | Aplicación web | Flujo completo con caso calibrado o datos propios y manejo de errores |
 
 ## 9. Requisitos de formato confirmados y no confirmados
 
@@ -144,8 +146,8 @@ La plataforma activa y la comunicación directa del profesor deben resolver la o
 |---|:---:|:---:|:---:|---|
 | Documento académico acumulativo | ✓ | ✓ | ✓ | Hito 2 y final construidos; campos humanos pendientes |
 | Modelo y desarrollo matemático | ✓ | ✓ | ✓ | Base técnica y cinco escenarios simulados documentados completos |
-| Aplicación funcional | — | prototipo | ✓ | Implementada y verificada técnicamente el 21-08-2026 |
-| Evidencia de pruebas | — | ✓ | ✓ | 37 pruebas, diez consultas LIVE, métricas, CSV/JSON y SHA-256 registrados |
+| Aplicación funcional | — | prototipo | ✓ | Implementada y verificada técnicamente el 07-09-2026 |
+| Evidencia de pruebas | — | ✓ | ✓ | 38 pruebas, diez consultas LIVE, métricas, CSV/JSON y SHA-256 registrados |
 | Póster | — | — | ✓ | Póster final construido y verificado; nombres/aportes pendientes |
 | Guion y ensayo de 3 minutos | — | — | ✓ | Guion final construido; reparto y ensayo humano pendientes |
 | Registro de IA | ✓ | ✓ | ✓ | Plantilla y borrador disponibles; revisión humana pendiente |
@@ -169,7 +171,7 @@ La plataforma activa y la comunicación directa del profesor deben resolver la o
 Antes de entregar, comprobar que documento, aplicación, JSON/CSV, póster y discurso contienen los mismos:
 
 - nombre del proyecto;
-- vivienda anonimizada y periodo;
+- identificador, versión y alcance del escenario simulado;
 - modelo de panel;
 - criterio anual o mensual;
 - porcentaje objetivo;

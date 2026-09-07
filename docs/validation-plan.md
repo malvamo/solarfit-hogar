@@ -12,7 +12,7 @@ Una prueba de software positiva no valida las facturas, la geometría del techo 
 
 ## 2. Estado honesto
 
-El 21-08-2026 se ejecutaron cinco escenarios residenciales `simulated_formal` contra PVGIS y PVWatts: diez consultas externas exitosas, series mensuales, métricas, JSON, CSV y hashes archivados en `cases/evidence/latest/`. También se aprobaron 37 pruebas automatizadas, lint, tipos y build.
+El 07-09-2026 se ejecutaron cinco escenarios residenciales `simulated_formal` contra PVGIS y PVWatts: diez consultas externas exitosas, series mensuales, métricas, JSON, CSV y hashes archivados en `cases/evidence/latest/`. También se aprobaron 38 pruebas automatizadas, lint, tipos y build.
 
 La evidencia actual permite afirmar consistencia matemática, ejecución del software y contraste intermodelo. Todavía no incluye:
 
@@ -41,20 +41,20 @@ Los casos siguientes están codificados en archivos `*.test.ts` de `src/domain/s
 
 | ID | Caso | Afirmación verificada en el test |
 |---|---|---|
-| UT-01 | Balance anual | `n* > 0`, `N = ceil(n*)`, cobertura anual recomendada al menos 100 % para el demo y 12 resultados |
+| UT-01 | Balance anual | `n* > 0`, `N = ceil(n*)`, cobertura anual recomendada al menos 100 % para el caso calibrado y 12 resultados |
 | UT-02 | PVGIS sin doble PR | Cambiar el PR manual no altera la producción neta de PVGIS; aparece la advertencia |
 | UT-03 | Techo insuficiente | La recomendación se conserva, el escenario construible usa `N_max` y `roofFeasible=false` |
-| UT-04 | Monotonicidad solar | Aumentar todas las HSP reduce la necesidad continua |
-| UT-05 | Criterio conservador | Con techo amplio, la recomendación alcanza la meta en todos los meses del demo |
-| UT-06 | Primera derivada | La derivada de `K/h` es negativa y la elasticidad es −1 |
+| UT-04 | Impacto del recurso solar | Aumentar todos los rendimientos específicos reduce la necesidad continua |
+| UT-05 | Criterio conservador | Con techo amplio, la recomendación alcanza la meta en todos los meses del caso calibrado |
+| UT-06 | Primera derivada | La derivada de `K/Y` y el cambio local estimado son negativos |
 | UT-07 | Métricas | Un caso controlado produce MAE, RMSE, MAPE y sesgo esperados |
-| UT-08 | Primera y segunda derivada | Un caso numérico verificable produce `n=5`, `n'=-1,25` y `n''=0,625` |
+| UT-08 | Capacidad comparable | PVGIS y PVWatts usan la misma capacidad construible cuando el techo limita |
 | UT-09 | Prorrateo | Una factura que cruza enero y febrero se distribuye por día de forma esperada |
 | UT-10 | Normalización neta | La energía mensual del proveedor se conserva sin aplicar pérdidas otra vez |
 | UT-11 | Total anual del proveedor | Se advierte una diferencia mayor que la tolerancia frente a la suma mensual |
 | UT-12 | Serie externa incompleta | Se rechaza una serie de once meses |
 | UT-13 | Convenio de azimut | Sur, este, oeste y norte se traducen correctamente al aspecto PVGIS |
-| UT-14 | Optimización parabólica | Se selecciona el máximo y se recuperan primera/segunda derivada esperadas |
+| UT-14 | Comparación de inclinaciones | Se selecciona el mayor rendimiento entre los ángulos evaluados |
 | UT-15 | Empate de inclinación | Se elige el menor ángulo entre máximos iguales |
 | UT-16 | Candidatos inválidos | Se rechazan ángulos repetidos y referencias fuera de la malla |
 | UT-17 | Valores externos malformados | `null`, booleanos y cadenas vacías no se convierten silenciosamente en cero |
@@ -71,14 +71,14 @@ pnpm test
 Última ejecución observada durante esta documentación:
 
 ```text
-Fecha y hora: 2026-08-21 09:49 America/Bogota
+Fecha y hora: 2026-09-07 12:32 America/Bogota
 Comando: pnpm check
-Resultado: lint aprobado; typegen y TypeScript aprobados; 37/37 pruebas aprobadas; build productivo aprobado
+Resultado: lint aprobado; typegen y TypeScript aprobados; 38/38 pruebas aprobadas; build productivo aprobado
 Rutas: /, /api/pvgis, /api/pvgis/optimize, /api/pvwatts
 Casos LIVE: 5 PVGIS + 5 PVWatts; 0 reintentos
 ```
 
-El registro detallado, incluida la revisión de interfaz y el humo PVGIS, está en `docs/verification-log-2026-08-21.md`. No sustituye la validación del caso académico elegido.
+El registro detallado de código, interfaz, cinco casos y entregables está en `docs/verification-log-2026-09-07.md`. No sustituye una validación experimental con una vivienda observada.
 
 Para una entrega, registre:
 
@@ -104,7 +104,6 @@ Responsable: [INTEGRANTE]
 | FUT-07 | Media | Timeout, 429, 529 y 5xx | Reintento limitado y error comprensible |
 | FUT-10 | Media | Facturas superpuestas o con huecos | Rechazo de superposición y advertencia de hueco |
 | FUT-11 | Media | Optimización con fallos parciales del proveedor | Máximo entre respuestas válidas y advertencias completas |
-| FUT-12 | Baja | Malla no uniforme | Diferencias finitas coinciden con cálculo independiente |
 
 ## 6. Verificación manual de interfaz
 
@@ -113,7 +112,7 @@ Registre cada ejecución con navegador, tamaño de pantalla, fecha, resultado y 
 | ID | Procedimiento | Resultado esperado |
 |---|---|---|
 | UI-01 | Abrir sin borrador | Demo visible y rotulado “no es evidencia” |
-| UI-02 | Pulsar **Usar datos reales** | Coordenadas, consumos y etiquetas pendientes; no aparece recomendación válida |
+| UI-02 | Pulsar **Crear caso propio** | Coordenadas, consumos y etiquetas pendientes; no aparece recomendación válida |
 | UI-03 | Completar manualmente 12 meses | Se habilitan modelo y resultados sin errores |
 | UI-04 | Importar plantilla CSV válida | Se cargan 12 meses y se activa el modo manual |
 | UI-05 | Importar CSV con 11 filas o encabezado erróneo | Mensaje de error; el proyecto previo permanece |
@@ -197,7 +196,7 @@ Responsable de verificación: [ ]
 - Comparar la suma mensual con el total anual reportado.
 - No confundir `H(i)_d` con horas de luz.
 
-## 9. Validación cruzada entre modelos
+## 9. Contraste entre modelos
 
 ### Configuración comparable
 
@@ -225,7 +224,7 @@ PVWatts V8 puede usarse como contraste opcional. Desde el 29 de mayo de 2026, la
 - [Uso de claves](https://developer.nlr.gov/docs/api-key/)
 - [Calculadora PVWatts y advertencias](https://pvwatts.nlr.gov/)
 
-La clave permanece en servidor y no se escribe en el repositorio ni en el navegador. La interfaz conecta con `/api/pvwatts` mediante `NLR_API_KEY`. La comparación fue ejecutada para los cinco escenarios formales y sus respuestas, configuración y métricas quedaron archivadas en `cases/evidence/latest/`; esto no las convierte en mediciones de campo.
+La clave permanece en servidor y no se escribe en el repositorio ni en el navegador. La interfaz conecta con `/api/pvwatts` mediante `NLR_API_KEY`. El contraste fue ejecutado para los cinco escenarios calibrados y sus respuestas, configuración y métricas quedaron archivadas en `cases/evidence/latest/`; esto no las convierte en mediciones de campo.
 
 ### Métricas
 
@@ -242,14 +241,14 @@ No se debe declarar un proveedor como “verdad”. Las diferencias pueden prove
 
 ### Criterio de aceptación
 
-No se encontró en los archivos oficiales del curso un umbral numérico obligatorio. Para no inventarlo después de conocer las salidas, esta entrega reporta y explica todas las diferencias sin clasificar un proveedor como “verdad”. Cali y Quibdó se tratan como hallazgos de sensibilidad que requieren cautela.
+No se encontró en los archivos oficiales del curso un umbral numérico obligatorio. Para no inventarlo después de conocer las salidas, esta entrega reporta y explica todas las diferencias sin clasificar un proveedor como “verdad”. Cali y Quibdó muestran las mayores diferencias de rendimiento; solo en Quibdó cambia la cantidad entera recomendada.
 
 ```text
 Criterio aplicado: reporte descriptivo sin umbral de aprobación inventado
 Justificación: la rúbrica no fija umbral y ambos proveedores son modelos
-Fecha de ejecución: 2026-08-21
+Fecha de ejecución: 2026-09-07
 Resultado: MAPE mensual entre 4,43 % y 20,39 %
-Conclusión: coherencia razonable en tres ciudades; divergencia material en Cali y Quibdó
+Conclusión: mismo entero en cuatro casos; Quibdó cambia de 4 a 3 paneles según el proveedor
 ```
 
 ## 10. Validación con producción medida
@@ -264,16 +263,14 @@ Esta es la evidencia más fuerte, pero solo es posible si existe un sistema real
 
 Si no existen mediciones, escribir explícitamente: **“No se realizó validación contra producción medida por falta de un sistema real comparable.”** No reemplazarlas por datos sintéticos.
 
-## 11. Validación de sensibilidad
+## 11. Comprobación de sensibilidad pertinente
 
 Comprobar al menos:
 
-- al aumentar HSP o rendimiento específico, `n*` disminuye;
-- al aumentar consumo u objetivo, `n*` aumenta;
-- al aumentar potencia del módulo, `n*` disminuye;
-- para `K>0`, `n'(h)<0` y `n''(h)>0`;
-- la aproximación lineal mejora para perturbaciones pequeñas;
-- el redondeo puede ocultar cambios pequeños en la decisión entera, aunque `n*` sí cambie.
+- al aumentar el rendimiento específico `Y`, `n*` disminuye;
+- para `K>0`, `n'(Y)=−K/Y²<0`;
+- el cambio local mostrado por la interfaz coincide con `n'(Y)·ΔY`;
+- el redondeo puede conservar el mismo entero aunque `n*` cambie, y puede cambiarlo si cruza el siguiente entero.
 
 La exposición debe distinguir la tasa de cambio continua de la cantidad física entera.
 

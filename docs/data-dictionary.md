@@ -138,19 +138,19 @@ Incluye todos los campos de `MonthlySolarInput` y añade:
 
 | Campo | Tipo/unidad | Descripción |
 |---|---|---|
-| `resourceSymbol` | `h \| y_d` | Símbolo usado en la representación visible |
-| `resourceLabel` | texto | Nombre de HSP o del rendimiento específico diario equivalente |
-| `resourceUnit` | `HSP \| kWh/kWp·día` | Unidad correcta para el modo solar activo |
+| `resourceSymbol` | `Y` | Símbolo del rendimiento específico neto |
+| `resourceLabel` | texto | Nombre visible del rendimiento específico |
+| `resourceUnit` | `kWh/kWp·año \| kWh/kWp·mes` | Unidad del periodo evaluado |
 | `referenceMonth` | `number \| null` | Mes crítico o nulo para balance anual |
 | `referenceLabel` | `string` | Etiqueta explicativa del caso de referencia |
-| `kConstant` | según parametrización | Constante de `n(h)=K/h` |
-| `referenceHsp` | h/día o rendimiento diario equivalente | Punto en el que se evalúa la derivada |
-| `derivativeAtReference` | paneles por unidad de `h` | `−K/h²` |
-| `changeForPointOneHsp` | paneles | Aproximación `n'(h)·0,1` |
-| `elasticity` | adimensional | Siempre −1 para el modelo inverso |
-| `points` | 25 pares | Coordenadas `hsp`, `continuousPanels` para SVG |
+| `kConstant` | según parametrización | Constante de `n(Y)=K/Y`, con `K=qD/P` |
+| `referenceYield` | kWh/kWp del periodo | Punto en el que se evalúa la derivada |
+| `derivativeAtReference` | paneles por unidad de `Y` | `−K/Y²` |
+| `practicalYieldStep` | kWh/kWp del periodo | Paso visible: 100 anual o 10 mensual |
+| `estimatedPanelChange` | paneles | Aproximación local `n'(Y)·ΔY` |
+| `points` | 25 pares | Coordenadas `yieldValue`, `continuousPanels` para SVG |
 
-En modo PVGIS, `referenceHsp` es el rendimiento específico diario neto equivalente. El nombre del campo se conserva por compatibilidad interna, pero no debe presentarse como una medición HSP independiente.
+El resultado usa directamente el rendimiento específico anual o mensual que participa en la decisión; no crea una HSP diaria equivalente.
 
 ## 9. Contratos de las APIs internas
 
@@ -194,9 +194,9 @@ Los ceros muestran la estructura, no una ubicación o configuración recomendada
 | `warnings` | textos | Diferencias de totales y límites de sombras |
 | `sourceUrl` | URL | Página oficial del proveedor |
 
-Ambos adaptadores están implementados en servidor. PVWatts requiere `NLR_API_KEY`; sin ella, `/api/pvwatts` responde HTTP 503 y la interfaz lo explica sin ocultar el error. El modo PVGIS ofrece consulta directa, optimización de inclinación y contraste con PVWatts.
+Ambos adaptadores están implementados en servidor. PVWatts requiere `NLR_API_KEY`; sin ella, `/api/pvwatts` responde HTTP 503 y la interfaz lo explica sin ocultar el error. El modo PVGIS ofrece consulta directa, comparación discreta de inclinaciones y contraste con PVWatts.
 
-### Solicitud de optimización: `POST /api/pvgis/optimize`
+### Solicitud de comparación de inclinaciones: `POST /api/pvgis/optimize`
 
 | Campo | Tipo/rango | Descripción |
 |---|---|---|
@@ -207,7 +207,7 @@ Ambos adaptadores están implementados en servidor. PVWatts requiere `NLR_API_KE
 | `candidateTiltsDeg` | 2 a 13 números únicos, 0 a 90° | Malla de inclinaciones |
 | `referenceTiltDeg` | número opcional, 0 a 90° | Debe aparecer también entre los candidatos |
 
-### Respuesta de optimización: `PvgisTiltOptimizationResult`
+### Respuesta de comparación: `PvgisTiltOptimizationResult`
 
 | Campo | Tipo/unidad | Descripción |
 |---|---|---|
@@ -231,8 +231,6 @@ Cada evaluación añade:
 |---|---|---|
 | `tiltDeg` | grados | Ángulo candidato |
 | `annualKwhPerKwp` | kWh/kWp·año | Rendimiento neto |
-| `estimatedFirstDerivativeKwhPerKwpDeg` | kWh/kWp·año por grado | Diferencia finita primera |
-| `estimatedSecondDerivativeKwhPerKwpDeg2` | kWh/kWp·año por grado² o `null` | Diferencia finita segunda en puntos interiores |
 | `isSelectedMaximum` | booleano | Identifica el máximo elegido |
 | `monthlyKwhPerKwp` | 12 números | Serie mensual PVGIS del ángulo |
 | `dataset` | texto | Base meteorológica reportada |
@@ -305,8 +303,8 @@ Ante un techo inviable, el CSV cambia a la cantidad construible y escribe `build
 | Cifrado | Ninguno implementado |
 | Validación al cargar | Esquema Zod v1, doce meses únicos, números finitos y URL HTTP(S) |
 
-El botón **Usar datos reales** elimina el borrador existente y carga una estructura sin consumos, coordenadas, área, modelo, potencia ni dimensiones del panel. Los cambios se guardan con una espera de 300 ms; si el navegador bloquea el almacenamiento, la interfaz lo advierte.
+El botón **Crear caso propio** elimina el borrador existente y carga una estructura sin consumos, coordenadas, área, modelo, potencia ni dimensiones del panel. Los cambios se guardan con una espera de 300 ms; si el navegador bloquea el almacenamiento, la interfaz lo advierte.
 
-## 13. Datos sintéticos incluidos
+## 13. Caso simulado calibrado incluido
 
-`src/data/demo-project.ts` contiene consumos, HSP, coordenadas de demostración y un módulo genérico. Sus tres procedencias están marcadas `synthetic` y sus notas indican que no son evidencia. Ningún valor de ese archivo debe atribuirse a una vivienda, factura, estación o producto real.
+`src/data/demo-project.ts` contiene el caso de referencia Bogotá: demanda constante de 156 kWh/mes calibrada con el promedio SUI 2018 para piso térmico frío, serie PVGIS archivada y módulo LONGi con ficha oficial. El consumo sigue siendo una simulación representativa y el techo es un supuesto; no deben presentarse como facturas, mediciones o levantamiento de una vivienda real.

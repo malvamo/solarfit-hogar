@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { compareEnergySeries, hspSensitivity } from "./analysis";
+import { compareEnergySeries } from "./analysis";
 import { calendarizeBills } from "./bills";
 
 describe("mathematical analysis", () => {
@@ -12,19 +12,6 @@ describe("mathematical analysis", () => {
     expect(result.annualBiasPct).toBe(0);
   });
 
-  it("calcula primera y segunda derivada del caso verificable", () => {
-    const result = hspSensitivity({
-      consumptionKwh: 240,
-      targetCoverage: 1,
-      panelPowerKwp: 0.5,
-      hspPerDay: 4,
-      days: 30,
-      performanceRatio: 0.8,
-    });
-    expect(result.continuousPanels).toBe(5);
-    expect(result.firstDerivative).toBe(-1.25);
-    expect(result.secondDerivative).toBe(0.625);
-  });
 });
 
 describe("calendarizeBills", () => {
