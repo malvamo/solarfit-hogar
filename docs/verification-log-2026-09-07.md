@@ -69,7 +69,18 @@ También se inspeccionaron el póster académico de una página y el libro de c�
 
 ## 6. Producción
 
-La verificación final del despliegue se añadirá en este mismo apartado después de publicar el commit corregido. Hasta entonces, la evidencia LIVE anterior valida las APIs externas, pero no sustituye la comprobación visual de la nueva interfaz en producción.
+El commit corregido `fa86bdd7b226dfdc23ea6fbd077576577378b2e1` se publicó en `main`. Vercel construyó automáticamente el despliegue de producción `dpl_DXHEqboBTRCjfxrDr4vRCqqEPbkk`; la compilación terminó correctamente y el dominio `https://solarfit-hogar.vercel.app` quedó asociado al estado `READY`.
+
+Pruebas realizadas sobre el dominio público:
+
+- carga inicial y navegación por Datos, Modelo y Resultados;
+- rótulo visible **“SIMULACIÓN CALIBRADA · NO ES MEDICIÓN”**;
+- resultado del caso Bogotá: 4 paneles, 1,80 kWp, 2.269 kWh/año y 121 % de cobertura;
+- consulta PVGIS: 1.261 kWh/kWp·año;
+- contraste PVWatts: 1.271 kWh/kWp·año, diferencia −0,8 % y decisión 4 frente a 4 paneles;
+- comparación discreta de nueve inclinaciones: máximo de la malla en 5°, con ganancia aproximada de 0,07 % frente a 10°;
+- revisión móvil a `390 × 844`;
+- consola del navegador, errores de página y errores agrupados de Vercel durante la prueba: vacíos.
 
 ## 7. Límites de la evidencia
 
@@ -77,4 +88,3 @@ La verificación final del despliegue se añadirá en este mismo apartado despu�
 - El sistema es una herramienta de predimensionamiento académico; no reemplaza el diseño eléctrico, estructural, regulatorio ni financiero de un instalador competente.
 - PVGIS y PVWatts son modelos independientes y pueden discrepar, especialmente en climas complejos.
 - Sombras, orientación real, degradación, temperatura, suciedad, disponibilidad de red y tarifas deben medirse o confirmarse antes de una decisión de inversión.
-
