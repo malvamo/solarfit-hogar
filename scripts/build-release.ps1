@@ -127,6 +127,7 @@ if ([string]::IsNullOrWhiteSpace($AcademicDeliverablesDirectory)) {
 }
 
 $artifactMap = @(
+  @{ Source = "LEEME_PRIMERO_SolarFit.md"; Destination = "." },
   @{ Source = "Propuesta_SolarFit_Hogar.docx"; Destination = "00_antecedentes" },
   @{ Source = "Propuesta_SolarFit_Hogar.pdf"; Destination = "00_antecedentes" },
   @{ Source = "Hito_1_SolarFit_Hogar_Semana_5.docx"; Destination = "00_antecedentes" },
@@ -158,7 +159,7 @@ foreach ($artifact in $artifactMap) {
   }
 }
 
-$evidenceReadme = @"
+$evidenceReadme = @'
 # Evidencias y alcance de los cinco casos
 
 Los casos incluidos son simulaciones calibradas y reproducibles; no son mediciones de cinco viviendas. Su demanda se apoya en niveles oficiales de referencia de UPME y se mantiene constante durante doce meses para no inventar estacionalidad. El recurso solar proviene de consultas archivadas de PVGIS y el contraste usa PVWatts con la misma capacidad física.
@@ -173,7 +174,7 @@ Esta carpeta incluye el libro de validación, las series y el manifiesto reprodu
 - `ia_y_aportes/`: declaración revisada y contribuciones reales.
 
 No incluya claves, direcciones exactas, números de cuenta ni artefactos internos de QA. El contraste entre modelos no demuestra exactitud frente a una instalación física.
-"@
+'@
 [System.IO.File]::WriteAllText(
   (Join-Path $releaseRoot "05_evidencias\LEEME.md"),
   $evidenceReadme,
