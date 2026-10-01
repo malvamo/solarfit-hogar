@@ -1,0 +1,7 @@
+.codex_tmp
+.next
+node_modules
+*.png
+AGENTS.md
+CLAUDE.md
+tsconfig.tsbuildinfo
