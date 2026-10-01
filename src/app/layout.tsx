@@ -1,28 +1,38 @@
 import type { Metadata } from "next";
-import { Fraunces, IBM_Plex_Sans } from "next/font/google";
+import { IBM_Plex_Mono, Manrope, Newsreader } from "next/font/google";
+import type { ReactNode } from "react";
+
 import "./globals.css";
 
-const displayFont = Fraunces({
+const display = Newsreader({
   subsets: ["latin"],
   variable: "--font-display",
 });
 
-const bodyFont = IBM_Plex_Sans({
+const body = Manrope({
   subsets: ["latin"],
   variable: "--font-body",
+});
+
+const mono = IBM_Plex_Mono({
+  subsets: ["latin"],
+  variable: "--font-mono",
   weight: ["400", "500", "600"],
 });
 
 export const metadata: Metadata = {
-  title: "SolarFit Hogar | Dimensionamiento solar explicable",
+  title: "SolarFit Hogar · Prototipo Hito 2",
   description:
-    "Prefactibilidad fotovoltaica residencial con modelo matemático, datos trazables y análisis de sensibilidad.",
+    "Prototipo académico para explorar el dimensionamiento solar residencial con tres simulaciones calibradas.",
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="es">
-      <body className={`${displayFont.variable} ${bodyFont.variable}`}>{children}</body>
+      <body className={`${display.variable} ${body.variable} ${mono.variable}`}>
+        {children}
+      </body>
     </html>
   );
 }
+
